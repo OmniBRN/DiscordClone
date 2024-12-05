@@ -17,6 +17,304 @@ html {
   min-height: 100%;
 }
 
-body {
-  margin-bottom: 60px;
+
+.apasat {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 70%;
+    max-height: 70%;
+    z-index: 20;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+
+
+
+
+/* Reset styling */
+
+:root {
+    --principal: #1a1a1d;
+    --secundar: #3b1c32;
+    --third: #6a1e55;
+    --forth: #a64d79;
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--principal)
+}
+
+/* :root {
+  --principal: #282a36;
+  --secundar: #1e1e2e;
+  --third: #44475a;
+  --forth: #8be9fd;
+} */
+
+.h1 {
+    font-weight: bold;
+    margin-left: 50px;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--third);
+    border-color: var(--third);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+}
+
+
+/* Container */
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.test {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+    .test:hover {
+        opacity: 0.66;
+        transition-duration: 0.2s;
+    }
+
+/* Sidebar */
+.sidebar {
+    width: 17%;
+    background-color: var(--secundar);
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    padding-top: 20px;
+}
+
+.group-name {
+    margin-left: 15px;
+}
+
+.sidebar-icon {
+    width: 60px;
+    height: 60px;
+    background-color: var(--third);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+    .sidebar-icon:hover {
+        background-color: var(--forth);
+    }
+
+/* Main Content */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Header */
+.header {
+    padding: 10px;
+    /* background-color: #412138; */
+    background-color: var(--third);
+    width: 100%;
+}
+
+.search-bar {
+    width: 100%;
+    padding: 8px;
+    background-color: var(--third);
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+}
+
+input:focus {
+    outline: none;
+}
+
+.lista-grupuri {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--principal);
+}
+
+.friend-list h2 {
+    margin-bottom: 15px;
+}
+
+.grup {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 5px;
+    margin-top: 3px;
+}
+
+    .grup:hover {
+        opacity: 0.66;
+        transition-duration: 0.2s;
+        cursor: pointer;
+    }
+
+.info-grup {
+    display: flex;
+    align-items: center;
+}
+
+.poza-grup {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    object-fit: cover;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+    .poza-grup:hover {
+        opacity: 0.66;
+        transition-duration: 0.2s;
+    }
+
+.detalii-grup {
+    display: flex;
+    flex-direction: column;
+}
+
+.nume-grup {
+    font-weight: bold;
+}
+
+.descriere-grup {
+    font-size: 18px;
+    color: #b9bbbe;
+}
+
+/*
+////////////////////////////////////////////////////////
+
+    Aici e pt CreateGroup.cshtml
+*/
+
+#fog {
+    position: fixed;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.83);
+    width: 120%;
+    height: 120%;
+    top: 0;
+    left: 0;
+    filter: blur(5px);
+}
+
+.modal {
+    background-color: var(--principal);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 35%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+    .modal h1 {
+        font-size: 20px;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+
+.upload {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    background-color: var(--forth);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+    .upload:hover {
+        opacity: 0.8;
+        transition-duration: 0.2s;
+    }
+
+    input[type="file"]{
+        display: none;
+    }
+
+.server-name {
+    width: 100%;
+    padding: 10px;
+    margin: 15px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: gray;
+    font-size: 16px;
+}
+
+.footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+    .footer button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .footer button:hover{
+        opacity: 0.8;
+        transition-duration: 0.2s;
+    }
+
+    .footer .back {
+        background-color: #72767D;
+        
+    }
+
+    .footer .create {
+        background-color: #5865F2;
+    }

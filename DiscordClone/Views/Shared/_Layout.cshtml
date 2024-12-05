@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model DiscordClone.Models.Group
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -7,9 +9,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DiscordClone.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body>
-    <header>
+   @*  <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DiscordClone</a>
@@ -30,18 +33,35 @@
                 </div>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    </header> *@
+    <div class="layout-container">
+        <nav class="sidebar">
+            <a href="Index" class="h1">Discord</a>
+            <div class="test">
+                <img src="https://w0.peakpx.com/wallpaper/343/1014/HD-wallpaper-scooby-meme.jpg" class="poza-grup"></img>
+                <p class="nume-grup">From the screen 💻 </p>
+            </div>
+            <hr />
+            <div class="test">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBIGFIMbph9mGT6QaZHW07QQzMD12rtFlBv_NaF6PwK2J5KJH_8XOi5lNEsAZuNR89w0Q&usqp=CAU" class="poza-grup"></img>
+                <p class="nume-grup">to the ring 💍</p>
+            </div>
+            <hr />
+            <div class="test">
+                <a class="sidebar-icon" href="/Groups/New" id="adaugare">+</a>
+                <p class="nume-grup">Adauga un grup</p>
+            </div>
+        </nav>
+      
             @RenderBody()
-        </main>
+       
     </div>
 
-    <footer class="border-top footer text-muted">
+   @*  <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2024 - DiscordClone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </footer> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

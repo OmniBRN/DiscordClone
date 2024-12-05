@@ -1,4 +1,18 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿//document.addEventListener('DOMContentLoaded', () => {
+//    const CreateButton = document.getElementById("adaugare")
+//    //const CloseButton = document.getElementById("inchide")
+//    const fog = document.getElementById("fog")
+//    const partial = document.getElementById("CreateWrapper")
 
-// Write your JavaScript code.
+//    CreateButton.addEventListener("click", () => {
+//        partial.style.display = "block";
+//    })
+
+//    //CloseButton.addEventListener("click", () => {
+//    //    partial.style.display = "none";
+//    //})
+
+//    fog.addEventListener("click", () => {
+//        partial.style.display = 'none';
+//    });
+//});

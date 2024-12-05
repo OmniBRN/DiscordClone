@@ -1,0 +1,30 @@
+﻿
+<div class="main-content">
+    <div class="header">
+        <input type="text" placeholder="Cauta un Grup" class="search-bar" />
+    </div>
+
+
+   
+
+    <div class="lista-grupuri">
+        <h2>Toate grupurile in care nu ai fost invitat</h2>
+
+        @foreach (var group in ViewBag.Groups)
+        {
+            <div class="grup">
+                <div class="info-grup">
+                    <img src=@group.ImageRPath class="poza-grup"></img>
+                    <div class="detalii-grup">
+                        <p class="nume-grup">@group.Name</p>
+                        <p class="descriere-grup">
+                            @group.Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+       
+     </div>
+</div>

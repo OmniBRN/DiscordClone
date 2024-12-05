@@ -150,6 +150,9 @@ namespace DiscordClone.Migrations
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -182,7 +185,10 @@ namespace DiscordClone.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ChannelId")
+                    b.Property<string>("ChannelId")
+                        .HasColumnType("longtext");
+
+                    b.Property<int?>("ChannelId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -196,6 +202,9 @@ namespace DiscordClone.Migrations
                     b.Property<string>("FileRPath")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("GroupId")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime(6)");
 
@@ -207,7 +216,7 @@ namespace DiscordClone.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChannelId");
+                    b.HasIndex("ChannelId1");
 
                     b.HasIndex("UserId");
 
@@ -252,6 +261,9 @@ namespace DiscordClone.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("GroupId")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Role")
                         .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
@@ -430,7 +442,7 @@ namespace DiscordClone.Migrations
                 {
                     b.HasOne("DiscordClone.Models.Channel", null)
                         .WithMany("Messages")
-                        .HasForeignKey("ChannelId");
+                        .HasForeignKey("ChannelId1");
 
                     b.HasOne("DiscordClone.Models.ApplicationUser", "User")
                         .WithMany("Messages")

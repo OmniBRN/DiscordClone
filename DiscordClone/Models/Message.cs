@@ -15,5 +15,7 @@ namespace DiscordClone.Models
         public bool? WasEdited { get; set; }
         public virtual ApplicationUser? User { get; set; }
         public string? FileRPath { get; set; }
+        public string? GroupId { get; set; }
+        public string? ChannelId { get; set; }
     }
 }
