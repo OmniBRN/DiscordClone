@@ -12,17 +12,19 @@
 
         @foreach (var group in ViewBag.Groups)
         {
-            <div class="grup">
-                <div class="info-grup">
-                    <img src=@group.ImageRPath class="poza-grup"></img>
-                    <div class="detalii-grup">
-                        <p class="nume-grup">@group.Name</p>
-                        <p class="descriere-grup">
-                            @group.Description
-                        </p>
+            @* <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id"> *@
+                <div class="grup">
+                    <div class="info-grup">
+                        <img src=@group.ImageRPath class="poza-grup"></img>
+                        <div class="detalii-grup">
+                            <p class="nume-grup">@group.Name</p>
+                            <p class="descriere-grup">
+                                @group.Description
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            // </a>
             <hr />
         }
        
