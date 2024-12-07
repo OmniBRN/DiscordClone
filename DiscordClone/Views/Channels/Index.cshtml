@@ -1,0 +1,56 @@
+﻿@* @model DiscordClone.Models.Channel*@
+@* Noi nu avem Canale, gen deloc in baza de date, asa ca toate chestiile sunt hard-codate  *@
+@* Btw, nu stiu exact cum sa leg grupurile de canale fara Useri, deci o perioada va trebui sa lucram asa *@
+
+
+<div class="main-content">
+    <div class="header">
+        <h2>Aici e descrierea Channelului</h2>
+    </div>
+
+<div class="messages">
+    <div class="info-grup">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdFMN9vPT3v92hqWx6XM-VnyVNIfzlZEXuDA&s" class="poza-grup"></img>
+        <div class="detalii-grup">
+            <p class="nume-grup">N-am facut conturi</p>
+            <p class="descriere-grup">
+                Aici ar trebui sa fie un mesaj, dar nu avem mesaje si nici conturi
+            </p>
+        </div>
+    </div>
+    <div class="info-grup">
+        <img src="https://w0.peakpx.com/wallpaper/161/305/HD-wallpaper-jonhy-bravo-bravo-cartoon-cartoon-network-jhon-jhony.jpg" class="poza-grup"></img>
+        <div class="detalii-grup">
+            <p class="nume-grup">Alt cont care nu exista</p>
+            <p class="descriere-grup">
+                aici ar trebui sa fie alt mesaj
+            </p>
+        </div>
+    </div>
+</div>
+    <div class="footer-mes">
+        <form method="post" asp-controller="Channels" asp-action="Show">
+            <input type="hidden" name="ChannelId" value="1" />
+            <input type="hidden" name="GroupId" value="1" />
+
+            <input class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
+            @* <span asp-validation-for="Content" class="text-danger"></span> *@
+            <label for="fileInput" class="sidebar-icon mini">+</label>
+            <input type="file" id="fileInput" style="display: none;" multiple name="ImageRPath"/>
+            <button class="btn btn-success" type="submit">Send</button>
+        </form>
+    </div>
+</div>
+
+<div class="sidebar">
+    <div class="test">
+        <img src="https://avatarfiles.alphacoders.com/368/368486.jpg" class="poza-grup"></img>
+        <p class="nume-grup">Membru 1 </p>
+    </div>
+   
+    <div class="test">
+        <img src="https://s1.zerochan.net/God.Hand.%28Berserk%29.600.3671652.jpg" class="poza-grup"></img>
+        <p class="nume-grup">Membru 2</p>
+    </div>
+    
+</div>

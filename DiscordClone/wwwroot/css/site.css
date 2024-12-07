@@ -101,9 +101,12 @@ hr {
     width: 17%;
     background-color: var(--secundar);
     display: flex;
+
     flex-direction: column;
     /* align-items: center; */
     padding-top: 20px;
+    overflow-y: auto;
+    min-height: 100vh;
 }
 
 .group-name {
@@ -134,6 +137,33 @@ hr {
     display: flex;
     flex-direction: column;
     width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.messages {
+    flex: 1; 
+    overflow-y: auto;
+}
+
+.footer-mes {
+    position: sticky;
+    bottom: 0;
+    background-color: var(--third);
+    width: 100%;
+    padding: 10px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+}
+
+.my-profile{
+    align-self: flex-end;
+}
+
+.mini{
+    height: 20px;
+    width: 20px;
+    background-color: var(--secundar);
 }
 
 /* Header */
@@ -146,6 +176,15 @@ hr {
 
 .search-bar {
     width: 100%;
+    padding: 8px;
+    background-color: var(--third);
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+}
+
+.message-bar {
+    width: 80%;
     padding: 8px;
     background-color: var(--third);
     border: none;
@@ -281,6 +320,7 @@ input:focus {
         display: none;
     }
 
+
 .server-name {
     width: 100%;
     padding: 10px;
@@ -295,6 +335,7 @@ input:focus {
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
+    align-self:flex-end;
 }
 
     .footer button {

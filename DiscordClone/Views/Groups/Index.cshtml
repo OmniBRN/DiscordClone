@@ -4,15 +4,12 @@
         <input type="text" placeholder="Cauta un Grup" class="search-bar" />
     </div>
 
-
-   
-
     <div class="lista-grupuri">
         <h2>Toate grupurile in care nu ai fost invitat</h2>
 
         @foreach (var group in ViewBag.Groups)
         {
-            @* <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id"> *@
+            <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id">
                 <div class="grup">
                     <div class="info-grup">
                         <img src=@group.ImageRPath class="poza-grup"></img>
@@ -24,7 +21,7 @@
                         </div>
                     </div>
                 </div>
-            // </a>
+             </a>
             <hr />
         }
        
