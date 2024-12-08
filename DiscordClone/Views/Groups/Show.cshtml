@@ -1,7 +1,22 @@
 ﻿@model DiscordClone.Models.Group;
 
-@{
-    Layout = null;
-}
 
-<h1>Ceva</h1>
+
+<div class="modal">
+    <h1>Cerere de intrare in grup</h1>
+    <div>
+        <img src="@Model.ImageRPath" class="poza-grup">
+        <br/>
+        <div class="info-grup cerere-grup">
+            <p class="group-name">Nume grup: @Model.Name</p>
+            <br/>
+            <p class="descriere-grup">Descriere grup: @Model.Description</p>
+            <br/>
+            @* Cred ca pentru asta avem noi User*@
+            <p>Detinatorul grupului: [aici ar trebui sa fie persoana care detine]</p>
+        </div>
+        <br/>
+        @* Aici o sa fie pus un post request la notificarile ownerului cu id-ul persoanei care a facut requestul *@
+        <button class="btn btn-success">Request to join</button>
+    </div>
+</div>

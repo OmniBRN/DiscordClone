@@ -1,0 +1,33 @@
+﻿@model DiscordClone.Models.Group
+
+
+<div class="modal">
+    <h1>Edit Your Server</h1>
+    <form enctype="multipart/form-data" method="post" asp-action="Edit" asp-controller="Groups">
+        <label asp-for="ImageRPath" class="upload">
+            <input asp-for="ImageRPath" type="file" />
+            <span><i class="bi bi-camera"></i></span>
+        </label>
+        <label asp-for="Name"> Numele Server-ului</label>
+        <br />
+        <input type="text"
+               class="server-name"
+               asp-for="Name"
+               placeholder="Server Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <br /><br />
+        <label asp-for="Description">Descrierea Server-ului</label>
+        <br />
+        <textarea class="form-control server-name" asp-for="Description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <br />
+        <label asp-for="CategoryId">Categoria</label>
+        <br />
+        <select asp-for="CategoryId" asp-items="Model.Categ" class="server-name"><option value="">Alegeti Categoria</option></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+        <div class="footer">
+            @* <button class="back" id="inchide">Back</button> *@
+            <button class="create" type="submit">Edit</button>
+        </div>
+    </form>
+</div>

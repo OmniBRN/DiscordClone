@@ -38,7 +38,8 @@ namespace DiscordClone.Controllers
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
             if (group == null)
             {
-                TempData["NO_GROUP_SHOW"] = "Nu exista grupul pe care incerci sa-l accesezi";
+                TempData["message"] = "Nu exista grupul pe care incerci sa-l accesezi";
+                TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Groups", "Index");
             }
 
