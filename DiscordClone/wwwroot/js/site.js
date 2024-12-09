@@ -17,4 +17,10 @@
 //    });
 //});
 
+//function editare(id) {
+//    var mesaj = document.getElementById("message-" + { messageId })
+//    var content = mesaj.textContent;
+//    var salvare = document.getElementById("edit")
+//}
+
 

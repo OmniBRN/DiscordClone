@@ -1,42 +1,71 @@
-﻿@* @model DiscordClone.Models.Channel*@
-@* Noi nu avem Canale, gen deloc in baza de date, asa ca toate chestiile sunt hard-codate  *@
-@* Btw, nu stiu exact cum sa leg grupurile de canale fara Useri, deci o perioada va trebui sa lucram asa *@
+﻿@model DiscordClone.Models.Channel
+
 
 
 <div class="main-content">
     <div class="header">
-        <h2>Aici e descrierea Channelului</h2>
+        <h4>@Model.Name</h4>
     </div>
 
-<div class="messages">
-    <div class="info-grup">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdFMN9vPT3v92hqWx6XM-VnyVNIfzlZEXuDA&s" class="poza-grup"></img>
-        <div class="detalii-grup">
-            <p class="nume-grup">N-am facut conturi</p>
-            <p class="descriere-grup">
-                Aici ar trebui sa fie un mesaj, dar nu avem mesaje si nici conturi
-            </p>
-        </div>
+
+    <div class="messages">
+        @foreach( var mes in Model.Messages )
+        { 
+                    <div class="info-grup">
+                        @* N-avem useri deci aici fa fi o poza random *@
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdFMN9vPT3v92hqWx6XM-VnyVNIfzlZEXuDA&s" class="poza-grup"></img>
+                        <div class="detalii-grup">
+                            <p class="nume-grup">N-avem conturi</p>
+                            <p class="descriere-grup">
+                                @mes.Content
+                            </p>
+                            <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                <button class="btn-danger " type="submit">Delete</button>
+                            </form>
+                            @if (mes.FileRPath != null)
+                            {
+                                
+                                //BTW, Partea de VIDEO si AUDIO nu am testat-o, nu stiu daca merg, cum merg, etc. 
+                                // Ca idee, clasa "poza-colectie" doar seteaza o lungime si latime maxima, atat
+                                // Daca nu merge, poti sa incerci sa faci ceva genul: https://getbootstrap.com/docs/4.0/utilities/embed/
+                                // Cu bootstrap  cel mai probabil o sa mearga ( si probabil va arata si mai bine)
+
+                                <div class="info-grup">
+                                    <div class="detalii-grup">
+                                    @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
+                                            {
+                                                <img src=@mes.FileRPath class="poza-colectie" />
+                                            }
+                                    else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov"))
+                                            {
+                                                <video controls class="poza-colectie">
+                                                    <source src="@mes.FileRPath" type="video/mp4" />
+                                                </video> 
+                                            }
+                                    else if (mes.FileRPath.EndsWith(".mp3"))
+                                            {
+                                                <audio controls class="poza-colectie">
+                                                    <source src="@mes.FileRPath" type="audio/mp3" />
+                                                </audio>
+                                            }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+        
+        }
     </div>
-    <div class="info-grup">
-        <img src="https://w0.peakpx.com/wallpaper/161/305/HD-wallpaper-jonhy-bravo-bravo-cartoon-cartoon-network-jhon-jhony.jpg" class="poza-grup"></img>
-        <div class="detalii-grup">
-            <p class="nume-grup">Alt cont care nu exista</p>
-            <p class="descriere-grup">
-                aici ar trebui sa fie alt mesaj
-            </p>
-        </div>
-    </div>
-</div>
+
     <div class="footer-mes">
-        <form method="post" asp-controller="Channels" asp-action="Show">
-            <input type="hidden" name="ChannelId" value="1" />
-            <input type="hidden" name="GroupId" value="1" />
+        <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show">
+            <input type="hidden" name="ChannelId" value="@Model.Id" />
+            <input type="hidden" name="GroupId" value="@Model.GroupId" />
 
-            <input class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
+            <input type="text" class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
             @* <span asp-validation-for="Content" class="text-danger"></span> *@
-            <label for="fileInput" class="sidebar-icon mini">+</label>
-            <input type="file" id="fileInput" style="display: none;" multiple name="ImageRPath"/>
+            @* <label name="FileRPath" class="sidebar-icon mini">+</label> *@
+            <input type="file" id="fileInput" name="FileRPath" />
             <button class="btn btn-success" type="submit">Send</button>
         </form>
     </div>
@@ -52,5 +81,4 @@
         <img src="https://s1.zerochan.net/God.Hand.%28Berserk%29.600.3671652.jpg" class="poza-grup"></img>
         <p class="nume-grup">Membru 2</p>
     </div>
-    
 </div>

@@ -17,6 +17,13 @@ html {
   min-height: 100%;
 }
 
+.poza-colectie {
+    max-width: 450px;
+    max-height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+
 
 .apasat {
     position: fixed;
@@ -139,6 +146,7 @@ hr {
     width: 100%;
     min-height: 100vh;
     box-sizing: border-box;
+
 }
 
 .messages {
@@ -164,6 +172,10 @@ hr {
     height: 20px;
     width: 20px;
     background-color: var(--secundar);
+}
+
+input[type="file"] {
+    display: none;
 }
 
 /* Header */
@@ -242,6 +254,7 @@ input:focus {
     object-fit: cover;
     cursor: pointer;
     margin-left: 5px;
+    justify-content: flex-start;
 }
 
     .poza-grup:hover {
@@ -323,9 +336,9 @@ input:focus {
         transition-duration: 0.2s;
     }
 
-    input[type="file"]{
+/*    input[type="file"]{
         display: none;
-    }
+    }*/
 
 
 .server-name {

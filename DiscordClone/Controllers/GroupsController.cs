@@ -83,7 +83,8 @@ namespace DiscordClone.Controllers
         {
             if (ImageRPath == null)
             {
-                var a = 1;
+                group.ImageRPath = "wwwroot/images/defaultGroup.png";
+                //var a = 1;
             }
             else
             {
@@ -111,9 +112,17 @@ namespace DiscordClone.Controllers
             }
             if ( ModelState.IsValid )
             {
+                Channel channel = new Channel();
+                channel.Name = "Canalul: " + group.Name;
+                channel.Description = "Acesta este canalul default";
+                channel.UserId = _userManager.GetUserId(User);
+               
                 group.UserId = _userManager.GetUserId(User);
                 group.Date = DateTime.Now;
                 db.Groups.Add(group);
+                db.SaveChanges();
+                channel.GroupId = group.Id;
+                db.Channels.Add(channel);
                 db.SaveChanges();
                 TempData["message"] = "S-a creat un grup";
                 TempData["messageType"] = "alert-succes";
@@ -144,6 +153,9 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public IActionResult Edit(Group editedGroup)
         {
+            ///
+            /// Mie imi sterge poza cand dau sa editeze, si nu pot adauga alta
+            ///
             var group = db.Groups.Where(o => o.Id == editedGroup.Id).FirstOrDefault();
             
             if (group!=null && ModelState.IsValid)
@@ -177,13 +189,17 @@ namespace DiscordClone.Controllers
         public IActionResult Delete(int id)
         {   
             
+            //// Aici am adaugat comentariu pt ca ar trebui sa stergem si canalele asociate grupului pe care-l facem
+
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
+            var channels = db.Channels.Where( o => o.GroupId == id).FirstOrDefault();
             if (group == null)
             {
                 TempData["message"] = "Grupul pe care incerci sa-l stergi nu exista";
                 TempData["messageType"] = "alert-danger";
             }
             db.Groups.Remove(group);
+            db.Channels.Remove(channels);
             db.SaveChanges();
             TempData["message"] = "Grupul a fost sters cu succes";
             TempData["messageType"] = "alert-succes";
