@@ -1,4 +1,5 @@
-﻿using DiscordClone.Data;
+﻿using System.Runtime.InteropServices.JavaScript;
+using DiscordClone.Data;
 using DiscordClone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +33,7 @@ namespace DiscordClone.Controllers
 
         [HttpPost]
         //[Authorize(Roles =("User,Moderator,Admin"))]
-        public IActionResult Delete( int id )
+        public IActionResult Delete(int id)
         {
             Message mes = db.Messages.Find(id);
             var par = mes.Id;
@@ -41,11 +42,25 @@ namespace DiscordClone.Controllers
             db.SaveChanges();
 
             //// Aici prefer sa avem o alerta decat sa creem un element cu TempData
-
-            return Redirect("/Groups/Index");
+            // RE: Nu cred ca ar trebui sa alertam  ca s-au sters mesaje ca se observa
+            return Redirect($"/Channels/Index/{mes.ChannelId}");
 
             /// Asta ar trebui sa se intample, dar asa face figuri Index-ul si nu stiu cum sa-l repar
             ///return Redirect("/Channels/Index/" + par);
         }
+        
+
+        [HttpPost]
+        public IActionResult Edit(Message NewMessage)
+        {
+            Message oldMessage = db.Messages.Find(NewMessage.Id);
+            oldMessage.Content = NewMessage.Content;
+            NewMessage.WasEdited = true;
+            NewMessage.EditTimeStamp = DateTime.Now;
+            db.SaveChanges();
+            return Redirect($"/Channels/Index/{NewMessage.ChannelId}");
+        }
+        
+        
     }
 }

@@ -1,4 +1,6 @@
-﻿//document.addEventListener('DOMContentLoaded', () => {
+﻿//[COMENTARIU DE LA TUDOR PENTRU MARIO]: Fa onpageload sa ia marimea window-ului si sa updateze max-heightul pagini.
+
+//document.addEventListener('DOMContentLoaded', () => {
 //    const CreateButton = document.getElementById("adaugare")
 //    //const CloseButton = document.getElementById("inchide")
 //    const fog = document.getElementById("fog")

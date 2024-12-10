@@ -16,12 +16,17 @@
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdFMN9vPT3v92hqWx6XM-VnyVNIfzlZEXuDA&s" class="poza-grup"></img>
                         <div class="detalii-grup">
                             <p class="nume-grup">N-avem conturi</p>
-                            <p class="descriere-grup">
-                                @mes.Content
-                            </p>
+                            @if (mes.Content != "<<empty>>")
+                            {
+                                <p class="descriere-grup">
+                                    @mes.Content
+                                </p>
+                            }
                             <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
                                 <button class="btn-danger " type="submit">Delete</button>
                             </form>
+                            @* VERE NU STIU CUM SA-L FAC MAI MIC :( *@
+                            <button class="btn-success btn">Edit</button>
                             @if (mes.FileRPath != null)
                             {
                                 
@@ -36,7 +41,7 @@
                                             {
                                                 <img src=@mes.FileRPath class="poza-colectie" />
                                             }
-                                    else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov"))
+                                    else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
                                             {
                                                 <video controls class="poza-colectie">
                                                     <source src="@mes.FileRPath" type="video/mp4" />

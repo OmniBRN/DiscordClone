@@ -34,12 +34,12 @@ namespace DiscordClone.Controllers
             
             if (FileRPath != null)
             {
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4", ".mov" };
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4", ".mov", ".mkv",".mp3"};
                 var fileExtension = Path.GetExtension(FileRPath.FileName).ToLower();
                 if (!allowedExtensions.Contains(fileExtension))
                 {
                     ModelState.AddModelError("ChannelImage", "Fișierul trebuie să fie o imagine (jpg, jpeg, png, gif).");
-                    return Redirect("Channels/Index/" + message.ChannelId );
+                    return Redirect("/Channels/Index/" + message.ChannelId );
                 }
 
                 // Cale stocare
@@ -53,6 +53,11 @@ namespace DiscordClone.Controllers
                 }
 
                 ModelState.Remove(nameof(message.FileRPath));
+                if (message.Content == null)
+                {
+                    ModelState.Remove(nameof(message.Content));
+                    message.Content = "<<empty>>";
+                }
                 message.FileRPath = databaseFileName;
 
             }
@@ -66,7 +71,7 @@ namespace DiscordClone.Controllers
 
             if( ModelState.IsValid )
             {
-                /// se fac chestii
+                // se fac chestii
                 db.Messages.Add(message);
                 db.SaveChanges();
                 return Redirect("/Channels/Index/" + message.ChannelId);
@@ -74,7 +79,7 @@ namespace DiscordClone.Controllers
             else
             {
                 Channel channel = db.Channels.Include("Messages").Where(c => c.Id.ToString() == message.ChannelId).First();
-                return View("Index/" + channel.Id, channel);
+                return Redirect($"/Channels/Index/{channel.Id}");
             }
         }
         public IActionResult Index( int id)

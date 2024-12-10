@@ -1,6 +1,8 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    /*overflow: hidden;*/
 }
+
 
 @media (min-width: 768px) {
   html {
@@ -18,8 +20,8 @@ html {
 }
 
 .poza-colectie {
-    max-width: 450px;
-    max-height: 250px;
+    max-width: 675px;
+    max-height: 375px;
     background-size: cover;
     background-position: center;
 }
@@ -51,7 +53,7 @@ html {
 .layout-container {
     display: flex;
     min-height: 100vh;
-    background-color: var(--principal)
+    background-color: var(--principal);
 }
 
 /* :root {
@@ -105,15 +107,14 @@ hr {
 
 /* Sidebar */
 .sidebar {
-    width: 17%;
+    width: 400px;
     background-color: var(--secundar);
     display: flex;
-
+    max-height: 937px;
     flex-direction: column;
     /* align-items: center; */
     padding-top: 20px;
     overflow-y: auto;
-    min-height: 100vh;
 }
 
 .group-name {
@@ -144,7 +145,7 @@ hr {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     box-sizing: border-box;
 
 }
@@ -152,6 +153,7 @@ hr {
 .messages {
     flex: 1; 
     overflow-y: auto;
+    max-height: 784px;
 }
 
 .footer-mes {
@@ -174,9 +176,9 @@ hr {
     background-color: var(--secundar);
 }
 
-input[type="file"] {
-    display: none;
-}
+/*input[type="file"] {*/
+/*    display: none;*/
+/*}*/
 
 /* Header */
 .header {
@@ -336,9 +338,9 @@ input:focus {
         transition-duration: 0.2s;
     }
 
-/*    input[type="file"]{
-        display: none;
-    }*/
+/*!*    input[type="file"]{*/
+/*        display: none;*/
+/*    }*!*/
 
 
 .server-name {

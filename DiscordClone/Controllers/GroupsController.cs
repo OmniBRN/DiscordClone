@@ -58,7 +58,7 @@ namespace DiscordClone.Controllers
             if( TempData.ContainsKey("message"))
             {
                 ViewBag.Message = TempData["message"].ToString();
-                ViewBag.Alert = TempData["messageType"].ToString();
+                // ViewBag.Alert = TempData["messageType"].ToString();
             }
 
             ViewBag.Categories = GetAllCategories();
@@ -199,7 +199,9 @@ namespace DiscordClone.Controllers
                 TempData["messageType"] = "alert-danger";
             }
             db.Groups.Remove(group);
-            db.Channels.Remove(channels);
+            //Am facut un check sa vad daca este null channels ca altfel da eroare
+            if(channels!=null)
+                db.Channels.Remove(channels);
             db.SaveChanges();
             TempData["message"] = "Grupul a fost sters cu succes";
             TempData["messageType"] = "alert-succes";

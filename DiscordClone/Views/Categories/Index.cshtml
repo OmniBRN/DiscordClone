@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Lista categorii";
+}
+<div class="main-content">
+    <h2>@ViewBag.Title</h2>
+    <br />  
+
+    @if (TempData.ContainsKey("message"))
+    {
+        <h1>@ViewBag.message</h1>
+    }
+
+
+    @foreach (DiscordClone.Models.Category category in ViewBag.Categories)
+    {
+        <div>
+            <label asp-for="@category.Name" class="form-label">Denumire categorie</label>
+            <div><i class="bi bi-globe"></i> @category.Name</div>
+        </div>
+        <br />
+        <a class="btn alert-success" asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id">Editare categorie</a>
+        <form method="post" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id">
+            <button type="submit">Delete</button>
+        </form>
+        
+        <br />
+        <br />
+
+    }
+    <br />
+    <a class="btn btn-success" asp-controller="Categories" asp-action="New">Adauga o noua categorie</a>
+    <br />
+
+</div>
