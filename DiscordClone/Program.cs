@@ -57,4 +57,9 @@ app.MapControllerRoute(
     pattern: "{controller=Groups}/{action=Index}/{id?}");
 app.MapRazorPages();
 
+app.MapControllerRoute(
+    name: "login",
+    pattern: "/login/",
+    defaults: new { controller = "Account", action = "Login" });
+
 app.Run();
