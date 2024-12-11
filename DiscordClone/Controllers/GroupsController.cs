@@ -32,6 +32,27 @@ namespace DiscordClone.Controllers
             _roleManager = roleManager;
             _env = env;
         }
+        //[Authorize(Roles ="User,Moderator,Admin")]
+        [HttpPost]
+        public IActionResult RequestToJoin(int id)
+        {
+            var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
+
+            Notification notification = new Notification();
+            notification.type = "Cerere intrare in grup";
+            notification.UserId = group.UserId;
+
+            var userCurent = _userManager.GetUserId(User);
+            //Facem IF pt cazul in care asta este Admin ca pur si simplu sa intre, fara sa trimita notificare;
+
+
+            var numeUser = db.Users.Where( a => a.Id == userCurent ).FirstOrDefault();
+            notification.content = "Utilizatorul " + numeUser + " doreste sa intre in grupul "+ group.Name;
+
+            
+
+            return Redirect("/Groups/Index");
+        }
 
         public IActionResult Show(int id)
         {

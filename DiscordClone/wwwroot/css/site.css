@@ -110,7 +110,7 @@ hr {
     width: 400px;
     background-color: var(--secundar);
     display: flex;
-    max-height: 937px;
+    max-height: 100%;
     flex-direction: column;
     /* align-items: center; */
     padding-top: 20px;
@@ -153,7 +153,8 @@ hr {
 .messages {
     flex: 1; 
     overflow-y: auto;
-    max-height: 784px;
+/*    max-height: 740px;*/
+    max-height: 587px;
 }
 
 .footer-mes {
@@ -224,6 +225,10 @@ input:focus {
 .cerere-grup
 {
     flex-direction: column;
+}
+
+.bottom{
+    margin-top:auto;
 }
 
 .grup {

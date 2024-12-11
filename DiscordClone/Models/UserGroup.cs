@@ -12,6 +12,7 @@ namespace DiscordClone.Models
         public string? Culoare { get; set; }
         public string? Role {  get; set; }
 
+       // public virtual Group? Group { get; set; }
         public virtual ApplicationUser? User { get; set; }
     }
 }
