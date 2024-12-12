@@ -24,6 +24,8 @@ html {
     max-height: 375px;
     background-size: cover;
     background-position: center;
+    border-radius: 15px;
+    cursor:pointer;
 }
 
 
@@ -32,10 +34,11 @@ html {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 70%;
-    max-height: 70%;
+    max-width: 75%;
+    max-height: 75%;
     z-index: 20;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    
 }
 
 
@@ -50,18 +53,39 @@ html {
     --forth: #a64d79;
 }
 
-.layout-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: var(--principal);
-}
-
 /* :root {
   --principal: #282a36;
   --secundar: #1e1e2e;
   --third: #44475a;
   --forth: #8be9fd;
 } */
+
+.messages .info-grup{
+    margin-bottom: 10px;
+    margin-top:5px;
+
+}
+
+.layout-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--principal);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--principal);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--forth);
+    border-radius: 20px;
+}
+
+
 
 .h1 {
     font-weight: bold;
@@ -95,8 +119,8 @@ hr {
     display: flex;
     /* justify-content: center; */
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 5px;
+/*    margin-top: 10px;
+    margin-bottom: 5px;*/
     cursor: pointer;
 }
 
@@ -105,9 +129,30 @@ hr {
         transition-duration: 0.2s;
     }
 
-/* Sidebar */
+.member{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    /*    margin-top: 10px;
+    margin-bottom: 5px;*/
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+
 .sidebar {
-    width: 400px;
+    width: 350px;
+    background-color: var(--secundar);
+    display: flex;
+    max-height: 100%;
+    flex-direction: column;
+    /* align-items: center; */
+    padding-top: 20px;
+    overflow-y: auto;
+}
+
+.members-bar {
+    width: 280px;
     background-color: var(--secundar);
     display: flex;
     max-height: 100%;
@@ -128,7 +173,7 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+/*    margin-top: 10px;*/
     border-radius: 50%;
     margin-left: 5px;
     margin-right: 10px;
@@ -153,9 +198,10 @@ hr {
 .messages {
     flex: 1; 
     overflow-y: auto;
-/*    max-height: 740px;*/
-    max-height: 587px;
+/*    max-height: 20px;*/
+/*    max-height: 642px;*/
 }
+
 
 .footer-mes {
     position: sticky;
@@ -165,6 +211,8 @@ hr {
     padding: 10px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
+    align-items: center; 
+    gap: 10px;
 }
 
 .my-profile{
@@ -189,6 +237,14 @@ hr {
     width: 100%;
 }
 
+.header-channel {
+    padding: 2px;
+    /* background-color: #412138; */
+    background-color: var(--third);
+    text-align: center;
+    width: 100%;
+}
+
 .search-bar {
     width: 100%;
     padding: 8px;
@@ -198,13 +254,26 @@ hr {
     margin: 0;
 }
 
+.formular {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Make the form fill the entire bar */
+    gap: 10px; /* Adds spacing between elements */
+}
+
+.incarcare-fisier:hover{
+    cursor:pointer;
+    opacity:0.8;
+}
+
 .message-bar {
-    width: 80%;
+    flex-grow: 1; /* Ensures the input takes up almost all available space */
     padding: 8px;
     background-color: var(--third);
     border: none;
     border-radius: 5px;
     margin: 0;
+    color: white; /* Ensure text is visible on dark background */
 }
 
 input:focus {
@@ -218,9 +287,6 @@ input:focus {
     background-color: var(--principal);
 }
 
-.friend-list h2 {
-    margin-bottom: 15px;
-}
 
 .cerere-grup
 {
@@ -235,9 +301,9 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
-    margin-bottom: 5px;
-    margin-top: 3px;
+/*    padding: 10px;*/
+/*    margin-bottom: 5px;*/
+    /*margin-top: 3px;*/
 }
 
     .grup:hover {
@@ -248,7 +314,8 @@ input:focus {
 
 .info-grup {
     display: flex;
-    align-items: center;
+    width: 100%;
+/*    align-items: center;*/
 }
 
 .poza-grup {
@@ -271,16 +338,20 @@ input:focus {
 
 .detalii-grup {
     display: flex;
+    justify-content:center;
     flex-direction: column;
 }
 
 .nume-grup {
     font-weight: bold;
+    margin-bottom: 4px;
 }
 
 .descriere-grup {
+    margin-right:auto;
     font-size: 18px;
     color: #b9bbbe;
+    margin-top: 0;
 }
 
 /*
@@ -289,7 +360,24 @@ input:focus {
     Aici e pt CreateGroup.cshtml
 */
 
-#fog {
+.container-mesaje{
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.butoane{
+    display: none;
+    margin-left:10px;
+}
+
+.info-grup:hover .butoane{
+    display:flex;
+    margin-left:auto;
+}
+
+.fog {
     position: fixed;
     z-index: 1;
     background-color: rgba(0, 0, 0, 0.83);

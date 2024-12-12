@@ -3,7 +3,7 @@
 
 
 <div class="main-content">
-    <div class="header">
+    <div class="header-channel">
         <h4>@Model.Name</h4>
     </div>
 
@@ -18,15 +18,19 @@
                             <p class="nume-grup">N-avem conturi</p>
                             @if (mes.Content != "<<empty>>")
                             {
-                                <p class="descriere-grup">
-                                    @mes.Content
-                                </p>
-                            }
-                            <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
-                                <button class="btn-danger " type="submit">Delete</button>
-                            </form>
-                            @* VERE NU STIU CUM SA-L FAC MAI MIC :( *@
-                            <button class="btn-success btn">Edit</button>
+                                <div class="container-mesaje">
+                                    <p class="descriere-grup">
+                                        @mes.Content
+                                    </p>
+                                    <div class="butoane">
+                                         <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                            <button class="btn-danger " type="submit"><i class="bi bi-trash"></i></button>
+                                         </form>
+                                         @* VERE NU STIU CUM SA-L FAC MAI MIC :( *@
+                                         <button class="btn-success btn"><i class="bi bi-pencil"></i></button>
+                                    </div>
+                                </div>
+                            }                           
                             @if (mes.FileRPath != null)
                             {
                                 
@@ -39,7 +43,7 @@
                                     <div class="detalii-grup">
                                     @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
                                             {
-                                                <img src=@mes.FileRPath class="poza-colectie" />
+                                                <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
                                             }
                                     else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
                                             {
@@ -63,26 +67,27 @@
     </div>
 
     <div class="footer-mes">
-        <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show">
+        <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show" class="formular">
             <input type="hidden" name="ChannelId" value="@Model.Id" />
             <input type="hidden" name="GroupId" value="@Model.GroupId" />
 
             <input type="text" class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
             @* <span asp-validation-for="Content" class="text-danger"></span> *@
             @* <label name="FileRPath" class="sidebar-icon mini">+</label> *@
-            <input type="file" id="fileInput" name="FileRPath" />
+            <input type="file" id="fileInput" name="FileRPath" style="display: none;" />
+            <label for="fileInput" class="incarcare-fisier"><i class="bi bi-upload"></i></label>
             <button class="btn btn-success" type="submit">Send</button>
         </form>
     </div>
 </div>
 
-<div class="sidebar">
-    <div class="test">
+<div class="members-bar">
+    <div class="member">
         <img src="https://avatarfiles.alphacoders.com/368/368486.jpg" class="poza-grup"></img>
         <p class="nume-grup">Membru 1 </p>
     </div>
    
-    <div class="test">
+    <div class="member">
         <img src="https://s1.zerochan.net/God.Hand.%28Berserk%29.600.3671652.jpg" class="poza-grup"></img>
         <p class="nume-grup">Membru 2</p>
     </div>
