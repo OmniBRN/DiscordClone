@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiscordClone.Controllers
 {
-    public class MessagesController : Controller
+    public class MessagesController : BaseController
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,7 +19,7 @@ namespace DiscordClone.Controllers
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IWebHostEnvironment env
-        )
+        ) : base(userManager, context, roleManager)
         {
             db = context;
             _userManager = userManager;
@@ -28,6 +28,8 @@ namespace DiscordClone.Controllers
         }
         public IActionResult Index()
         {
+            
+            
             return View();
         }
 
@@ -35,6 +37,9 @@ namespace DiscordClone.Controllers
         //[Authorize(Roles =("User,Moderator,Admin"))]
         public IActionResult Delete(int id)
         {
+          
+
+            
             Message mes = db.Messages.Find(id);
             var par = mes.Id;
 
@@ -53,6 +58,9 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public IActionResult Edit(Message NewMessage)
         {
+            
+
+            
             Message oldMessage = db.Messages.Find(NewMessage.Id);
             oldMessage.Content = NewMessage.Content;
             NewMessage.WasEdited = true;

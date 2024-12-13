@@ -12,55 +12,49 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body>
-   @*  <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DiscordClone</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
-            </div>
-        </nav>
-    </header> *@
+  
     <div class="layout-container">
-        <nav class="sidebar">
-            <a asp-controller="Groups" asp-action="Index" class="h1">Discord</a>
-            <hr/>
-            <div class="test">
-                <img src="https://w0.peakpx.com/wallpaper/343/1014/HD-wallpaper-scooby-meme.jpg" class="poza-grup"></img>
-                <p class="nume-grup">From the screen 💻 </p>
-            </div>
-            <hr />
-            <div class="test">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBIGFIMbph9mGT6QaZHW07QQzMD12rtFlBv_NaF6PwK2J5KJH_8XOi5lNEsAZuNR89w0Q&usqp=CAU" class="poza-grup"></img>
-                <p class="nume-grup">to the ring 💍</p>
-            </div>
-            <hr />
-            <div class="test">
-                <a class="sidebar-icon" href="/Groups/New" id="adaugare">+</a>
-                <p class="nume-grup">Adauga un grup</p>
-            </div>
 
-            <div class="test bottom">
-            <hr />
-                <img src="https://wallpapers.com/images/hd/duck-funny-discord-pfp-43saqlv2v60nxgtv.jpg" class="poza-grup" />
-                <p class="nume-grup">Profil</p>
-            </div>
-        </nav>
-      
-            @RenderBody()
+        @if (User.IsInRole("User") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
+        {
+           
+            <nav class="sidebar">
+
+                <a asp-controller="Groups" asp-action="Index" class="h1">Discord</a>
+                <hr/>
+                @if (ViewBag.Groups != null)
+                {
+                    @foreach (Group group in ViewBag.Groups)
+                    {
+                        <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.ChannelId>
+                            <div class="test">
+                                <img src=@group.ImageRPath class="poza-grup"/>
+                                <p class="nume-grup">@group.Name</p>
+                            </div>
+                            <hr/>
+                        </a>
+                    }
+                }
+
+                <div class="test">
+                    <a class="sidebar-icon" href="/Groups/New" id="adaugare">+</a>
+                    <p class="nume-grup">Adauga un grup</p>
+                </div>
+
+                <div class="test bottom">
+                    <hr/>
+                    <img src=@ViewBag.User.ProfilePicture class="poza-grup"/>
+                    <p class="nume-grup">@ViewBag.User.UserName</p>
+                    <div class="icon-profil">
+                        <a asp-controller="Notifications" asp-action="Index" class="icon"><i class="bi bi-envelope-open"></i></a>
+                        <a class="icon"><i class="bi bi-gear"></i></a>
+                    </div>
+                    <!-- asp-controller="Ceva aici" asp-action="Altceva aici"-->
+                </div>
+                @* <partial name="_LoginPartial" /> *@
+            </nav>
+        }
+        @RenderBody()
        
     </div>
 

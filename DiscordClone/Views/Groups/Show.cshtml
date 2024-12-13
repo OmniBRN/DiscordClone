@@ -1,5 +1,6 @@
 ﻿@model DiscordClone.Models.Group;
 
+
 <div class="modal">
     <h1>Cerere de intrare in grup</h1>
     <div>
@@ -11,12 +12,13 @@
             <p class="descriere-grup">Descriere grup: @Model.Description</p>
             <br/>
             @* Cred ca pentru asta avem noi User*@
-            <p>Detinatorul grupului: [aici ar trebui sa fie persoana care detine]</p>
+            <p>Detinatorul grupului: @ViewBag.Owner</p>
         </div>
         <br/>
         @* Aici o sa fie pus un post request la notificarile ownerului cu id-ul persoanei care a facut requestul *@
-        @* <form method="post" asp-controller="Notifications" asp-action="New" asp-route-id=@Model.Id> *@
-        @*     <button class="btn btn-success">Request to join</button> *@
-        @* </form> *@
+        <form method="post" asp-controller="Notifications" asp-action="New" asp-route-id="@Model.Id">
+            
+            <button class="btn btn-success">Request to join</button>
+        </form>
     </div>
 </div>

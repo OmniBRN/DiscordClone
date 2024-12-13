@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiscordClone.Controllers
 {
-    public class UsersController : Controller
+    public class UsersController : BaseController
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -15,7 +15,7 @@ namespace DiscordClone.Controllers
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager
-            )
+            ) : base(userManager, context, roleManager)
         {
             db = context;
 
@@ -25,6 +25,9 @@ namespace DiscordClone.Controllers
         }
         public IActionResult Index()
         {
+            
+
+            
             var users = from user in db.Users
                         orderby user.UserName
                         select user;
@@ -35,6 +38,8 @@ namespace DiscordClone.Controllers
         }
         public async Task<ActionResult> Show(string id)
         {
+           
+            
             ApplicationUser user = db.Users.Find(id);
             var roles = await _userManager.GetRolesAsync(user);
 
@@ -48,6 +53,9 @@ namespace DiscordClone.Controllers
 
         public async Task<ActionResult> Edit(string id)
         {
+           
+
+            
             ApplicationUser user = db.Users.Find(id);
 
             ViewBag.AllRoles = GetAllRoles();
@@ -66,6 +74,9 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(string id, ApplicationUser newData, [FromForm] string newRole)
         {
+          
+
+            
             ApplicationUser user = db.Users.Find(id);
 
             ViewBag.AllRoles = GetAllRoles();

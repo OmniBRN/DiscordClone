@@ -13,22 +13,16 @@
         { 
                     <div class="info-grup">
                         @* N-avem useri deci aici fa fi o poza random *@
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdFMN9vPT3v92hqWx6XM-VnyVNIfzlZEXuDA&s" class="poza-grup"></img>
+                        <img src="@mes.User.ProfilePicture" class="poza-grup"></img>
                         <div class="detalii-grup">
-                            <p class="nume-grup">N-avem conturi</p>
+                            <p class="nume-grup">@mes.User.UserName</p>
                             @if (mes.Content != "<<empty>>")
                             {
                                 <div class="container-mesaje">
                                     <p class="descriere-grup">
                                         @mes.Content
                                     </p>
-                                    <div class="butoane">
-                                         <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
-                                            <button class="btn-danger " type="submit"><i class="bi bi-trash"></i></button>
-                                         </form>
-                                         @* VERE NU STIU CUM SA-L FAC MAI MIC :( *@
-                                <button class="btn-success btn" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil">Edit</i></button>
-                            </div>
+                                   
                                     <div class="editare-inline" id="e @mes.Id">
                                         <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
                                             <input type="hidden" name="Id" value="@mes.Id" />
@@ -37,6 +31,14 @@
                                             <button type="submit" class="buton-salvare" onClick="buton_cancel(@mes.Id)">Salveaza</button>
                                             <button type="button" class="buton-anulare" onClick="buton_cancel(@mes.Id)">Anuleaza</button>
                                         </form>
+                                    </div>
+                                    
+                                    <div class="butoane">
+                                        <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                            <button class="btn-danger " type="submit"><i class="bi bi-trash"></i></button>
+                                        </form>
+
+                                        <button class="btn-success btn" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil">Edit</i></button>
                                     </div>
                                 </div>
                             }                           
@@ -91,13 +93,14 @@
 </div>
 
 <div class="members-bar">
-    <div class="member">
-        <img src="https://avatarfiles.alphacoders.com/368/368486.jpg" class="poza-grup"></img>
-        <p class="nume-grup">Membru 1 </p>
-    </div>
+    @foreach (var member in ViewBag.Members)
+    {
+        
+        
+            <div class="member">
+                <img src=@member.ProfilePicture class="poza-grup"></img>
+                <p class="nume-grup">@member.UserName </p>
+            </div>
+    }
    
-    <div class="member">
-        <img src="https://s1.zerochan.net/God.Hand.%28Berserk%29.600.3671652.jpg" class="poza-grup"></img>
-        <p class="nume-grup">Membru 2</p>
-    </div>
 </div>

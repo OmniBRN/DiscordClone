@@ -13,7 +13,9 @@ namespace DiscordClone.Controllers
 
 
     // [Authorize]
-    public class GroupsController : Controller
+   
+
+    public class GroupsController : BaseController
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -25,7 +27,7 @@ namespace DiscordClone.Controllers
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IWebHostEnvironment env
-        )
+        ) : base(userManager, context, roleManager)
         {
             db = context;
             _userManager = userManager;
@@ -33,11 +35,14 @@ namespace DiscordClone.Controllers
             _env = env;
         }
         //[Authorize(Roles ="User,Moderator,Admin")]
-        [HttpPost]
+       
        
 
         public IActionResult Show(int id)
         {
+                
+
+            
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
             if (group == null)
             {
@@ -45,7 +50,12 @@ namespace DiscordClone.Controllers
                 TempData["messageType"] = "alert-danger";
                 return RedirectToAction("Groups", "Index");
             }
+            var t = db.Users.Where(o => o.Id == group.UserId).FirstOrDefault().UserName;
+            if (t != null)
+                ViewBag.Owner = t;
 
+            
+            
             return View(group);
         }
 
@@ -55,8 +65,13 @@ namespace DiscordClone.Controllers
         //[Authorize(Roles = "User, Moderator, Admin")]
         public IActionResult Index()
         {
-            var groups = db.Groups;
-            ViewBag.Groups = groups;
+         
+            
+            var userId = _userManager.GetUserId(User);
+            var allGroupsNotIn =  db.UserGroups.Where(o=>userId != o.UserId).Select(o=>o.GroupId).ToList();
+            var groups = db.Groups.Where(o => allGroupsNotIn.Contains(o.Id.ToString()));
+            ViewBag.Groups2 = groups;
+            
             
             if( TempData.ContainsKey("message"))
             {
@@ -65,7 +80,7 @@ namespace DiscordClone.Controllers
             }
 
             ViewBag.Categories = GetAllCategories();
-
+            
             return View();
         }
 
@@ -73,6 +88,8 @@ namespace DiscordClone.Controllers
         //[Authorize(Roles = "User, Moderator, Admin")]
         public IActionResult New()
         {
+           
+            
             Group group = new Group();
 
             group.Categ = ViewBag.Categories ?? GetAllCategories();
@@ -84,6 +101,9 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public async Task<IActionResult> New( Group group, IFormFile ImageRPath)
         {
+            
+        
+            
             if (ImageRPath == null)
             {
                 group.ImageRPath = "wwwroot/images/defaultGroup.png";
@@ -91,7 +111,7 @@ namespace DiscordClone.Controllers
             }
             else
             {
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4", ".mov" };
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png"};
                 var fileExtension = Path.GetExtension(ImageRPath.FileName).ToLower();
                 if (!allowedExtensions.Contains(fileExtension))
                 {
@@ -115,18 +135,34 @@ namespace DiscordClone.Controllers
             }
             if ( ModelState.IsValid )
             {
+                
+                
                 Channel channel = new Channel();
                 channel.Name = "Canalul: " + group.Name;
                 channel.Description = "Acesta este canalul default";
                 channel.UserId = _userManager.GetUserId(User);
-               
+                
                 group.UserId = _userManager.GetUserId(User);
                 group.Date = DateTime.Now;
+                
                 db.Groups.Add(group);
                 db.SaveChanges();
+                
+                var userGroup = new UserGroup();
+                userGroup.GroupId = group.Id.ToString();
+                userGroup.UserId = _userManager.GetUserId(User);
+                userGroup.Role = "Moderator";
+                userGroup.Culoare = "#F9C74F";
+                db.UserGroups.Add(userGroup);
+                db.SaveChanges();
+                
                 channel.GroupId = group.Id;
                 db.Channels.Add(channel);
                 db.SaveChanges();
+
+                group.ChannelId = channel.Id;
+                db.SaveChanges();
+                
                 TempData["message"] = "S-a creat un grup";
                 TempData["messageType"] = "alert-succes";
                 return RedirectToAction("Index", "Groups");
@@ -140,6 +176,9 @@ namespace DiscordClone.Controllers
 
         public IActionResult Edit(int id)
         {
+           
+
+            
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
             if (group == null)
             {
@@ -156,6 +195,8 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public IActionResult Edit(Group editedGroup)
         {
+           
+            
             ///
             /// Mie imi sterge poza cand dau sa editeze, si nu pot adauga alta
             ///
@@ -191,6 +232,8 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {   
+            
+
             
             //// Aici am adaugat comentariu pt ca ar trebui sa stergem si canalele asociate grupului pe care-l facem
 
@@ -228,5 +271,7 @@ namespace DiscordClone.Controllers
             }
             return selectList;
         }
+
+       
     }
 }

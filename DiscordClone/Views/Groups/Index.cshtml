@@ -7,7 +7,8 @@
     <div class="lista-grupuri">
         <h2>Toate grupurile in care nu ai fost invitat</h2>
 
-        @foreach (var group in ViewBag.Groups)
+        
+        @foreach (var group in ViewBag.Groups2)
         {
             <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id">
                 <div class="grup">
@@ -19,10 +20,10 @@
                                 @group.Description
                             </p>
                         </div>
-                        @* <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" > <button class="btn-success">[TEMPORARY] Edit @group.Name</button></a> *@
-                        @* <form method="post" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id"> *@
-                        @*     <button class="btn-danger" type="submit">[TEMPORARY] Delete @group.Name</button> *@
-                        @* </form>                      *@
+                        <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" > <button class="btn-success">[TEMPORARY] Edit @group.Name</button></a>
+                        <form method="post" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id">
+                            <button class="btn-danger" type="submit">[TEMPORARY] Delete @group.Name</button>
+                        </form>
                     </div>
                 </div>
             </a>

@@ -7,7 +7,7 @@ namespace DiscordClone.Models
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Numele Canalului este obligatoriu")]
-        [StringLength(25, ErrorMessage = "Numele Canalului poate avea maxim 25 de caractere")]
+        [StringLength(50, ErrorMessage = "Numele Canalului poate avea maxim 25 de caractere")]
         public string Name { get; set; }
         [StringLength(100, ErrorMessage = "Descrierea Canalului poate avea maxim 100 de caractere")]
         public string? Description { get; set; }

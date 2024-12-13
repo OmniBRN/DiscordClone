@@ -11,7 +11,12 @@ namespace DiscordClone.Models
         [Required]
         public string content {  get; set; } 
         public string? UserId { get; set; }
+        
+        public string? FromUserId { get; set; }
+        
+        public string? ReferencedGroupId { get; set; }
         public virtual ApplicationUser? User { get; set; }
+        
 
     }
 }

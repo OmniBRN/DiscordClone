@@ -5,18 +5,18 @@ html {
 
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 .edit-mesaj{
@@ -42,7 +42,7 @@ html {
     max-height: 75%;
     z-index: 20;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    
+
 }
 
 
@@ -123,15 +123,12 @@ hr {
     display: flex;
     /* justify-content: center; */
     align-items: center;
-/*    margin-top: 10px;
-    margin-bottom: 5px;*/
+    /*    margin-top: 10px;
+        margin-bottom: 5px;*/
+
     cursor: pointer;
 }
 
-    .test:hover {
-        opacity: 0.66;
-        transition-duration: 0.2s;
-    }
 
 .member{
     display: flex;
@@ -177,7 +174,7 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
-/*    margin-top: 10px;*/
+    /*    margin-top: 10px;*/
     border-radius: 50%;
     margin-left: 5px;
     margin-right: 10px;
@@ -185,9 +182,9 @@ hr {
     font-size: 24px;
 }
 
-    .sidebar-icon:hover {
-        background-color: var(--forth);
-    }
+.sidebar-icon:hover {
+    background-color: var(--forth);
+}
 
 /* Main Content */
 .main-content {
@@ -200,10 +197,10 @@ hr {
 }
 
 .messages {
-    flex: 1; 
+    flex: 1;
     overflow-y: auto;
-/*    max-height: 20px;*/
-/*    max-height: 642px;*/
+    /*    max-height: 20px;*/
+    /*    max-height: 642px;*/
 }
 
 
@@ -215,7 +212,7 @@ hr {
     padding: 10px;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    align-items: center; 
+    align-items: center;
     gap: 10px;
 }
 
@@ -299,27 +296,47 @@ input:focus {
 
 .bottom{
     margin-top:auto;
+
+}
+
+.icon-profil{
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    z-index: 5;
+    margin-right: 10px;
+}
+
+.icon{
+    margin-left: 15px;
+    font-size: 18px;
+    margin-right: 5px;
+    z-index: 10;
+}
+
+.icon:hover{
+    opacity: 0.8;
 }
 
 .grup {
     display: flex;
     align-items: center;
     justify-content: space-between;
-/*    padding: 10px;*/
-/*    margin-bottom: 5px;*/
+    /*    padding: 10px;*/
+    /*    margin-bottom: 5px;*/
     /*margin-top: 3px;*/
 }
 
-    .grup:hover {
-        opacity: 0.66;
-        transition-duration: 0.2s;
-        cursor: pointer;
-    }
+.grup:hover {
+    opacity: 0.66;
+    transition-duration: 0.2s;
+    cursor: pointer;
+}
 
 .info-grup {
     display: flex;
     width: 100%;
-/*    align-items: center;*/
+    /*    align-items: center;*/
 }
 
 .poza-grup {
@@ -335,10 +352,10 @@ input:focus {
     justify-content: flex-start;
 }
 
-    .poza-grup:hover {
-        opacity: 0.66;
-        transition-duration: 0.2s;
-    }
+.poza-grup:hover {
+    opacity: 0.66;
+    transition-duration: 0.2s;
+}
 
 .detalii-grup {
     display: flex;
@@ -373,7 +390,7 @@ input:focus {
 
 .butoane{
     display: none;
-    margin-left:10px;
+    margin-left:auto;
 }
 
 .info-grup:hover .butoane{
@@ -383,7 +400,7 @@ input:focus {
 
 .editare-inline{
     display: none;
-    
+
 }
 
 .fog {
@@ -416,11 +433,34 @@ input:focus {
     transform: translate(-50%, -50%);
 }
 
-    .modal h1 {
-        font-size: 20px;
-        margin-bottom: 5px;
-        text-align: center;
-    }
+.notificari {
+    background-color: var(--principal);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 65%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.notificari h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+}
 
 .upload {
     display: inline-block;
@@ -435,10 +475,10 @@ input:focus {
     cursor: pointer;
 }
 
-    .upload:hover {
-        opacity: 0.8;
-        transition-duration: 0.2s;
-    }
+.upload:hover {
+    opacity: 0.8;
+    transition-duration: 0.2s;
+}
 
 /*!*    input[type="file"]{*/
 /*        display: none;*/
@@ -462,24 +502,24 @@ input:focus {
     align-self:flex-end;
 }
 
-    .footer button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 14px;
-        cursor: pointer;
-    }
+.footer button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
 
-    .footer button:hover{
-        opacity: 0.8;
-        transition-duration: 0.2s;
-    }
+.footer button:hover{
+    opacity: 0.8;
+    transition-duration: 0.2s;
+}
 
-    .footer .back {
-        background-color: #72767D;
-        
-    }
+.footer .back {
+    background-color: #72767D;
 
-    .footer .create {
-        background-color: #5865F2;
-    }
+}
+
+.footer .create {
+    background-color: #5865F2;
+}

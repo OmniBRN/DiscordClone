@@ -124,8 +124,8 @@ namespace DiscordClone.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("varchar(25)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255)");
@@ -148,6 +148,9 @@ namespace DiscordClone.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ChannelId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
@@ -230,6 +233,12 @@ namespace DiscordClone.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FromUserId")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ReferencedGroupId")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255)");

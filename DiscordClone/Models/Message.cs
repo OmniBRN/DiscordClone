@@ -17,5 +17,8 @@ namespace DiscordClone.Models
         public string? FileRPath { get; set; }
         public string? GroupId { get; set; }
         public string? ChannelId { get; set; }
+        
+        
+        
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscordClone.Controllers
 {
-    public class ChannelsController : Controller
+    public class ChannelsController : BaseController
     {
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -19,7 +19,7 @@ namespace DiscordClone.Controllers
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IWebHostEnvironment env
-        )
+        ) : base(userManager, context, roleManager)
         {
             db = context;
             _userManager = userManager;
@@ -31,6 +31,8 @@ namespace DiscordClone.Controllers
         //[Authorize(Roles ="User, Editor, Admin")]
         public async Task<IActionResult> ShowAsync([FromForm] Message message, IFormFile FileRPath )
         {
+            
+         
             
             if (FileRPath != null)
             {
@@ -84,9 +86,16 @@ namespace DiscordClone.Controllers
         }
         public IActionResult Index( int id)
         {
+         
+
+            
             //// Sa incerc sa dau ToList in loc de ".First"
             var channel = db.Channels.Include(c => c.Messages).FirstOrDefault(c => c.Id == id);
-            channel.Messages = db.Messages.Where(m => m.ChannelId == id.ToString()).ToList();
+
+            var members2 = db.UserGroups.Where(o => o.GroupId == channel.GroupId.ToString()).Select(o=>o.UserId).ToList();
+            var members1 = db.Users.Where(o => members2.Contains(o.Id));
+            ViewBag.Members = members1;
+            channel.Messages = db.Messages.Include("User").Where(m => m.ChannelId == id.ToString()).ToList();
             return View(channel);
         }
     }
