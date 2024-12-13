@@ -27,7 +27,16 @@
                                             <button class="btn-danger " type="submit"><i class="bi bi-trash"></i></button>
                                          </form>
                                          @* VERE NU STIU CUM SA-L FAC MAI MIC :( *@
-                                         <button class="btn-success btn"><i class="bi bi-pencil"></i></button>
+                                <button class="btn-success btn" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil">Edit</i></button>
+                            </div>
+                                    <div class="editare-inline" id="e @mes.Id">
+                                        <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
+                                            <input type="hidden" name="Id" value="@mes.Id" />
+                                            <input type="hidden" name="ChannelId" value="@Model.Id" />
+                                            <input type="text" name="Content" value="@mes.Content" class="edit-mesaj" />
+                                            <button type="submit" class="buton-salvare" onClick="buton_cancel(@mes.Id)">Salveaza</button>
+                                            <button type="button" class="buton-anulare" onClick="buton_cancel(@mes.Id)">Anuleaza</button>
+                                        </form>
                                     </div>
                                 </div>
                             }                           

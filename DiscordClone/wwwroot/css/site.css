@@ -19,13 +19,17 @@ html {
   min-height: 100%;
 }
 
+.edit-mesaj{
+    background-color: var(--forth);
+}
+
 .poza-colectie {
     max-width: 675px;
     max-height: 375px;
     background-size: cover;
     background-position: center;
     border-radius: 15px;
-    cursor:pointer;
+    cursor: pointer;
 }
 
 
@@ -375,6 +379,11 @@ input:focus {
 .info-grup:hover .butoane{
     display:flex;
     margin-left:auto;
+}
+
+.editare-inline{
+    display: none;
+    
 }
 
 .fog {

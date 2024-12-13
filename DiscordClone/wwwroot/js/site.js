@@ -26,7 +26,7 @@ function poza_mare( i, link )
     console.log(i);
     e = document.getElementById(i);
     console.log(e);
-    ecran = document.getElementsByClassName("layout-container")
+    ecran = document.getElementsByTagName("body")
     console.log(ecran);
     let ok = 0;
 
@@ -44,6 +44,22 @@ function poza_mare( i, link )
         ceata.style.visibility = "hidden";
     });
 }
+
+
+function afisare_inline(i)
+{
+    var input = document.getElementById("e " + i);
+    console.log(("e + " + i))
+    input.style.display = 'block';
+
+}
+
+function buton_cancel(i)
+{
+    var cancel = document.getElementById("e " + i);
+    cancel.style.display = "none";
+}
+
 
 //document.addEventListener('DOMContentLoaded', () => {
 //    const CreateButton = document.getElementById("adaugare")
