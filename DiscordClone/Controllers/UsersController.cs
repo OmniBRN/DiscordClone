@@ -34,6 +34,8 @@ namespace DiscordClone.Controllers
 
             ViewBag.UsersList = users;
 
+           
+
             return View();
         }
         public async Task<ActionResult> Show(string id)

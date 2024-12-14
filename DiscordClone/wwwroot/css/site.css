@@ -10,7 +10,18 @@ html {
     }
 }
 
-a{
+.maxim{
+
+}
+
+.content-users {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; 
+    padding: 20px;
+}
+
+a {
     text-decoration: none;
     color: white;
 }
@@ -147,7 +158,8 @@ hr {
 
 
 .sidebar {
-    width: 350px;
+    width: 300px;
+    min-width: 300px;
     background-color: var(--secundar);
     display: flex;
     max-height: 100%;
@@ -158,7 +170,7 @@ hr {
 }
 
 .members-bar {
-    width: 280px;
+    width: 330px;
     background-color: var(--secundar);
     display: flex;
     max-height: 100%;
@@ -166,6 +178,16 @@ hr {
     /* align-items: center; */
     padding-top: 20px;
     overflow-y: auto;
+}
+
+
+.members-bar .poza-grup{
+    height: 45px;
+    width: 45px;
+}
+
+.members-bar .nume-grup{
+    font-size: 14px;
 }
 
 .group-name {
@@ -196,7 +218,7 @@ hr {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100%;
+    max-height: 100%;
     box-sizing: border-box;
 
 }
@@ -241,23 +263,47 @@ hr {
     /* background-color: #412138; */
     background-color: var(--third);
     width: 100%;
+    display: flex;
 }
 
 .header-channel {
     padding: 2px;
-    /* background-color: #412138; */
     background-color: var(--third);
     text-align: center;
     width: 100%;
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
 }
 
-.search-bar {
+
+/*.message-bar {
+    flex-grow: 1;*/ /* Ensures the input takes up almost all available space */
+    /*padding: 8px;
+    background-color: var(--third);
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+    color: white;*/ /* Ensure text is visible on dark background */
+/*}*/
+
+
+/*.search-bar {
     width: 100%;
     padding: 8px;
     background-color: var(--third);
     border: none;
     border-radius: 5px;
     margin: 0;
+}*/
+
+.search-bar{
+    flex-grow: 1;
+    background-color: var(--third);
+    border: none;
+    border-radius: 5px;
+    margin: 0;
+    color: white;
 }
 
 .formular {
@@ -301,7 +347,7 @@ input:focus {
 
 .bottom{
     margin-top:auto;
-
+    margin-bottom: 10px;
 }
 
 .icon-profil{
@@ -309,12 +355,12 @@ input:focus {
     justify-content: space-between;
     margin-left: auto;
     z-index: 5;
-    margin-right: 10px;
+/*    margin-right: 10px;*/
 }
 
 .icon{
     margin-left: 15px;
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 5px;
     z-index: 10;
 }
@@ -369,6 +415,12 @@ input:focus {
 }
 
 .nume-grup {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.nume-profil {
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 4px;
 }

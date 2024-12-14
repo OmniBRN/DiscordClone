@@ -1,0 +1,28 @@
+﻿<div class="main-content">
+<h1 class="h1">User: <a asp-controller="AdminGroups" asp-action="Index"> Aici is grupurile</a></h1>
+<hr />
+
+<div class="container" style="margin-top:10px;">
+    <div class="row">
+        @foreach (var user in ViewBag.UsersList)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card text-white bg-dark h-100 d-flex flex-column">
+                    <div class="card-body">
+                        <img src="@user.ProfilePicture" class="poza-grup mb-3" />
+                        <p><i class="bi bi-person"></i> UserName: @user.UserName</p>
+                        <p><i class="bi bi-envelope"></i> Email utilizator: @user.Email</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-success">Editare utilizator</a>
+                        <a asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Sterge utilizator</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />
+
+
+</div>

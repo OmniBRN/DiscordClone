@@ -1,0 +1,51 @@
+﻿@model DiscordClone.Models.ApplicationUser
+
+
+<div class="modal">
+    <form asp-controller="Users" asp-action="Edit" method="post" asp-route-id="@Model.Id">
+
+        <label readonly asp-for="ProfilePicture" class="upload">
+            <input asp-for="ProfilePicture" type="file" readonly />
+            <span><i class="bi bi-camera"></i></span>
+        </label>
+
+        <i class="bi bi-person"></i>
+        <label asp-for="UserName">Nume utilizator</label>
+        <br />
+        <input readonly asp-for="UserName" class="server-name" />
+        <br />
+
+        <i class="bi bi-envelope"></i>
+        <label asp-for="Email">Email utilizator</label>
+        <br />
+        <input readonly asp-for="Email" class="server-name" />
+        <br />
+
+        <i class="bi bi-card-list"></i>
+        <label>Selectati rolul</label>
+        <br />
+
+
+        <select name="newRole" class="server-name">
+            <option selected>Selectati rolul</option>
+
+            @foreach (var role in ViewBag.AllRoles)
+            {
+                @if (ViewBag.UserRole == role.Value)
+                {
+                    <option selected="selected" value="@role.Value">@role.Text</option>
+                }
+                else
+                {
+                    <option value="@role.Value">@role.Text</option>
+                }
+            }
+        </select>
+
+        <button type="submit" class="btn btn-sm btn-success">Editare user</button>
+
+    </form>
+</div>
+
+
+

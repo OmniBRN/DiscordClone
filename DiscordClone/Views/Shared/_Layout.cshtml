@@ -44,8 +44,13 @@
                 <div class="test bottom">
                     <hr/>
                     <img src=@ViewBag.User.ProfilePicture class="poza-grup"/>
-                    <p class="nume-grup">@ViewBag.User.UserName</p>
+                    <p class="nume-profil">@ViewBag.User.UserName</p>
+
                     <div class="icon-profil">
+                        @if( User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Users" asp-action="Index" class="icon"><i class="bi bi-people"></i></a>
+                        }
                         <a asp-controller="Notifications" asp-action="Index" class="icon"><i class="bi bi-envelope-open"></i></a>
                         <a class="icon"><i class="bi bi-gear"></i></a>
                     </div>

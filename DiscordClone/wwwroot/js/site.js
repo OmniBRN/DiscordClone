@@ -4,6 +4,7 @@ var body = document.body
 var inaltime = body.scrollHeight - 99;
 
 var continut = document.getElementsByClassName("messages");
+var maxim = document.getElementsByClassName("maxim");
 console.log(inaltime);
 
 if (!localStorage.getItem("inaltime")) {
@@ -15,6 +16,15 @@ let b = parseInt(localStorage.getItem("inaltime"));
 if (continut.length > 0)
 {
     continut[0].style.maxHeight = ( b - 1 ) + "px";
+
+    console.log("Inaltime: " + b);
+}
+else
+    console.log("e ok")
+
+
+if (maxim.length > 0) {
+    maxim[0].style.maxHeight = (b - 1) + "px";
 
     console.log("Inaltime: " + b);
 }

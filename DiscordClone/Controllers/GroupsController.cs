@@ -65,7 +65,8 @@ namespace DiscordClone.Controllers
         //[Authorize(Roles = "User, Moderator, Admin")]
         public IActionResult Index()
         {
-         
+
+            ViewBag.ToateGrupurile = db.Groups;
             
             var userId = _userManager.GetUserId(User);
             var allGroupsNotIn =  db.UserGroups.Where(o=>userId != o.UserId).Select(o=>o.GroupId).ToList();
@@ -80,7 +81,7 @@ namespace DiscordClone.Controllers
             }
 
             ViewBag.Categories = GetAllCategories();
-
+            
 
             var search = "";
 
@@ -132,7 +133,8 @@ namespace DiscordClone.Controllers
 
             if (ImageRPath == null)
             {
-                group.ImageRPath = "wwwroot/images/defaultGroup.png";
+
+                group.ImageRPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/defaultGroup.png");
                 //var a = 1;
             }
             else

@@ -5,6 +5,10 @@
 <div class="main-content">
     <div class="header-channel">
         <h4>@Model.Name</h4>
+        <div class="icon-profil">
+            <a asp-controller="Groups" asp-action="Delete" class="icon" asp-route-id="@Model.GroupId"><i class="bi bi-trash"></i></a>
+            <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
+        </div>
     </div>
 
 
@@ -100,6 +104,11 @@
             <div class="member">
                 <img src=@member.ProfilePicture class="poza-grup"></img>
                 <p class="nume-grup">@member.UserName </p>
+                <div class="icon-profil">
+                <a class="icon">
+                    <i class="bi bi-plus-circle"></i>
+                </a>
+                </div>
             </div>
     }
    
