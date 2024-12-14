@@ -70,7 +70,7 @@ namespace DiscordClone.Controllers
             var userId = _userManager.GetUserId(User);
             var allGroupsNotIn =  db.UserGroups.Where(o=>userId != o.UserId).Select(o=>o.GroupId).ToList();
             var groups = db.Groups.Where(o => allGroupsNotIn.Contains(o.Id.ToString()));
-            ViewBag.Groups2 = groups;
+            
             
             
             if( TempData.ContainsKey("message"))
@@ -80,7 +80,32 @@ namespace DiscordClone.Controllers
             }
 
             ViewBag.Categories = GetAllCategories();
-            
+
+
+            var search = "";
+
+            if (Convert.ToString(HttpContext.Request.Query["search"]) != null)
+            {
+                search = Convert.ToString(HttpContext.Request.Query["search"]).Trim();
+
+                List<int> groupsId = db.Groups.Where(at => at.Name.Contains(search)).Select(a => a.Id).ToList();
+
+                groups = db.Groups.Where(group => groupsId.Contains(group.Id)).OrderByDescending( a => a.Name);
+            }
+
+            if( search != "")
+            {
+                ViewBag.PaginationBaseUrl = "/Groups/Index/?search=" + search;
+
+            }
+            else
+            {
+                ViewBag.PaginationBaseUrl = "/Groups/Index";
+            }
+
+            ViewBag.SearchString = search;
+
+            ViewBag.Groups2 = groups;
             return View();
         }
 
@@ -101,9 +126,10 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public async Task<IActionResult> New( Group group, IFormFile ImageRPath)
         {
-            
-        
-            
+
+
+            ModelState.Remove(nameof(group.ImageRPath));
+
             if (ImageRPath == null)
             {
                 group.ImageRPath = "wwwroot/images/defaultGroup.png";

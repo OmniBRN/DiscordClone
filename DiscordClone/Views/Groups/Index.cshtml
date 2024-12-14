@@ -1,8 +1,11 @@
 ﻿
 <div class="main-content">
-    <div class="header">
-        <input type="text" placeholder="Cauta un Grup" class="search-bar" />
-    </div>
+    <form method="get">
+        <div class="header">
+            <input type="text" placeholder="Cauta un Grup" class="search-bar" name="search" value="@ViewBag.SearchString" />
+            <button class="btn btn-outline-dark" type="submit">Cauta</button>
+        </div>
+    </form>
 
     <div class="lista-grupuri">
         <h2>Toate grupurile in care nu ai fost invitat</h2>
