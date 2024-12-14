@@ -48,8 +48,7 @@ namespace DiscordClone.Controllers
 
             var numeUser = db.Users.Where( a => a.Id == userCurent ).FirstOrDefault();
             notification.content = "Utilizatorul " + numeUser + " doreste sa intre in grupul "+ group.Name;
-
-            
+     
 
             return Redirect("/Groups/Index");
         }

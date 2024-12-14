@@ -125,13 +125,10 @@ hr {
     align-items: center;
 /*    margin-top: 10px;
     margin-bottom: 5px;*/
+    
     cursor: pointer;
 }
 
-    .test:hover {
-        opacity: 0.66;
-        transition-duration: 0.2s;
-    }
 
 .member{
     display: flex;
@@ -299,14 +296,34 @@ input:focus {
 
 .bottom{
     margin-top:auto;
+
+}
+
+.icon-profil{
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    z-index: 5;
+    margin-right: 10px;
+}
+
+.icon{
+    margin-left: 15px;
+    font-size: 18px;
+    margin-right: 5px;
+    z-index: 10;
+}
+
+.icon:hover{
+    opacity: 0.8;
 }
 
 .grup {
     display: flex;
     align-items: center;
     justify-content: space-between;
-/*    padding: 10px;*/
-/*    margin-bottom: 5px;*/
+    /*    padding: 10px;*/
+    /*    margin-bottom: 5px;*/
     /*margin-top: 3px;*/
 }
 
@@ -416,11 +433,34 @@ input:focus {
     transform: translate(-50%, -50%);
 }
 
+.notificari {
+    background-color: var(--principal);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 65%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
     .modal h1 {
         font-size: 20px;
         margin-bottom: 5px;
         text-align: center;
     }
+
+.notificari h1 {
+    font-size: 20px;
+    margin-bottom: 5px;
+    text-align: center;
+}
 
 .upload {
     display: inline-block;
