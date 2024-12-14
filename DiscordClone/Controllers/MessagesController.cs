@@ -48,7 +48,7 @@ namespace DiscordClone.Controllers
 
             //// Aici prefer sa avem o alerta decat sa creem un element cu TempData
             // RE: Nu cred ca ar trebui sa alertam  ca s-au sters mesaje ca se observa
-            return Redirect($"/Channels/Index/{mes.ChannelId}");
+            return Redirect($"/Channels/Index/{mes.MessageChannelId}");
 
             /// Asta ar trebui sa se intample, dar asa face figuri Index-ul si nu stiu cum sa-l repar
             ///return Redirect("/Channels/Index/" + par);
@@ -57,16 +57,13 @@ namespace DiscordClone.Controllers
 
         [HttpPost]
         public IActionResult Edit(Message NewMessage)
-        {
-            
-
-            
+        {            
             Message oldMessage = db.Messages.Find(NewMessage.Id);
             oldMessage.Content = NewMessage.Content;
             NewMessage.WasEdited = true;
             NewMessage.EditTimeStamp = DateTime.Now;
             db.SaveChanges();
-            return Redirect($"/Channels/Index/{NewMessage.ChannelId}");
+            return Redirect($"/Channels/Index/{NewMessage.MessageChannelId}");
         }
         
         

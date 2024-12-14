@@ -160,7 +160,7 @@ namespace DiscordClone.Controllers
                 db.Channels.Add(channel);
                 db.SaveChanges();
 
-                group.ChannelId = channel.Id;
+                group.GroupChannelId = channel.Id;
                 db.SaveChanges();
                 
                 TempData["message"] = "S-a creat un grup";

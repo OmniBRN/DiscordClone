@@ -26,7 +26,7 @@
                 {
                     @foreach (Group group in ViewBag.Groups)
                     {
-                        <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.ChannelId>
+                        <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.GroupChannelId>
                             <div class="test">
                                 <img src=@group.ImageRPath class="poza-grup"/>
                                 <p class="nume-grup">@group.Name</p>

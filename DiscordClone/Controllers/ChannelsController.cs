@@ -41,7 +41,7 @@ namespace DiscordClone.Controllers
                 if (!allowedExtensions.Contains(fileExtension))
                 {
                     ModelState.AddModelError("ChannelImage", "Fișierul trebuie să fie o imagine (jpg, jpeg, png, gif).");
-                    return Redirect("/Channels/Index/" + message.ChannelId );
+                    return Redirect("/Channels/Index/" + message.MessageChannelId );
                 }
 
                 // Cale stocare
@@ -76,11 +76,11 @@ namespace DiscordClone.Controllers
                 // se fac chestii
                 db.Messages.Add(message);
                 db.SaveChanges();
-                return Redirect("/Channels/Index/" + message.ChannelId);
+                return Redirect("/Channels/Index/" + message.MessageChannelId);
             }
             else
             {
-                Channel channel = db.Channels.Include("Messages").Where(c => c.Id.ToString() == message.ChannelId).First();
+                Channel channel = db.Channels.Include("Messages").Where(c => c.Id.ToString() == message.MessageChannelId).First();
                 return Redirect($"/Channels/Index/{channel.Id}");
             }
         }
@@ -95,7 +95,7 @@ namespace DiscordClone.Controllers
             var members2 = db.UserGroups.Where(o => o.GroupId == channel.GroupId.ToString()).Select(o=>o.UserId).ToList();
             var members1 = db.Users.Where(o => members2.Contains(o.Id));
             ViewBag.Members = members1;
-            channel.Messages = db.Messages.Include("User").Where(m => m.ChannelId == id.ToString()).ToList();
+            channel.Messages = db.Messages.Include("User").Where(m => m.MessageChannelId == id.ToString()).ToList();
             return View(channel);
         }
     }

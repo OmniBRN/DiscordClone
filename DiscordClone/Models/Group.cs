@@ -21,7 +21,7 @@ namespace DiscordClone.Models
         public int? CategoryId { get; set; }
         public string? ImageRPath { get; set; }
         
-        public int? ChannelId { get; set; }
+        public int? GroupChannelId { get; set; }
         public string? UserId { get; set; }
         public virtual ApplicationUser? User { get; set; }
 
