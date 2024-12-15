@@ -1,12 +1,18 @@
 ﻿@model DiscordClone.Models.Channel
 
 
+<div id="fog"></div>
+
+<div id="popOutStergere" style="display: none">
+    <partial name="AreYouSure"></partial>
+</div>
+
 
 <div class="main-content">
     <div class="header-channel">
         <h4>@Model.Name</h4>
         <div class="icon-profil">
-            <a asp-controller="Groups" asp-action="Delete" class="icon" asp-route-id="@Model.GroupId"><i class="bi bi-trash"></i></a>
+            <a id="sterge" class="icon" style="cursor:pointer;" ><i class="bi bi-trash"></i></a>
             <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
         </div>
     </div>

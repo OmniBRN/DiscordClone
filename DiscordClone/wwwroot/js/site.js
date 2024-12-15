@@ -90,6 +90,30 @@ function buton_cancel(i)
 //    });
 //});
 
+
+
+var popOutStergere = document.getElementById("popOutStergere")
+
+var buton = document.getElementById("efectuare")
+var fog = document.getElementById("fog")
+
+var sterge = document.getElementById("sterge")
+
+sterge.addEventListener("click", () => {
+    popOutStergere.style.display = "block";
+    fog.style.display = "block";
+})
+
+
+
+
+fog.addEventListener("click", () => {
+    popOutStergere.style.display = "none";
+    fog.style.display = "none";
+})
+
+
+
 //function editare(id) {
 //    var mesaj = document.getElementById("message-" + { messageId })
 //    var content = mesaj.textContent;

@@ -462,13 +462,25 @@ input:focus {
 
 .fog {
     position: fixed;
-    z-index: 1;
+    z-index: 6;
     background-color: rgba(0, 0, 0, 0.83);
     width: 120%;
     height: 120%;
     top: 0;
     left: 0;
     filter: blur(5px);
+}
+
+#fog {
+    position: fixed;
+    z-index: 6;
+    background-color: rgba(0, 0, 0, 0.83);
+    width: 120%;
+    height: 120%;
+    top: 0;
+    left: 0;
+    filter: blur(5px);
+    display: none;
 }
 
 
@@ -488,7 +500,27 @@ input:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 7;
 }
+
+.are-you-sure-modal {
+    background-color: var(--principal);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    width: 65%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 7;
+}
+
 
 .notificari {
     background-color: var(--principal);
