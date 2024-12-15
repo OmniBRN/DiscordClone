@@ -98,6 +98,12 @@ namespace DiscordClone.Controllers
             var members2 = db.UserGroups.Include("User").Where(o => o.GroupId == channel.GroupId.ToString()).Select(o=> new {o.UserId, o.Culoare, o.User.UserName, o.User.ProfilePicture, o.Role}).ToList();
             // var members1 = db.Users.Where(o => members2.Contains(o.Id));
             ViewBag.Members = members2;
+
+            if (!members2.Any( m => m.UserId == _userManager.GetUserId(User) ))
+            {
+                return Redirect($"/Groups/Index");
+            }
+            
             // channel.Messages = db.Messages.Include("User").Where(m => m.MessageChannelId == id.ToString()).ToList();
             var mess = db.Messages
                 .Where(m => m.MessageChannelId == id.ToString())

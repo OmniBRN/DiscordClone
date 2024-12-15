@@ -186,6 +186,7 @@ hr {
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.3s ease;
+    
 }
 
 .sidebar:hover .nume-grupdor {
@@ -397,11 +398,19 @@ input:focus {
 .icon-profil{
     display: flex;
     justify-content: space-between;
-    margin-left: auto;
+    /*margin-left: auto;*/
     z-index: 5;
     
 /*    margin-right: 10px;*/
 }
+
+.icon {
+    all: unset; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
 
 
 
