@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiscordClone.Controllers
 {
+    [Authorize]
     public class MessagesController : BaseController
     {
         private readonly ApplicationDbContext db;
@@ -38,9 +39,21 @@ namespace DiscordClone.Controllers
         public IActionResult Delete(int id)
         {
           
-
-            
             Message mes = db.Messages.Find(id);
+            
+          
+            var group = db.Groups.Where(o => o.Id.ToString() == mes.GroupId).FirstOrDefault();
+            var userCurrentId = _userManager.GetUserId(User);
+            var currentUserRole = db.UserGroups.Where(o=>o.GroupId == mes.GroupId.ToString() && o.UserId == userCurrentId).First().Role;
+            if(!((currentUserRole == "Moderator"&& group.UserId == userCurrentId) || User.IsInRole("Admin")))
+                
+                return RedirectToAction("Index", "Groups");
+            
+            
+            //
+            
+            
+            
             var par = mes.Id;
 
             db.Messages.Remove(mes);

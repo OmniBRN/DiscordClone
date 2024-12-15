@@ -7,8 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DiscordClone.Controllers
 {
+    [Authorize]
     public class ChannelsController : BaseController
     {
+        
         private readonly ApplicationDbContext db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -27,8 +29,9 @@ namespace DiscordClone.Controllers
             _env = env;
         }
 
+        
         [HttpPost]
-        //[Authorize(Roles ="User, Editor, Admin")]
+        [Authorize(Roles ="User, Moderator, Admin")]
         public async Task<IActionResult> ShowAsync([FromForm] Message message, IFormFile FileRPath )
         {
             

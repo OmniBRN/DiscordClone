@@ -183,13 +183,10 @@ hr {
 .nume-profildor {
     font-weight: bold;
     margin-bottom: 4px;
+    white-space: nowrap;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
-
-
-
-
 
 .sidebar:hover .nume-grupdor {
     opacity: 1;
@@ -201,7 +198,8 @@ hr {
 
 
 .sidebar {
-    width: 80px;
+    width: 90px;
+    overflow-x:hidden;
     background-color: var(--secundar);
     display: flex;
     max-height: 100%;
@@ -216,7 +214,7 @@ hr {
 }
 
 .members-bar {
-    width: 330px;
+    width: 280px;
     background-color: var(--secundar);
     display: flex;
     max-height: 100%;
@@ -472,6 +470,7 @@ input:focus {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 4px;
+    
 }
 
 

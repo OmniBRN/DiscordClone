@@ -1,10 +1,12 @@
 ﻿using DiscordClone.Data;
 using DiscordClone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DiscordClone.Controllers
 {
+    [Authorize (Roles="Admin")]
     public class AdminGroupsController : BaseController
     {
         private readonly ApplicationDbContext db;

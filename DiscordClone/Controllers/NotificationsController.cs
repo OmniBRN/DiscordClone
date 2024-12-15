@@ -31,6 +31,8 @@ public class NotificationsController : BaseController
 
         
         var userId = _userManager.GetUserId(User);
+        if(userId == null)
+            return Redirect("/Identity/Account/Login");
         var notifications = db.Notifications.Where(o=> o.UserId == userId);
         ViewBag.Notifications = notifications;
         return View();
