@@ -92,11 +92,97 @@ namespace DiscordClone.Controllers
             //// Sa incerc sa dau ToList in loc de ".First"
             var channel = db.Channels.Include(c => c.Messages).FirstOrDefault(c => c.Id == id);
 
-            var members2 = db.UserGroups.Where(o => o.GroupId == channel.GroupId.ToString()).Select(o=>o.UserId).ToList();
-            var members1 = db.Users.Where(o => members2.Contains(o.Id));
-            ViewBag.Members = members1;
-            channel.Messages = db.Messages.Include("User").Where(m => m.MessageChannelId == id.ToString()).ToList();
+            var members2 = db.UserGroups.Include("User").Where(o => o.GroupId == channel.GroupId.ToString()).Select(o=> new {o.UserId, o.Culoare, o.User.UserName, o.User.ProfilePicture, o.Role}).ToList();
+            // var members1 = db.Users.Where(o => members2.Contains(o.Id));
+            ViewBag.Members = members2;
+            // channel.Messages = db.Messages.Include("User").Where(m => m.MessageChannelId == id.ToString()).ToList();
+            var mess = db.Messages
+                .Where(m => m.MessageChannelId == id.ToString())
+                .Join(db.Users,
+                    m => m.UserId,
+                    u => u.Id,
+                    (m, u) => new { Message = m, User = u })
+                .Join(db.UserGroups,
+                    combined => new { combined.User.Id, GroupId = channel.GroupId.ToString() },
+                    ug => new { Id = ug.UserId, ug.GroupId },
+                    (combined, ug) => new
+                    {
+                        combined.Message.Id,
+                        combined.Message.Content,
+                        combined.Message.TimeStamp,
+                        UserName = combined.User.UserName,
+                        combined.User.ProfilePicture,
+                        combined.Message.FileRPath,
+                        Color = ug.Culoare, 
+                        Rol = ug.Role
+                    })
+                .ToList();
+            getId();
+            
+            var role = db.UserGroups
+                .Where(o => _userManager.GetUserId(User) == o.UserId && channel.GroupId.ToString() == o.GroupId)
+                .Select(o => o.Role).FirstOrDefault();
+            ViewBag.OwnerId = db.Groups.Where(o=> o.Id == channel.GroupId).Select(o=>o.UserId).First();
+            ViewBag.Messages = mess;
+            ViewBag.UserCurrentRole = role;
             return View(channel);
+        }
+
+        [HttpPost]
+        public IActionResult Promote(string UserId, string GroupId, int ChannelId)
+        {
+            
+            var userGroup = db.UserGroups.Where(o=> o.GroupId == GroupId && o.UserId == UserId).FirstOrDefault();
+            Console.WriteLine(GroupId);
+            Console.WriteLine(UserId);
+            Console.WriteLine(ChannelId);   
+            userGroup.Role = "Moderator";
+            userGroup.Culoare = "#F9C74F";
+            db.SaveChanges();
+            return Redirect("/Channels/Index/" + ChannelId);
+        }
+        
+        [HttpPost]
+        public IActionResult Demote(string UserId, int GroupId, int ChannelId)
+        {
+            
+            var userGroup = db.UserGroups.Where(o=> o.GroupId == GroupId.ToString() && o.UserId == UserId).FirstOrDefault();
+            userGroup.Role = "User";
+            string[] colors = new string[]
+            {
+                "#F94144", // Vibrant Red
+                "#F3722C", // Warm Orange
+                "#F8961E", // Golden Amber
+                "#F9844A", // Sunset Peach
+                "#90BE6D", // Soft Olive Green
+                "#43AA8B", // Teal
+                "#577590", // Muted Blue
+                "#277DA1", // Deep Cyan
+                "#4D908E", // Slate Green
+                "#577590", // Steely Blue
+                "#F4A261", // Terracotta
+                "#D72638", // Crimson
+                "#3F88C5", // Cerulean Blue
+                "#1446A0", // Royal Blue
+                "#585123", // Earthy Brown
+                "#A78682", // Dusty Rose
+                "#5A5A66", // Charcoal Grey
+                "#C9ADA7", // Pale Mauve
+                "#9C6644"  // Cocoa Brown
+            };
+            Random random = new Random();
+            int randomNumber = random.Next(colors.Length);
+            userGroup.Culoare = colors[randomNumber];
+            db.SaveChanges();
+            return Redirect("/Channels/Index/" + ChannelId);
+        }
+
+
+        [NonAction]
+        private void getId()
+        {
+            ViewBag.UserCurrent = _userManager.GetUserId(User);
+          
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿@model DiscordClone.Models.Channel
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model DiscordClone.Models.Channel
 
 
 <div id="fog"></div>
@@ -19,13 +21,13 @@
 
 
     <div class="messages">
-        @foreach( var mes in Model.Messages )
+        @foreach( var mes in ViewBag.Messages )
         { 
                     <div class="info-grup">
                         @* N-avem useri deci aici fa fi o poza random *@
-                        <img src="@mes.User.ProfilePicture" class="poza-grup"></img>
+                        <img src="@mes.ProfilePicture" class="poza-grup"></img>
                         <div class="detalii-grup">
-                            <p class="nume-grup">@mes.User.UserName</p>
+                            <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
                             @if (mes.Content != "<<empty>>")
                             {
                                 <div class="container-mesaje">
@@ -89,7 +91,7 @@
 
     <div class="footer-mes">
         <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show" class="formular">
-            <input type="hidden" name="ChannelId" value="@Model.Id" />
+            <input type="hidden" name="MessageChannelId" value="@Model.Id" />
             <input type="hidden" name="GroupId" value="@Model.GroupId" />
 
             <input type="text" class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
@@ -108,13 +110,39 @@
         
         
             <div class="member">
-                <img src=@member.ProfilePicture class="poza-grup"></img>
-                <p class="nume-grup">@member.UserName </p>
-                <div class="icon-profil">
-                <a class="icon">
-                    <i class="bi bi-plus-circle"></i>
-                </a>
-                </div>
+                <img src=@member.ProfilePicture class="poza-grup"/>
+                <p style="color:@member.Culoare"class="nume-grup">@member.UserName </p>
+                @if(ViewBag.UserCurrentRole=="Moderator"&&member.UserId!=ViewBag.UserCurrent&&member.UserId!=ViewBag.OwnerId)
+                {
+                    <div class="icon-profil">
+                        @if (member.Role != "Moderator")
+                        {
+                            <form asp-controller="Channels" asp-action="Promote" method="post">
+                                <input type="hidden" value="@member.UserId" name="UserId"/>
+                                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                                <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                                <button type="submit" class="icon">
+                                    <i class="bi bi-arrow-up-circle"></i>
+                                </button>
+                            </form>
+                            
+                        }
+                        else
+                        {
+                            <form asp-controller="Channels" asp-action="Demote" method="post">
+                                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                                <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                                <input type="hidden" value="@member.UserId" name="UserId"/>
+                                <button type="submit" class="icon">
+                                    <i class="bi bi-arrow-down-circle"></i>
+                                </button>
+                            </form>
+                            
+                        }
+                        
+                    </div>
+                }
+                
             </div>
     }
    

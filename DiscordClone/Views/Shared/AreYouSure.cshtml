@@ -2,10 +2,9 @@
 <div class="are-you-sure-modal">
     <h1>Esti pe cale sa stergi canalul</h1>
     <p> Apasand butonul de mai jos, vei sterge canulul. Esti sigur ca vrei sa faci asta?</p>
-    <form >
+    <form asp-controller="Groups" asp-action="Delete" class="icon" asp-route-id="@Model.GroupId">
         <button class="create" id="efectuare">Da</button>
     </form>
 </div>
 
 
-@* asp-controller="Groups" asp-action="Delete" class="icon" asp-route-id="@Model.GroupId" *@

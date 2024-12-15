@@ -20,33 +20,33 @@
            
             <nav class="sidebar">
 
-                <a asp-controller="Groups" asp-action="Index" class="h1">Discord</a>
+                <a asp-controller="Groups" asp-action="Index" class="h1 Discord"><i class="bi bi-discord"></i></a>
                 <hr/>
                 @if (ViewBag.Groups != null)
                 {
                     @foreach (Group group in ViewBag.Groups)
                     {
                         <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.GroupChannelId>
-                            <div class="test">
+                            <div class="test2dor">
                                 <img src=@group.ImageRPath class="poza-grup"/>
-                                <p class="nume-grup">@group.Name</p>
+                                <p class="nume-grupdor">@group.Name</p>
                             </div>
                             <hr/>
                         </a>
                     }
                 }
 
-                <div class="test">
-                    <a class="sidebar-icon" href="/Groups/New" id="adaugare">+</a>
-                    <p class="nume-grup">Adauga un grup</p>
+                <div class="test2dor">
+                    <a  href="/Groups/New" id="adaugare"><img class="poza-grup" src="~/images/Crucea.png"/></a>
+                    <p class="nume-grupdor">Adauga un grup</p>
                 </div>
 
-                <div class="test bottom">
+                <div class="test2dor bottom">
                     <hr/>
                     <img src=@ViewBag.User.ProfilePicture class="poza-grup"/>
-                    <p class="nume-profil">@ViewBag.User.UserName</p>
+                    <p class="nume-profildor">@ViewBag.User.UserName</p>
 
-                    <div class="icon-profil">
+                    <div class="icon-profil Discord">
                         @if( User.IsInRole("Admin"))
                         {
                             <a asp-controller="Users" asp-action="Index" class="icon"><i class="bi bi-people"></i></a>

@@ -69,8 +69,11 @@ namespace DiscordClone.Controllers
             ViewBag.ToateGrupurile = db.Groups;
             
             var userId = _userManager.GetUserId(User);
-            var allGroupsNotIn =  db.UserGroups.Where(o=>userId != o.UserId).Select(o=>o.GroupId).ToList();
-            var groups = db.Groups.Where(o => allGroupsNotIn.Contains(o.Id.ToString()));
+            var allGroupsImin =  db.UserGroups.Where(o=>userId == o.UserId).Select(o=>o.GroupId).ToList();
+            var groups = db.Groups.Where(o=> !allGroupsImin.Contains(o.Id.ToString())).ToList();
+            var groupsIds = groups.Select(o => o.Id).ToList();
+           
+            // var groups = db.Groups.Where(o => allGroupsNotIn.Contains(o.Id.ToString()));
             
             
             
@@ -90,8 +93,8 @@ namespace DiscordClone.Controllers
                 search = Convert.ToString(HttpContext.Request.Query["search"]).Trim();
 
                 List<int> groupsId = db.Groups.Where(at => at.Name.Contains(search)).Select(a => a.Id).ToList();
-
-                groups = db.Groups.Where(group => groupsId.Contains(group.Id)).OrderByDescending( a => a.Name);
+                var groups2 = db.Groups.Where(o => groupsId.Contains(o.Id) && groupsIds.Contains(o.Id)).OrderByDescending( a => a.Name).ToList();
+                groups = groups2;
             }
 
             if( search != "")
@@ -134,7 +137,7 @@ namespace DiscordClone.Controllers
             if (ImageRPath == null)
             {
 
-                group.ImageRPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/defaultGroup.png");
+                group.ImageRPath = "/images/defaultGroup.png";
                 //var a = 1;
             }
             else

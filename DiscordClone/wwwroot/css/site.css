@@ -108,10 +108,20 @@ html {
 
 
 .h1 {
+    font-size:75px;
     font-weight: bold;
-    margin-left: 50px;
-    margin-bottom: 20px;
+    text-align: center;
+    
     text-decoration: none;
+    
+}
+
+.Discord{
+    opacity:0;
+}
+
+.sidebar:hover .Discord{
+    opacity:1;
 }
 
 hr {
@@ -156,17 +166,53 @@ hr {
     margin-bottom: 10px;
 }
 
+.test2dor{
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.nume-grupdor {
+    font-weight: bold;
+    margin-bottom: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.nume-profildor {
+    font-weight: bold;
+    margin-bottom: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+
+
+
+
+.sidebar:hover .nume-grupdor {
+    opacity: 1;
+}
+
+.sidebar:hover .nume-profildor {
+    opacity: 1;
+}
+
 
 .sidebar {
-    width: 300px;
-    min-width: 300px;
+    width: 80px;
     background-color: var(--secundar);
     display: flex;
     max-height: 100%;
     flex-direction: column;
-    /* align-items: center; */
     padding-top: 20px;
     overflow-y: auto;
+    transition: width 0.5s ease;
+}
+
+.sidebar:hover {
+    width: 300px;
 }
 
 .members-bar {
@@ -355,8 +401,11 @@ input:focus {
     justify-content: space-between;
     margin-left: auto;
     z-index: 5;
+    
 /*    margin-right: 10px;*/
 }
+
+
 
 .icon{
     margin-left: 15px;
@@ -424,6 +473,8 @@ input:focus {
     font-weight: bold;
     margin-bottom: 4px;
 }
+
+
 
 .descriere-grup {
     margin-right:auto;
@@ -607,6 +658,10 @@ input:focus {
 .footer .back {
     background-color: #72767D;
 
+}
+
+.create {
+    
 }
 
 .footer .create {
