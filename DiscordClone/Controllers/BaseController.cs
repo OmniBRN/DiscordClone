@@ -30,6 +30,8 @@ public class BaseController : Controller
 
         if (User.Identity.IsAuthenticated)
         {
+            
+            
             var userIdVIEWBAG = _userManager.GetUserId(User); 
             var usergroupsVIEWBAG =  db.UserGroups.Where(o=>userIdVIEWBAG == o.UserId).Select(o=>o.GroupId).ToList();
             var groupsVIEWBAG = db.Groups.Where(o => usergroupsVIEWBAG.Contains(o.Id.ToString()));

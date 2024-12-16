@@ -70,8 +70,9 @@ namespace DiscordClone.Controllers
 
         [HttpPost]
         public IActionResult Edit(Message NewMessage)
-        {            
+        {
             Message oldMessage = db.Messages.Find(NewMessage.Id);
+            
             oldMessage.Content = NewMessage.Content;
             NewMessage.WasEdited = true;
             NewMessage.EditTimeStamp = DateTime.Now;

@@ -258,7 +258,10 @@ namespace DiscordClone.Controllers
                 group.Description = editedGroup.Description;
                 group.CategoryId = editedGroup.CategoryId;
                 //Aici putem sa alegem daca vrem sa stergem poza veche a grupului de pe server sau nu
-                group.ImageRPath = editedGroup.ImageRPath;
+                if( editedGroup.ImageRPath != null)
+                {
+                    group.ImageRPath = editedGroup.ImageRPath;
+                }
                 TempData["message"] = "Grupul a fost modificat cu succes";
                 TempData["messageType"] = "alert-success";
                 db.SaveChanges();
@@ -285,14 +288,23 @@ namespace DiscordClone.Controllers
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
             var userCurrentId = _userManager.GetUserId(User);
             var currentGrupId = db.Groups.Find(id).Id;
-            var currentUserRole = db.UserGroups.Where(o=>o.GroupId == currentGrupId.ToString() && o.UserId == userCurrentId).First().Role;
+            var currentUserRole = "";
+            if (User.IsInRole("Admin"))
+            {
+                currentUserRole = "Moderator";
+            }
+            else
+            {
+                currentUserRole = db.UserGroups.Where(o=>o.GroupId == currentGrupId.ToString() && o.UserId == userCurrentId).FirstOrDefault().Role;
+                
+            }
             if(!((currentUserRole == "Moderator"&& group.UserId == userCurrentId) || User.IsInRole("Admin")))
                 return RedirectToAction("Index", "Groups");
 
             //// Aici am adaugat comentariu pt ca ar trebui sa stergem si canalele asociate grupului pe care-l facem
 
            
-            var channels = db.Channels.Where(o => o.GroupId == id).FirstOrDefault();
+            var channels = db.Channels.Include("Messages").Where(o => o.GroupId == id).FirstOrDefault();
             if (group == null)
             {
                 TempData["message"] = "Grupul pe care incerci sa-l stergi nu exista";
@@ -302,7 +314,18 @@ namespace DiscordClone.Controllers
             db.Groups.Remove(group);
             //Am facut un check sa vad daca este null channels ca altfel da eroare
             if (channels != null)
+            {
+                var mesaje = db.Messages.Where(m => m.MessageChannelId == id.ToString()).ToList();
+                
+                if (mesaje.Count > 0)
+                {
+                    foreach (var mesaj in mesaje)
+                    {
+                        db.Messages.Remove(mesaj);
+                    }
+                }
                 db.Channels.Remove(channels);
+            }
             db.SaveChanges();
             TempData["message"] = "Grupul a fost sters cu succes";
             TempData["messageType"] = "alert-succes";

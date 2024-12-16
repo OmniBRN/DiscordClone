@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiscordClone.Controllers
 {
@@ -106,6 +107,37 @@ namespace DiscordClone.Controllers
 
                 db.SaveChanges();
 
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Delete(string id)
+        {
+            var user = db.Users.Include("UserGroups").Include("Messages").Include("Notifications").Where( u => u.Id == id).FirstOrDefault();
+            if(user != null)
+            {
+                var channels = db.Channels.Where(c => c.UserId == user.Id).ToList();
+                var groups = db.Groups.Where(c => c.UserId == user.Id).ToList();
+                
+                if(channels != null)
+                {
+                    foreach (var channel in channels)
+                    {
+                        db.Channels.Remove(channel);
+                    }
+                }
+
+                if (groups != null)
+                {
+                    foreach (var group in groups)
+                    {
+                        db.Groups.Remove(group);
+                    }
+                }
+                
+                db.Users.Remove(user);
+                db.SaveChanges();
             }
             return RedirectToAction("Index");
         }

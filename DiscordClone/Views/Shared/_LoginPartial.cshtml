@@ -3,18 +3,30 @@
 @inject UserManager<ApplicationUser> UserManager
 
 
-<ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-        </li>
-    
+    var user = UserManager.GetUserAsync(User).Result;
+    if (user != null)
+    {
+        <div class="test2dor bottom">
+            <hr/>
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><img src=@user.ProfilePicture class="poza-grup"/></a>
+            <div class="detalii-grup">
+                <p class="nume-profildor">@user.UserName</p>
+
+                <div class="icon-profil Discord">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Users" asp-action="Index" class="icon"><i class="bi bi-people"></i></a>
+                    }
+                    <a asp-controller="Notifications" asp-action="Index" class="icon"><i class="bi bi-envelope-open"></i></a>
+                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Groups", new { area = "" })">
+                        <button type="submit" class="icon"><i class="bi bi-door-closed"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
 }
 else
 {
@@ -25,4 +37,3 @@ else
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
-</ul>

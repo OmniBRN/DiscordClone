@@ -34,25 +34,36 @@
                                     <p class="descriere-grup">
                                         @mes.Content
                                     </p>
-                                   
-                                    <div class="editare-inline" id="e @mes.Id">
-                                        <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
-                                            <input type="hidden" name="Id" value="@mes.Id" />
-                                            <input type="hidden" name="ChannelId" value="@Model.Id" />
-                                            <input type="text" name="Content" value="@mes.Content" class="edit-mesaj" />
-                                            <button type="submit" class="buton-salvare" onClick="buton_cancel(@mes.Id)">Salveaza</button>
-                                            <button type="button" class="buton-anulare" onClick="buton_cancel(@mes.Id)">Anuleaza</button>
-                                        </form>
-                                    </div>
-                                    
-                                    <div class="butoane">
-                                        <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
-                                            <button class="btn-danger " type="submit"><i class="bi bi-trash"></i></button>
-                                        </form>
+                                   @if (mes.UserId == ViewBag.UserCurrent)
+                                    {
+                                        <div class="editare-inline" id="e @mes.Id">
+                                            <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
+                                                <input type="hidden" name="Id" value="@mes.Id"/>
+                                                <input type="hidden" name="MessageChannelId" value="@Model.Id"/>
+                                                <input type="text" name="Content" value="@mes.Content" class="edit-mesaj"/>
+                                                <button type="submit" class="buton-salvare" onClick="buton_cancel(@mes.Id)">Salveaza</button>
+                                                <button type="button" class="buton-anulare" onClick="buton_cancel(@mes.Id)">Anuleaza</button>
+                                            </form>
+                                        </div>
 
-                                        <button class="btn-success btn" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil">Edit</i></button>
-                                    </div>
+                                        <div class="butoane">
+                                            <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                                <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
+                                            </form>
+
+                                            <button class="icon" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil"></i></button>
+                                        </div>
+                                    }
+                                    else if (ViewBag.UserCurrentRole == "Moderator")
+                                    {
+                                        <div class="butoane">
+                                            <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                                <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
+                                            </form>
+                                            </div>
+                                    }
                                 </div>
+                                    
                             }                           
                             @if (mes.FileRPath != null)
                             {

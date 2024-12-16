@@ -95,6 +95,10 @@ namespace DiscordClone.Controllers
             //// Sa incerc sa dau ToList in loc de ".First"
             var channel = db.Channels.Include(c => c.Messages).FirstOrDefault(c => c.Id == id);
 
+            if (channel == null)
+                return Redirect("/Groups/Index");
+            
+
             var members2 = db.UserGroups.Include("User").Where(o => o.GroupId == channel.GroupId.ToString()).Select(o=> new {o.UserId, o.Culoare, o.User.UserName, o.User.ProfilePicture, o.Role}).ToList();
             // var members1 = db.Users.Where(o => members2.Contains(o.Id));
             ViewBag.Members = members2;
@@ -119,6 +123,7 @@ namespace DiscordClone.Controllers
                         combined.Message.Id,
                         combined.Message.Content,
                         combined.Message.TimeStamp,
+                        combined.Message.UserId,
                         UserName = combined.User.UserName,
                         combined.User.ProfilePicture,
                         combined.Message.FileRPath,
@@ -127,6 +132,7 @@ namespace DiscordClone.Controllers
                     })
                 .ToList();
             getId();
+            
             
             var role = db.UserGroups
                 .Where(o => _userManager.GetUserId(User) == o.UserId && channel.GroupId.ToString() == o.GroupId)

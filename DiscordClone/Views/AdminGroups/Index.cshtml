@@ -17,8 +17,10 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between">
                         <a asp-controller="Groups" asp-action="Show" asp-route-id="@grup.Id" class="btn btn-sm btn-succes">Afiseaza grup</a>
-                        <a asp-controller="Groups" asp-action="Delete" asp-route-id="@grup.Id" class="btn btn-sm btn-danger">Sterge Grup</a>
-                    </div>
+                        <form asp-controller="Groups" asp-action="Delete" asp-route-id="@grup.Id" method="post">
+                            <button class="btn btn-sm btn-danger">Sterge Grup</button>
+                        </form>
+                        </div>
                 </div>
             </div>
         }

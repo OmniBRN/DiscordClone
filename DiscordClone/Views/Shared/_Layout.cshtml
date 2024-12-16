@@ -1,7 +1,5 @@
 ﻿@model dynamic
-@using Microsoft.AspNetCore.Identity
-@inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+
 
 
 <!DOCTYPE html>
@@ -45,37 +43,8 @@
                     <p class="nume-grupdor">Adauga un grup</p>
                 </div>
 
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <div class="test2dor bottom">
-                        <hr/>
-                        <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><img src=@ViewBag.User.ProfilePicture class="poza-grup" /></a>
-                        <div class="detalii-grup">
-                        <p class="nume-profildor">@ViewBag.User.UserName</p>
-
-                        <div class="icon-profil Discord">
-                            @if (User.IsInRole("Admin"))
-                            {
-                                <a asp-controller="Users" asp-action="Index" class="icon"><i class="bi bi-people"></i></a>
-                            }
-                            <a asp-controller="Notifications" asp-action="Index" class="icon"><i class="bi bi-envelope-open"></i></a>
-                            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Groups", new { area = "" })">
-                                <button type="submit" class="icon"><i class="bi bi-door-closed"></i></button>
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                    </li>
-                }
-                @* <partial name="_LoginPartial" /> *@
+               
+                <partial name="_LoginPartial" /> 
             </nav>
         }
         @RenderBody()
