@@ -5,13 +5,13 @@
     ViewData["Title"] = "Log in";
 }
 
-<div class="modal">
+<div class="modal register">
     <h4>Intra in cont</h4>
             <form id="account" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 
                     <label asp-for="Input.Email" class="form-label">Email</label> <br />
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="gicahagi@example.com" />
+                    <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" placeholder="gicahagi@example.com" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                     <br /><br />
                 

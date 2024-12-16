@@ -14,7 +14,11 @@
     <div class="header-channel">
         <h4>@Model.Name</h4>
         <div class="icon-profil">
-            <a id="sterge" class="icon" style="cursor:pointer;" ><i class="bi bi-trash"></i></a>
+            @if( ViewBag.UserCurrent == ViewBag.OwnerId )
+            {
+                <a id="sterge" class="icon" style="cursor:pointer;"><i class="bi bi-trash"></i></a>    
+            }
+            
             <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
         </div>
     </div>
@@ -34,7 +38,7 @@
                                     <p class="descriere-grup">
                                         @mes.Content
                                     </p>
-                                   @if (mes.UserId == ViewBag.UserCurrent)
+                                    @if (mes.UserId == ViewBag.UserCurrent)
                                     {
                                         <div class="editare-inline" id="e @mes.Id">
                                             <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
@@ -60,7 +64,7 @@
                                             <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
                                                 <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
                                             </form>
-                                            </div>
+                                        </div>
                                     }
                                 </div>
                                     
@@ -75,26 +79,27 @@
 
                                 <div class="info-grup">
                                     <div class="detalii-grup">
-                                    @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
-                                            {
-                                                <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
-                                            }
-                                    else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
-                                            {
-                                                <video controls class="poza-colectie">
-                                                    <source src="@mes.FileRPath" type="video/mp4" />
-                                                </video> 
-                                            }
-                                    else if (mes.FileRPath.EndsWith(".mp3"))
-                                            {
-                                                <audio controls class="poza-colectie">
-                                                    <source src="@mes.FileRPath" type="audio/mp3" />
-                                                </audio>
-                                            }
+                                        @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
+                                        {
+                                            <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
+                                        }
+                                        else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
+                                        {
+                                            <video controls class="poza-colectie">
+                                                <source src="@mes.FileRPath" type="video/mp4" />
+                                            </video> 
+                                        }
+                                        else if (mes.FileRPath.EndsWith(".mp3"))
+                                        {
+                                            <audio controls class="poza-colectie">
+                                                <source src="@mes.FileRPath" type="audio/mp3" />
+                                            </audio>
+                                        }
                                     </div>
                                 </div>
                             }
                         </div>
+                        <p class="time-stamp">@mes.TimeStamp</p>
                     </div>
         
         }

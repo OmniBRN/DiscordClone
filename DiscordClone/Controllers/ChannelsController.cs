@@ -130,7 +130,7 @@ namespace DiscordClone.Controllers
                         Color = ug.Culoare, 
                         Rol = ug.Role
                     })
-                .ToList();
+                .OrderBy(a => a.TimeStamp).ToList();
             getId();
             
             

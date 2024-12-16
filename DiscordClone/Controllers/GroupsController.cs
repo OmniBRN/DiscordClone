@@ -219,7 +219,8 @@ namespace DiscordClone.Controllers
             var currentUserRole = db.UserGroups.Where(o=>o.GroupId == currentGrupId.ToString() && o.UserId == userCurrentId).First().Role;
             if(currentUserRole != "Moderator")
                 return RedirectToAction("Index", "Groups");
-            
+
+           
             
 
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
@@ -237,7 +238,7 @@ namespace DiscordClone.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Group editedGroup)
+        public async Task<IActionResult> Edit(Group editedGroup, IFormFile ImageRPath)
         {
 
             var userCurrentId = _userManager.GetUserId(User);
@@ -247,21 +248,39 @@ namespace DiscordClone.Controllers
                 return RedirectToAction("Index", "Groups");
             
             
-            ///
-            /// Mie imi sterge poza cand dau sa editeze, si nu pot adauga alta
-            ///
             var group = db.Groups.Where(o => o.Id == editedGroup.Id).FirstOrDefault();
+            
+            if (ImageRPath != null)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
+                var fileExtension = Path.GetExtension(ImageRPath.FileName).ToLower();
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("Image",
+                        "Fișierul trebuie să fie o imagine (jpg, jpeg, png)");
+                    return View(group);
+                }
 
+                // Cale stocare
+                var storagePath = Path.Combine(_env.WebRootPath, "images", ImageRPath.FileName);
+                var databaseFileName = "/images/" + ImageRPath.FileName;
+
+                // Salvare fișier
+                using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                {
+                    await ImageRPath.CopyToAsync(fileStream);
+                }
+
+                ModelState.Remove(nameof(group.ImageRPath));
+                group.ImageRPath = databaseFileName;
+            }
+            
             if (group != null && ModelState.IsValid)
             {
                 group.Name = editedGroup.Name;
                 group.Description = editedGroup.Description;
                 group.CategoryId = editedGroup.CategoryId;
-                //Aici putem sa alegem daca vrem sa stergem poza veche a grupului de pe server sau nu
-                if( editedGroup.ImageRPath != null)
-                {
-                    group.ImageRPath = editedGroup.ImageRPath;
-                }
+                
                 TempData["message"] = "Grupul a fost modificat cu succes";
                 TempData["messageType"] = "alert-success";
                 db.SaveChanges();

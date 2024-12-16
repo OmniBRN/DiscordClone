@@ -446,6 +446,17 @@ input:focus {
     /*    align-items: center;*/
 }
 
+.time-stamp{
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: bold;
+    color: #b9bbbe;
+}
+
+.lista-grupuri h2{
+    margin-bottom: 20px;
+}
+
 .poza-grup {
     width: 60px;
     height: 60px;
@@ -457,6 +468,13 @@ input:focus {
     cursor: pointer;
     margin-left: 5px;
     justify-content: flex-start;
+}
+
+.profil-user{
+    min-width: 60px;
+    min-height: 60px;
+    max-width: 60px;
+    max-height: 60px;
 }
 
 .poza-grup:hover {
@@ -628,9 +646,9 @@ input:focus {
     transition-duration: 0.2s;
 }
 
-/*!*    input[type="file"]{*/
-/*        display: none;*/
-/*    }*!*/
+    input[type="file"]{
+        display: none;
+    }
 
 
 .server-name {
@@ -648,6 +666,10 @@ input:focus {
     display: flex;
     justify-content: space-between;
     align-self:flex-end;
+}
+
+.register{
+    background-color: #1c1c1f
 }
 
 .footer button {

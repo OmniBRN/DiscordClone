@@ -30,7 +30,7 @@
                     {
                         <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.GroupChannelId>
                             <div class="test2dor">
-                                <img src=@group.ImageRPath class="poza-grup"/>
+                                <img src=@group.ImageRPath class="poza-grup profil-user"/>
                                 <p class="nume-grupdor">@group.Name</p>
                             </div>
                             <hr/>
@@ -39,7 +39,7 @@
                 }
 
                 <div class="test2dor">
-                    <a  href="/Groups/New" id="adaugare"><img class="poza-grup" src="~/images/Crucea.png"/></a>
+                    <a  href="/Groups/New" id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>
                     <p class="nume-grupdor">Adauga un grup</p>
                 </div>
 
