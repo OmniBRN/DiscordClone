@@ -18,8 +18,10 @@
             {
                 <a id="sterge" class="icon" style="cursor:pointer;"><i class="bi bi-trash"></i></a>    
             }
-            
-            <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
+            @if (ViewBag.UserCurrentRole == "Moderator")
+            {
+                <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
+            }
         </div>
     </div>
 

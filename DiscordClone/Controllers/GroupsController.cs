@@ -274,6 +274,10 @@ namespace DiscordClone.Controllers
                 ModelState.Remove(nameof(group.ImageRPath));
                 group.ImageRPath = databaseFileName;
             }
+            else
+            {
+                ModelState.Remove(nameof(group.ImageRPath));
+            }
             
             if (group != null && ModelState.IsValid)
             {
