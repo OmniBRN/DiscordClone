@@ -68,11 +68,19 @@ namespace DiscordClone.Controllers
         {
 
             ViewBag.ToateGrupurile = db.Groups;
+            
+            
+            
 
             var userId = _userManager.GetUserId(User);
             var allGroupsImin = db.UserGroups.Where(o => userId == o.UserId).Select(o => o.GroupId).ToList();
             var groups = db.Groups.Where(o => !allGroupsImin.Contains(o.Id.ToString())).ToList();
             var groupsIds = groups.Select(o => o.Id).ToList();
+            
+            
+            var folderName = _env.WebRootPath + "/temp_" + userId;
+            if(Directory.Exists(folderName))
+                Directory.Delete(folderName, true);
 
             // var groups = db.Groups.Where(o => allGroupsNotIn.Contains(o.Id.ToString()));
 
@@ -124,7 +132,7 @@ namespace DiscordClone.Controllers
             Group group = new Group();
 
             group.Categ = ViewBag.Categories ?? GetAllCategories();
-
+            ViewBag.fisier = "/images/defaultGroup.png";
             return View(group);
         }
 
@@ -136,37 +144,27 @@ namespace DiscordClone.Controllers
 
             ModelState.Remove(nameof(group.ImageRPath));
 
-            if (ImageRPath == null)
+            if (TempData.ContainsKey("fisier") && TempData["fisier"] != null)
             {
-
-                group.ImageRPath = "/images/defaultGroup.png";
-                //var a = 1;
-            }
-            else
-            {
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-                var fileExtension = Path.GetExtension(ImageRPath.FileName).ToLower();
-                if (!allowedExtensions.Contains(fileExtension))
-                {
-                    ModelState.AddModelError("ArticleImage",
-                        "Fișierul trebuie să fie o imagine (jpg, jpeg, png, gif) sau un video (mp4,  mov).");
-                    return View(group);
-                }
+                var numeFisier = TempData["fisier"].ToString();
+                TempData["fisier"] = null;
+                var numeFolder = Path.Combine(_env.WebRootPath, "temp_" + _userManager.GetUserId(User));
+                var file = new FileInfo(Path.Combine(numeFolder, numeFisier));
+                file.MoveTo(Path.Combine(_env.WebRootPath, "images", numeFisier));
 
                 // Cale stocare
-                var storagePath = Path.Combine(_env.WebRootPath, "images", ImageRPath.FileName);
-                var databaseFileName = "/images/" + ImageRPath.FileName;
-
-                // Salvare fișier
-                using (var fileStream = new FileStream(storagePath, FileMode.Create))
-                {
-                    await ImageRPath.CopyToAsync(fileStream);
-                }
-
+                
+                var databaseFileName = "/images/" + numeFisier;
+                
                 ModelState.Remove(nameof(group.ImageRPath));
                 group.ImageRPath = databaseFileName;
 
             }
+            else
+            {
+                group.ImageRPath = "/images/defaultGroup.png";
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -208,6 +206,46 @@ namespace DiscordClone.Controllers
                 return View(group);
             }
         }
+        
+        [HttpPost]
+        public async Task<ActionResult> UploadFile(IFormFile file)
+        {
+            string nume = "";
+            if (file != null)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png"};
+                var fileExtension = Path.GetExtension(file.FileName).ToLower();
+                nume = Path.ChangeExtension(file.FileName, null);
+                nume = nume.Replace(" ", "");
+                nume += Guid.NewGuid().ToString("N") + fileExtension;
+                
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("ChannelImage",
+                        "Fișierul trebuie să fie o imagine (jpg, jpeg, png).");
+                    return Json(new { message = "File received has incorrect format." });
+                }
+                var folderName = Path.Combine(_env.WebRootPath , "temp_" + _userManager.GetUserId(User));
+                if(!Directory.Exists(folderName))
+                    Directory.CreateDirectory(folderName);
+                // Cale stocare
+                var storagePath = Path.Combine(folderName, nume);
+                var databaseFileName = "/images/"  + nume;
+                ViewBag.fisier = storagePath;
+
+                // Salvare fișier
+                using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+            }       
+
+            TempData["fisier"] = nume;
+            
+            return Json(new { message = "✓" });
+        }
+        
         
         [Authorize]
         public IActionResult Edit(int id)

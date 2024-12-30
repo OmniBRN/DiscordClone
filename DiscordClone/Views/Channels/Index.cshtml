@@ -16,152 +16,156 @@
         <div class="icon-profil">
             @if( ViewBag.UserCurrent == ViewBag.OwnerId )
             {
-                <a id="sterge" class="icon" style="cursor:pointer;"><i class="bi bi-trash"></i></a>    
+                <a id="sterge" class="icon" style="cursor:pointer;"><i class="bi bi-trash"></i></a>
             }
-            @if (ViewBag.UserCurrentRole == "Moderator")
-            {
-                <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
-            }
+
+            <a asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId" class="icon"><i class="bi bi-gear"></i></a>
         </div>
     </div>
 
 
     <div class="messages">
         @foreach( var mes in ViewBag.Messages )
-        { 
-                    <div class="info-grup">
-                        @* N-avem useri deci aici fa fi o poza random *@
-                        <img src="@mes.ProfilePicture" class="poza-grup"></img>
-                        <div class="detalii-grup">
-                            <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
-                            @if (mes.Content != "<<empty>>")
+        {
+            <div class="info-grup">
+                @* N-avem useri deci aici fa fi o poza random *@
+                <img src="@mes.ProfilePicture" class="poza-grup"></img>
+                <div class="detalii-grup">
+                    <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
+                    @if (mes.Content != "<<empty>>")
+                    {
+                        <div class="container-mesaje">
+                            <p class="descriere-grup">
+                                @mes.Content
+                            </p>
+                            @if (mes.UserId == ViewBag.UserCurrent)
                             {
-                                <div class="container-mesaje">
-                                    <p class="descriere-grup">
-                                        @mes.Content
-                                    </p>
-                                    @if (mes.UserId == ViewBag.UserCurrent)
-                                    {
-                                        <div class="editare-inline" id="e @mes.Id">
-                                            <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
-                                                <input type="hidden" name="Id" value="@mes.Id"/>
-                                                <input type="hidden" name="MessageChannelId" value="@Model.Id"/>
-                                                <input type="text" name="Content" value="@mes.Content" class="edit-mesaj"/>
-                                                <button type="submit" class="buton-salvare" onClick="buton_cancel(@mes.Id)">Salveaza</button>
-                                                <button type="button" class="buton-anulare" onClick="buton_cancel(@mes.Id)">Anuleaza</button>
-                                            </form>
-                                        </div>
-
-                                        <div class="butoane">
-                                            <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
-                                                <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
-                                            </form>
-
-                                            <button class="icon" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil"></i></button>
-                                        </div>
-                                    }
-                                    else if (ViewBag.UserCurrentRole == "Moderator")
-                                    {
-                                        <div class="butoane">
-                                            <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
-                                                <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
-                                            </form>
-                                        </div>
-                                    }
+                                <div class="editare-inline" id="e @mes.Id">
+                                    <form method="post" asp-action="Edit" asp-controller="Messages" asp-route-id="@mes.Id">
+                                        <input type="hidden" name="Id" value="@mes.Id"/>
+                                        <input type="hidden" name="MessageChannelId" value="@Model.Id"/>
+                                        <input type="text" name="Content" value="@mes.Content" class="edit-mesaj"/>
+                                        <button type="submit" class="buton-salvare" onClick="buton_cancel(@mes.Id)">Salveaza</button>
+                                        <button type="button" class="buton-anulare" onClick="buton_cancel(@mes.Id)">Anuleaza</button>
+                                    </form>
                                 </div>
-                                    
-                            }                           
-                            @if (mes.FileRPath != null)
-                            {
-                                
-                                //BTW, Partea de VIDEO si AUDIO nu am testat-o, nu stiu daca merg, cum merg, etc. 
-                                // Ca idee, clasa "poza-colectie" doar seteaza o lungime si latime maxima, atat
-                                // Daca nu merge, poti sa incerci sa faci ceva genul: https://getbootstrap.com/docs/4.0/utilities/embed/
-                                // Cu bootstrap  cel mai probabil o sa mearga ( si probabil va arata si mai bine)
 
-                                <div class="info-grup">
-                                    <div class="detalii-grup">
-                                        @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
-                                        {
-                                            <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
-                                        }
-                                        else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
-                                        {
-                                            <video controls class="poza-colectie">
-                                                <source src="@mes.FileRPath" type="video/mp4" />
-                                            </video> 
-                                        }
-                                        else if (mes.FileRPath.EndsWith(".mp3"))
-                                        {
-                                            <audio controls class="poza-colectie">
-                                                <source src="@mes.FileRPath" type="audio/mp3" />
-                                            </audio>
-                                        }
-                                    </div>
+                                <div class="butoane">
+                                    <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                        <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
+                                    </form>
+
+                                    <button class="icon" onClick="afisare_inline(@mes.Id)"><i class="bi bi-pencil"></i></button>
+                                </div>
+                            }
+                            else if (ViewBag.UserCurrentRole == "Moderator")
+                            {
+                                <div class="butoane">
+                                    <form method="post" asp-action="Delete" asp-controller="Messages" asp-route-id="@mes.Id">
+                                        <button class="icon" type="submit"><i class="bi bi-trash"></i></button>
+                                    </form>
                                 </div>
                             }
                         </div>
-                        <p class="time-stamp">@mes.TimeStamp</p>
-                    </div>
-        
+
+                    }
+                    @if (mes.FileRPath != null)
+                    {
+
+                        //BTW, Partea de VIDEO si AUDIO nu am testat-o, nu stiu daca merg, cum merg, etc. 
+                        // Ca idee, clasa "poza-colectie" doar seteaza o lungime si latime maxima, atat
+                        // Daca nu merge, poti sa incerci sa faci ceva genul: https://getbootstrap.com/docs/4.0/utilities/embed/
+                        // Cu bootstrap  cel mai probabil o sa mearga ( si probabil va arata si mai bine)
+
+                        <div class="info-grup">
+                            <div class="detalii-grup">
+                                @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
+                                {
+                                    <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
+                                }
+                                else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
+                                {
+                                    <video controls class="poza-colectie">
+                                        <source src="@mes.FileRPath" type="video/mp4" />
+                                    </video>
+                                }
+                                else if (mes.FileRPath.EndsWith(".mp3"))
+                                {
+                                    <audio controls class="poza-colectie">
+                                        <source src="@mes.FileRPath" type="audio/mp3" />
+                                    </audio>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <p class="time-stamp">@mes.TimeStamp</p>
+            </div>
+
         }
     </div>
 
-    <div class="footer-mes">
-        <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show" class="formular">
-            <input type="hidden" name="MessageChannelId" value="@Model.Id" />
-            <input type="hidden" name="GroupId" value="@Model.GroupId" />
+    <div class="footer-mesaje">
+        <div id="progress-bar">
+            <div><p id="procentaj-upload"></p></div>
+        </div>
+        <div>
+            <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show" class="formular">
+                <input type="hidden" name="MessageChannelId" value="@Model.Id"/>
+                <input type="hidden" name="GroupId" value="@Model.GroupId"/>
 
-            <input type="text" class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
-            @* <span asp-validation-for="Content" class="text-danger"></span> *@
-            @* <label name="FileRPath" class="sidebar-icon mini">+</label> *@
-            <input type="file" id="fileInput" name="FileRPath" style="display: none;" />
-            <label for="fileInput" class="incarcare-fisier"><i class="bi bi-upload"></i></label>
-            <button class="btn btn-success" type="submit">Send</button>
-        </form>
+                <input type="text" class="message-bar" placeholder="scrie un mesaj" id="textInput" name="Content"/>
+                @* <span asp-validation-for="Content" class="text-danger"></span> *@
+                @* <label name="FileRPath" class="sidebar-icon mini">+</label> *@
+                <input type="file" id="fileInput" name="FileRPath" style="display: none;"/>
+                <label for="fileInput" class="incarcare-fisier"><i class="bi bi-upload"></i></label>
+                <button class="btn btn-success" type="submit">Send</button>
+            </form>
+        </div>
+
     </div>
 </div>
 
 <div class="members-bar">
     @foreach (var member in ViewBag.Members)
     {
-        
-        
-            <div class="member">
-                <img src=@member.ProfilePicture class="poza-grup"/>
-                <p style="color:@member.Culoare"class="nume-grup">@member.UserName </p>
-                @if(ViewBag.UserCurrentRole=="Moderator"&&member.UserId!=ViewBag.UserCurrent&&member.UserId!=ViewBag.OwnerId)
-                {
-                    <div class="icon-profil">
-                        @if (member.Role != "Moderator")
-                        {
-                            <form asp-controller="Channels" asp-action="Promote" method="post">
-                                <input type="hidden" value="@member.UserId" name="UserId"/>
-                                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
-                                <input type="hidden" value="@Model.Id" name="ChannelId"/>
-                                <button type="submit" class="icon">
-                                    <i class="bi bi-arrow-up-circle"></i>
-                                </button>
-                            </form>
-                            
-                        }
-                        else
-                        {
-                            <form asp-controller="Channels" asp-action="Demote" method="post">
-                                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
-                                <input type="hidden" value="@Model.Id" name="ChannelId"/>
-                                <input type="hidden" value="@member.UserId" name="UserId"/>
-                                <button type="submit" class="icon">
-                                    <i class="bi bi-arrow-down-circle"></i>
-                                </button>
-                            </form>
-                            
-                        }
-                        
-                    </div>
-                }
-                
-            </div>
+
+
+        <div class="member">
+            <img src=@member.ProfilePicture class="poza-grup"/>
+            <p style="color:@member.Culoare"class="nume-grup">@member.UserName </p>
+            @if(ViewBag.UserCurrentRole=="Moderator"&&member.UserId!=ViewBag.UserCurrent&&member.UserId!=ViewBag.OwnerId)
+            {
+                <div class="icon-profil">
+                    @if (member.Role != "Moderator")
+                    {
+                        <form asp-controller="Channels" asp-action="Promote" method="post">
+                            <input type="hidden" value="@member.UserId" name="UserId"/>
+                            <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                            <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                            <button type="submit" class="icon">
+                                <i class="bi bi-arrow-up-circle"></i>
+                            </button>
+                        </form>
+
+                    }
+                    else
+                    {
+                        <form asp-controller="Channels" asp-action="Demote" method="post">
+                            <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                            <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                            <input type="hidden" value="@member.UserId" name="UserId"/>
+                            <button type="submit" class="icon">
+                                <i class="bi bi-arrow-down-circle"></i>
+                            </button>
+                        </form>
+
+                    }
+
+                </div>
+            }
+
+        </div>
     }
-   
+
 </div>

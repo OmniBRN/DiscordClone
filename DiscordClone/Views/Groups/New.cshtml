@@ -5,7 +5,8 @@
     <h1>Creaza un server</h1>
     <form enctype="multipart/form-data" method="post" asp-action="New" asp-controller="Groups">
         <label asp-for="ImageRPath" class="upload">
-            <input asp-for="ImageRPath" type="file" />
+            <img id="uploadedImage" src="@ViewBag.fisier" alt="Uploaded Image">
+            <input asp-for="ImageRPath" id="ImageRPath" type="file" />
             <span><i class="bi bi-camera"></i></span>
         </label>
         <label asp-for="Name"> Numele Server-ului</label>

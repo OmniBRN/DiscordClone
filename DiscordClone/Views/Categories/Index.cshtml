@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Lista categorii";
 }
 
@@ -19,24 +18,29 @@
 
     @foreach (DiscordClone.Models.Category category in ViewBag.Categories)
     {   
-        <div class="col-md-6 col-lg-4 mb-4">
-            <div>
-                <label asp-for="@category.Name" class="form-label">Denumire categorie</label>
-                <div><i class="bi bi-globe"></i> @category.Name</div>
+        <div class="col-md-6 col-lg-4 mb-4" style="margin-left:10px;">
+            <div class="card text-white bg-dark h-100 d-flex flex-column">
+                <div class="card-body">
+                    <div>
+                        <label asp-for="@category.Name" class="form-label">Denumire categorie</label>
+                        <div><i class="bi bi-globe"></i> @category.Name</div>
+                    </div>
+                </div>
+                <br/>
+                <div class="card-footer d-flex justify-content-between">
+                    <a asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id"><button class="btn btn-success create">Editare categorie</button></a>
+                    <form method="post" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+                <br/>
+                <br/>
             </div>
-            <br/>
-            <a  asp-controller="Categories" asp-action="Edit" asp-route-id="@category.Id"><button class="create">Editare categorie</button></a>
-            <form method="post" asp-controller="Categories" asp-action="Delete" asp-route-id="@category.Id">
-                <button type="submit">Delete</button>
-            </form>
-
-            <br/>
-            <br/>
         </div>
 
     }
     <br/>
-    <a asp-controller="Categories" asp-action="New"><button  class="create">Adauga o noua categorie</button></a>
+    <a asp-controller="Categories" asp-action="New"><button  class="btn btn-success create">Adauga o noua categorie</button></a>
     <br/>
 
 </div>

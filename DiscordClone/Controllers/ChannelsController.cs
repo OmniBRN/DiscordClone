@@ -32,31 +32,25 @@ namespace DiscordClone.Controllers
         
         [HttpPost]
         [Authorize(Roles ="User, Moderator, Admin")]
+        [HttpPost]
+        [Authorize(Roles ="User, Moderator, Admin")]
         public async Task<IActionResult> ShowAsync([FromForm] Message message, IFormFile FileRPath )
         {
             
          
             
-            if (FileRPath != null)
+            if (TempData.ContainsKey("fisier") && TempData["fisier"] != null)
             {
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4", ".mov", ".mkv",".mp3"};
-                var fileExtension = Path.GetExtension(FileRPath.FileName).ToLower();
-                if (!allowedExtensions.Contains(fileExtension))
-                {
-                    ModelState.AddModelError("ChannelImage", "Fișierul trebuie să fie o imagine (jpg, jpeg, png, gif).");
-                    return Redirect("/Channels/Index/" + message.MessageChannelId );
-                }
+                var numeFisier = TempData["fisier"].ToString();
+                TempData["fisier"] = null;
+                var numeFolder = Path.Combine(_env.WebRootPath, "temp_" + _userManager.GetUserId(User));
+                var file = new FileInfo(Path.Combine(numeFolder, numeFisier));
+                file.MoveTo(Path.Combine(_env.WebRootPath, "images", numeFisier));
 
                 // Cale stocare
-                var storagePath = Path.Combine(_env.WebRootPath, "images", FileRPath.FileName);
-                var databaseFileName = "/images/" + FileRPath.FileName;
-
-                // Salvare fișier
-                using (var fileStream = new FileStream(storagePath, FileMode.Create))
-                {
-                    await FileRPath.CopyToAsync(fileStream);
-                }
-
+                
+                var databaseFileName = "/images/" + numeFisier;
+                
                 ModelState.Remove(nameof(message.FileRPath));
                 if (message.Content == null)
                 {
@@ -87,6 +81,47 @@ namespace DiscordClone.Controllers
                 return Redirect($"/Channels/Index/{channel.Id}");
             }
         }
+        
+        [HttpPost]
+        public async Task<ActionResult> UploadFile(IFormFile file)
+        {
+    
+            
+            string nume = "";
+            if (file != null)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".mp4", ".mov", ".mkv", ".mp3", ".zip"};
+                var fileExtension = Path.GetExtension(file.FileName).ToLower();
+                nume = Path.ChangeExtension(file.FileName, null);
+                nume = nume.Replace(" ", "");
+                nume += Guid.NewGuid().ToString("N") + fileExtension;
+                
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("ChannelImage",
+                        "Fișierul trebuie să fie o imagine (jpg, jpeg, png, gif).");
+                    return Json(new { message = "File received has incorrect format." });
+                }
+                var folderName = Path.Combine(_env.WebRootPath , "temp_" + _userManager.GetUserId(User));
+                if(!Directory.Exists(folderName))
+                    Directory.CreateDirectory(folderName);
+                // Cale stocare
+                var storagePath = Path.Combine(folderName, nume);
+                var databaseFileName = "/images/"  + nume;
+
+                // Salvare fișier
+                using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+
+            }       
+
+            TempData["fisier"] = nume;
+            return Json(new { message = "✓" });
+
+        }
+        
         public IActionResult Index( int id)
         {
          

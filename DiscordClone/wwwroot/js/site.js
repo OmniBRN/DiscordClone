@@ -82,6 +82,7 @@ var fog = document.getElementById("fog")
 
 var sterge = document.getElementById("sterge")
 
+if( sterge)
 sterge.addEventListener("click", () => {
     popOutStergere.style.display = "block";
     fog.style.display = "block";
@@ -89,11 +90,93 @@ sterge.addEventListener("click", () => {
 
 
 
-
+if(fog)
 fog.addEventListener("click", () => {
     popOutStergere.style.display = "none";
     fog.style.display = "none";
 })
+
+var profil = document.getElementById("ImageRPath")
+
+console.log(profil)
+if(profil)
+profil.addEventListener("input", () => {
+    
+    var poza = profil.files[0];
+    
+    if(!poza)
+    {
+        return;
+    }
+    
+    console.log(poza);
+
+    const formData = new FormData();
+    formData.append('file', poza);
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/Groups/UploadFile' ,true)
+
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('uploadedImage').src = e.target.result;
+            };
+            reader.readAsDataURL(poza); 
+        } else {
+            alert("File upload failed");
+        }
+    };
+
+    xhr.send(formData);
+    
+})
+const fileInput = document.getElementById('fileInput');
+if(fileInput)
+fileInput.addEventListener('input', function () {
+    
+    const file = fileInput.files[0];
+    if (!file) {
+        alert('Please select a file.');
+        return;
+    }
+    document.getElementById('progress-bar').style.display = 'block';
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const xhr = new XMLHttpRequest();
+    // Update the URL to match the MVC or Web API route
+    xhr.open('POST', '/Channels/UploadFile', true);
+    
+    
+
+    // Update the progress bar
+    xhr.upload.onprogress = function (event) {
+        if (event.lengthComputable) {
+            const percentage = Math.floor((event.loaded / event.total) * 100);
+            document.querySelector('#progress-bar div').style.width = percentage + '%';
+            document.getElementById('procentaj-upload').innerText = percentage + '%'
+        }
+    };
+
+    // Show completion status
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            document.getElementById('status').textContent = response.message;
+        } else {
+            document.getElementById('status').textContent = 'Upload failed.';
+        }
+    };
+
+    xhr.onerror = function () {
+        document.getElementById('status').textContent = 'An error occurred during the upload.';
+    };
+
+    xhr.send(formData);
+});
+
 
 
 
