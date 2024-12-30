@@ -168,6 +168,7 @@ namespace DiscordClone.Controllers
                         combined.Message.Content,
                         combined.Message.TimeStamp,
                         combined.Message.UserId,
+                        combined.Message.WasEdited,
                         UserName = combined.User.UserName,
                         combined.User.ProfilePicture,
                         combined.Message.FileRPath,

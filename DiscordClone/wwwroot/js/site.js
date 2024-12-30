@@ -1,7 +1,7 @@
 ﻿//[COMENTARIU DE LA TUDOR PENTRU MARIO]: Fa onpageload sa ia marimea window-ului si sa updateze max-heightul pagini.
 
 var body = document.body
-var inaltime = body.scrollHeight - 99;
+var inaltime = body.scrollHeight - 139;
 
 var continut = document.getElementsByClassName("messages");
 var maxim = document.getElementsByClassName("maxim");
@@ -15,7 +15,7 @@ let b = parseInt(localStorage.getItem("inaltime"));
 
 if (continut.length > 0)
 {
-    continut[0].style.maxHeight = ( b - 1 ) + "px";
+    continut[0].style.maxHeight = ( b - 38 ) + "px";
 
     console.log("Inaltime: " + b);
 }

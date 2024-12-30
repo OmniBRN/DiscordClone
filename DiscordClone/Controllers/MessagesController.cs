@@ -35,6 +35,22 @@ namespace DiscordClone.Controllers
         }
 
         [HttpPost]
+        public IActionResult DeleteFile(int id)
+        {
+            Message mes = db.Messages.Find(id);
+            string filePath = Path.Combine(_env.WebRootPath, mes.FileRPath.TrimStart('/').Replace("/", "\\"));
+            System.IO.File.Delete(filePath);
+            mes.FileRPath = null;
+            if (mes.Content == "<<empty>>")
+            {
+                db.Messages.Remove(mes);
+            }
+            db.SaveChanges();
+            
+            return Redirect($"/Channels/Index/{mes.MessageChannelId}");
+        }
+
+        [HttpPost]
         //[Authorize(Roles =("User,Moderator,Admin"))]
         public IActionResult Delete(int id)
         {
@@ -50,11 +66,15 @@ namespace DiscordClone.Controllers
                 return RedirectToAction("Index", "Groups");
             
             
-            //
-            
-            
-            
             var par = mes.Id;
+            
+            if (mes.FileRPath != null)
+            {
+                string filePath = Path.Combine(_env.WebRootPath, mes.FileRPath.TrimStart('/').Replace("/", "\\"));
+                System.IO.File.Delete(filePath);
+                mes.FileRPath = null;
+                
+            }
 
             db.Messages.Remove(mes);
             db.SaveChanges();
@@ -73,9 +93,11 @@ namespace DiscordClone.Controllers
         {
             Message oldMessage = db.Messages.Find(NewMessage.Id);
             
+            
+            
             oldMessage.Content = NewMessage.Content;
-            NewMessage.WasEdited = true;
-            NewMessage.EditTimeStamp = DateTime.Now;
+            oldMessage.WasEdited = true;
+            oldMessage.TimeStamp = DateTime.Now;
             db.SaveChanges();
             return Redirect($"/Channels/Index/{NewMessage.MessageChannelId}");
         }

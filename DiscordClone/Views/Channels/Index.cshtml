@@ -39,7 +39,14 @@
                 @* N-avem useri deci aici fa fi o poza random *@
                 <img src="@mes.ProfilePicture" class="poza-grup"></img>
                 <div class="detalii-grup">
-                    <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
+                    @if(mes.WasEdited != true)
+                    {
+                        <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
+                    }
+                    else
+                    {
+                        <p style="color:@mes.Color" class="nume-grup">@mes.UserName (Edited)</p>
+                    }
                     @if (mes.Content != "<<empty>>")
                     {
                         <div class="container-mesaje">
@@ -89,19 +96,71 @@
                             <div class="detalii-grup">
                                 @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
                                 {
-                                    <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
+                                    @if (mes.UserId == ViewBag.UserCurrent)
+                                    {
+                                        <div style="display: flex;">
+                                            <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
+                                            <div class="butoane">
+                                                <form method="post" asp-action="DeleteFile" asp-controller="Messages" asp-route-id="@mes.Id">
+                                                    <button class="icon" type="submit"><i class="bi bi-file-earmark-x"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
+                                    }
+
+
                                 }
                                 else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov") || mes.FileRPath.EndsWith(".mkv"))
                                 {
-                                    <video controls class="poza-colectie">
-                                        <source src="@mes.FileRPath" type="video/mp4"/>
-                                    </video>
+                                    @if (mes.UserId == ViewBag.UserCurrent)
+                                    {
+                                        <div style="display: flex;">
+                                            <video controls class="poza-colectie">
+                                                <source src="@mes.FileRPath" type="video/mp4"/>
+                                            </video>
+                                            <div class="butoane">
+                                                <form method="post" asp-action="DeleteFile" asp-controller="Messages" asp-route-id="@mes.Id">
+                                                    <button class="icon" type="submit"><i class="bi bi-file-earmark-x"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+
+                                        <video controls class="poza-colectie">
+                                            <source src="@mes.FileRPath" type="video/mp4"/>
+                                        </video>
+
+
+                                    }
                                 }
                                 else if (mes.FileRPath.EndsWith(".mp3"))
                                 {
-                                    <audio controls class="poza-colectie">
-                                        <source src="@mes.FileRPath" type="audio/mp3"/>
-                                    </audio>
+                                    @if (mes.UserId == ViewBag.UserCurrent)
+                                    {
+                                        <div style="display: flex;">
+                                            <audio controls class="poza-colectie">
+                                                <source src="@mes.FileRPath" type="audio/mp3"/>
+                                            </audio>
+                                            <div class="butoane">
+                                                <form method="post" asp-action="DeleteFile" asp-controller="Messages" asp-route-id="@mes.Id">
+                                                    <button class="icon" type="submit"><i class="bi bi-file-earmark-x"></i></button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <audio controls class="poza-colectie">
+                                            <source src="@mes.FileRPath" type="audio/mp3"/>
+                                        </audio>
+                                    }
                                 }
                             </div>
                         </div>

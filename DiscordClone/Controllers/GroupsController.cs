@@ -370,6 +370,12 @@ namespace DiscordClone.Controllers
                 TempData["alerta"] = "Grupul pe care incerci sa-l stergi nu exista";
                 
             }
+            
+            if (group.ImageRPath != null && group.ImageRPath != "/images/defaultGroup.png")
+            {
+                string filePath = Path.Combine(_env.WebRootPath, group.ImageRPath.TrimStart('/').Replace("/", "\\"));
+                System.IO.File.Delete(filePath);
+            }
 
             db.Groups.Remove(group);
             //Am facut un check sa vad daca este null channels ca altfel da eroare
@@ -381,9 +387,18 @@ namespace DiscordClone.Controllers
                 {
                     foreach (var mesaj in mesaje)
                     {
+                        if (mesaj.FileRPath != null)
+                        {
+                            string filePath = Path.Combine(_env.WebRootPath, mesaj.FileRPath.TrimStart('/').Replace("/", "\\"));
+                            System.IO.File.Delete(filePath);
+                            mesaj.FileRPath = null;
+                        }
                         db.Messages.Remove(mesaj);
                     }
                 }
+
+                
+                
                 db.Channels.Remove(channels);
             }
             db.SaveChanges();
