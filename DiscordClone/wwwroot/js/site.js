@@ -71,13 +71,20 @@ function buton_cancel(i)
 }
 
 
-;
+
 
 
 
 var popOutStergere = document.getElementById("popOutStergere")
+var kick = document.getElementById("kick")
+var leave = document.getElementById("leave")
 
+var leave_btn = document.getElementById("leave-button");
+var kick_btn = document.getElementById("kick-button")
 var buton = document.getElementById("efectuare")
+
+
+
 var fog = document.getElementById("fog")
 
 var sterge = document.getElementById("sterge")
@@ -88,11 +95,36 @@ sterge.addEventListener("click", () => {
     fog.style.display = "block";
 })
 
+if(leave_btn)
+{
+    leave_btn.addEventListener("click", () => {
+        console.log('a intrat')
+        leave.style.display = "block";
+        fog.style.display = "block";
+    })
+}
+
+if(kick_btn)
+{
+    kick_btn.addEventListener("click", () => {
+        kick.style.display = "block";
+        fog.style.display = "block";
+    })
+}
+
 
 
 if(fog)
 fog.addEventListener("click", () => {
-    popOutStergere.style.display = "none";
+    if (popOutStergere && popOutStergere.style.display === "block") {
+        popOutStergere.style.display = "none";
+    }
+    if (kick && kick.style.display === "block") {
+        kick.style.display = "none";
+    }
+    if (leave && leave.style.display === "block") {
+        leave.style.display = "none";
+    }
     fog.style.display = "none";
 })
 

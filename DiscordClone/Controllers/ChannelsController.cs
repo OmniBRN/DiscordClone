@@ -202,6 +202,66 @@ namespace DiscordClone.Controllers
             TempData["alerta"] = "Promovarea s-a efectuat cu succes";
             return Redirect("/Channels/Index/" + ChannelId);
         }
+
+        [HttpPost]
+        public IActionResult Kick(string UserId, string GroupId, int ChannelId)
+        {
+            var userGroup = db.UserGroups.Where(o => o.GroupId == GroupId && o.UserId == UserId).FirstOrDefault();
+            db.UserGroups.Remove(userGroup);
+            db.SaveChanges();
+            
+            int nr_membri = db.UserGroups.Count(O => O.GroupId == GroupId);
+
+            if (nr_membri == 0)
+            {
+                var group = db.Groups.Where(o => o.Id.ToString() == GroupId).FirstOrDefault();
+                var channels = db.Channels.Include("Messages").Where(o => o.GroupId.ToString() == GroupId).FirstOrDefault();
+                if (group == null)
+                {
+                    TempData["alerta"] = "Grupul pe care incerci sa-l stergi nu exista";
+                
+                }
+            
+                if (group.ImageRPath != null && group.ImageRPath != "/images/defaultGroup.png")
+                {
+                    string filePath = Path.Combine(_env.WebRootPath, group.ImageRPath.TrimStart('/').Replace("/", "\\"));
+                    System.IO.File.Delete(filePath);
+                }
+
+                db.Groups.Remove(group);
+                //Am facut un check sa vad daca este null channels ca altfel da eroare
+                if (channels != null)
+                {
+                    var mesaje = db.Messages.Where(m => m.MessageChannelId == GroupId.ToString()).ToList();
+                
+                    if (mesaje.Count > 0)
+                    {
+                        foreach (var mesaj in mesaje)
+                        {
+                            if (mesaj.FileRPath != null)
+                            {
+                                string filePath = Path.Combine(_env.WebRootPath, mesaj.FileRPath.TrimStart('/').Replace("/", "\\"));
+                                System.IO.File.Delete(filePath);
+                                mesaj.FileRPath = null;
+                            }
+                            db.Messages.Remove(mesaj);
+                        }
+                    }
+
+                
+                
+                    db.Channels.Remove(channels);
+                }
+                db.SaveChanges();
+                TempData["alerta"] = "Grupul a fost sters cu succes";
+                return Redirect("/Groups/Index/");
+            }
+            
+            if( UserId != _userManager.GetUserId(User))
+                return Redirect("/Channels/Index/" + ChannelId);
+            else
+                return Redirect("/Groups/Index/");
+        }
         
         [HttpPost]
         public IActionResult Demote(string UserId, int GroupId, int ChannelId)

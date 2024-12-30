@@ -5,6 +5,8 @@
 
 <div id="fog"></div>
 
+
+
 <div id="popOutStergere" style="display: none">
     <partial name="AreYouSure"></partial>
 </div>
@@ -229,9 +231,47 @@
                         </form>
 
                     }
+                   
+                        <button id="kick-button" type="submit" class="icon">
+                            <i class="bi bi-x-circle"></i>
+                        </button>
+                   
+
+                    <div id="kick" class="are-you-sure-modal" style="display: none;">
+                        <h1>Esti pe cale sa dai kick unui utilizator</h1>
+                        <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
+                        <form asp-controller="Channels" asp-action="Kick" method="post">
+                            <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                            <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                            <input type="hidden" value="@member.UserId" name="UserId"/>
+                            <button type="submit" class="icon">
+                                Da
+                            </button>
+                        </form>
+                    </div>
 
                 </div>
             }
+                @if (member.UserId == ViewBag.UserCurrent)
+                {
+                    <button id="leave-button" type="submit" class="icon">
+                        <i class="bi bi-box-arrow-left"></i>
+                    </button>
+
+                    <div id="leave" class="are-you-sure-modal" style="display: none;">
+                        <h1>Esti pe cale sa iesi din grup</h1>
+                        <p> Apasand butonul de mai jos, vei iesi din grup. Esti sigur ca vrei sa faci asta?</p>
+                        <form asp-controller="Channels" asp-action="Kick" method="post">
+                            <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                            <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                            <input type="hidden" value="@member.UserId" name="UserId"/>
+                            <button type="submit" class="icon">
+                                Da
+                            </button>
+                        </form>
+                    </div>
+                }
+            
 
         </div>
     }
