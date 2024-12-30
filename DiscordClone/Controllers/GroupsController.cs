@@ -86,9 +86,9 @@ namespace DiscordClone.Controllers
 
 
 
-            if (TempData.ContainsKey("message"))
+            if (TempData.ContainsKey("alerta"))
             {
-                ViewBag.Message = TempData["message"].ToString();
+                ViewBag.Alerta = TempData["alerta"].ToString();
                 // ViewBag.Alert = TempData["messageType"].ToString();
             }
 
@@ -196,8 +196,8 @@ namespace DiscordClone.Controllers
                 group.GroupChannelId = channel.Id;
                 db.SaveChanges();
 
-                TempData["message"] = "S-a creat un grup";
-                TempData["messageType"] = "alert-succes";
+                TempData["alerta"] = "S-a creat un grup";
+                
                 return RedirectToAction("Index", "Groups");
             }
             else
@@ -264,8 +264,8 @@ namespace DiscordClone.Controllers
             var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
             if (group == null)
             {
-                TempData["message"] = "Nu exista grupul pe care incerci sa-l editezi";
-                TempData["messageType"] = "alert-danger";
+                TempData["alerta"] = "Nu exista grupul pe care incerci sa-l editezi";
+                
                 return RedirectToAction("Index", "Groups");
 
             }
@@ -323,8 +323,7 @@ namespace DiscordClone.Controllers
                 group.Description = editedGroup.Description;
                 group.CategoryId = editedGroup.CategoryId;
                 
-                TempData["message"] = "Grupul a fost modificat cu succes";
-                TempData["messageType"] = "alert-success";
+                TempData["alerta"] = "Grupul a fost modificat cu succes";
                 db.SaveChanges();
                 // trebuie sa fac sa redirectionez in grupul pe care l-am modificat?
                 return RedirectToAction("Index", "Groups");
@@ -368,8 +367,8 @@ namespace DiscordClone.Controllers
             var channels = db.Channels.Include("Messages").Where(o => o.GroupId == id).FirstOrDefault();
             if (group == null)
             {
-                TempData["message"] = "Grupul pe care incerci sa-l stergi nu exista";
-                TempData["messageType"] = "alert-danger";
+                TempData["alerta"] = "Grupul pe care incerci sa-l stergi nu exista";
+                
             }
 
             db.Groups.Remove(group);
@@ -388,8 +387,8 @@ namespace DiscordClone.Controllers
                 db.Channels.Remove(channels);
             }
             db.SaveChanges();
-            TempData["message"] = "Grupul a fost sters cu succes";
-            TempData["messageType"] = "alert-succes";
+            TempData["alerta"] = "Grupul a fost sters cu succes";
+            
             return RedirectToAction("Index", "Groups");
         }
 

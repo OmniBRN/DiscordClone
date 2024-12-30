@@ -125,7 +125,16 @@ namespace DiscordClone.Controllers
         public IActionResult Index( int id)
         {
          
-
+            var userId = _userManager.GetUserId(User);
+            var folderName = _env.WebRootPath + "/temp_" + userId;
+            if(Directory.Exists(folderName))
+                Directory.Delete(folderName, true);
+            
+            if (TempData.ContainsKey("alerta"))
+            {
+                ViewBag.Alerta = TempData["alerta"].ToString();
+                
+            }
             
             //// Sa incerc sa dau ToList in loc de ".First"
             var channel = db.Channels.Include(c => c.Messages).FirstOrDefault(c => c.Id == id);
@@ -189,6 +198,7 @@ namespace DiscordClone.Controllers
             userGroup.Role = "Moderator";
             userGroup.Culoare = "#F9C74F";
             db.SaveChanges();
+            TempData["alerta"] = "Promovarea s-a efectuat cu succes";
             return Redirect("/Channels/Index/" + ChannelId);
         }
         
@@ -224,6 +234,7 @@ namespace DiscordClone.Controllers
             int randomNumber = random.Next(colors.Length);
             userGroup.Culoare = colors[randomNumber];
             db.SaveChanges();
+            TempData["alerta"] = "Retrogradarea s-a efectuat cu succes";
             return Redirect("/Channels/Index/" + ChannelId);
         }
 

@@ -35,6 +35,14 @@ public class NotificationsController : BaseController
             return Redirect("/Identity/Account/Login");
         var notifications = db.Notifications.Where(o=> o.UserId == userId);
         ViewBag.Notifications = notifications;
+        
+        if (TempData.ContainsKey("alerta"))
+        {
+            ViewBag.Alerta = TempData["alerta"].ToString();
+                
+        }
+        
+        
         return View();
     }
 
@@ -84,6 +92,7 @@ public class NotificationsController : BaseController
         var notification = db.Notifications.Where(o => o.Id == id).FirstOrDefault();
         db.Notifications.Remove(notification);
         db.SaveChanges();
+        TempData["alerta"] = "Ai respins cererea de intrare";
         return Redirect("/Notifications/Index");
     }
 
@@ -128,7 +137,7 @@ public class NotificationsController : BaseController
         
         db.Notifications.Remove(notification);
         db.SaveChanges();
-        
+        TempData["alerta"] = "Ai acceptat cererea de intrare";
         return Redirect("/Notifications/Index");
     }
     

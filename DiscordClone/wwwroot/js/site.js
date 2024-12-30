@@ -177,6 +177,12 @@ fileInput.addEventListener('input', function () {
     xhr.send(formData);
 });
 
+function inchide()
+{
+    var alerta = document.getElementById("alerta");
+    alerta.style.display = 'none';
+}
+
 
 
 

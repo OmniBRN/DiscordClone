@@ -39,6 +39,11 @@ public class CategoriesController : BaseController
             select category;
         ViewBag.Categories = categories;
         
+        if (TempData.ContainsKey("alerta"))
+        {
+            ViewBag.Alerta = TempData["alerta"].ToString();
+        }
+        
         return View();
         
     }
@@ -59,7 +64,7 @@ public class CategoriesController : BaseController
         {
             db.Categories.Add(cat);
             db.SaveChanges();
-            TempData["message"] = "Categoria a fost adaugata";
+            TempData["alerta"] = "Categoria a fost adaugata";
             return RedirectToAction("Index");
         }
 
@@ -91,7 +96,7 @@ public class CategoriesController : BaseController
 
             category.Name = requestCategory.Name;
             db.SaveChanges();
-            TempData["message"] = "Categoria a fost modificata!";
+            TempData["alerta"] = "Categoria a fost modificata!";
             return RedirectToAction("Index");
         }
         else
@@ -107,7 +112,7 @@ public class CategoriesController : BaseController
         
         Category category = db.Categories.Find(id);
         db.Categories.Remove(category);
-        TempData["message"] = "Categoria a fost stearsa";
+        TempData["alerta"] = "Categoria a fost stearsa";
         db.SaveChanges();
         return RedirectToAction("Index");
     }

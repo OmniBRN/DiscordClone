@@ -4,7 +4,16 @@
     <h1 class="h1"> <a asp-controller="Users" asp-action="Index">Useri</a>  -- Grupuri -- <a asp-controller="Categories" asp-action="Index">Categorii</a></h1>
     <hr />
 
-<div class="container" style="margin-top:10px;">
+    @if (ViewBag.Alerta != null)
+    {
+        <div id="alerta" class="alerta">
+            <p id="alerta-mesaj">@ViewBag.Alerta</p>
+            <button id="alerta-buton" class="icon" onclick="inchide()">x</button>
+        </div>
+
+    }
+
+    <div class="container" style="margin-top:10px;">
     <div class="row">
         @foreach (var grup in ViewBag.ToateGrupurile)
         {

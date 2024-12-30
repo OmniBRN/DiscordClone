@@ -337,26 +337,6 @@ hr {
 }
 
 
-/*.message-bar {
-    flex-grow: 1;*/ /* Ensures the input takes up almost all available space */
-    /*padding: 8px;
-    background-color: var(--third);
-    border: none;
-    border-radius: 5px;
-    margin: 0;
-    color: white;*/ /* Ensure text is visible on dark background */
-/*}*/
-
-
-/*.search-bar {
-    width: 100%;
-    padding: 8px;
-    background-color: var(--third);
-    border: none;
-    border-radius: 5px;
-    margin: 0;
-}*/
-
 .search-bar{
     flex-grow: 1;
     background-color: var(--third);
@@ -425,8 +405,6 @@ input:focus {
     align-items: center; 
     justify-content: center; 
 }
-
-
 
 
 .icon{
@@ -752,18 +730,9 @@ input:focus {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 100;
 
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    
    
 }
 
-.alerta.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.alerta.hidden {
-    display: none;
-}
 
 

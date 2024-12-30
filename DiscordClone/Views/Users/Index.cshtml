@@ -1,5 +1,13 @@
 ﻿    <div class="main-content"><h1 class="h1">User -- <a asp-controller="AdminGroups" asp-action="Index">Grupuri</a> -- <a asp-controller="Categories" asp-action="Index">Categorii</a></h1>
-    <hr />
+        <hr />
+        @if (ViewBag.Alerta != null)
+        {
+            <div id="alerta" class="alerta">
+                <p id="alerta-mesaj">@ViewBag.Alerta</p>
+                <button id="alerta-buton" class="icon" onclick="inchide()">x</button>
+            </div>
+
+        }
 
     <div class="container" style="margin-top:10px;">
         <div class="row">

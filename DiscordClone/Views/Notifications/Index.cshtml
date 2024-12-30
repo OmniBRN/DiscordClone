@@ -1,6 +1,16 @@
 ﻿<div class="main-content">
     <h1>Notificarile tale</h1>
     <hr />
+
+    @if (ViewBag.Alerta != null)
+    {
+        <div id="alerta" class="alerta">
+            <p id="alerta-mesaj">@ViewBag.Alerta</p>
+            <button id="alerta-buton" class="icon" onclick="inchide()">x</button>
+        </div>
+
+    }
+    
     <div class="lista-grupuri">
         @foreach (var Notification in ViewBag.Notifications)
         {

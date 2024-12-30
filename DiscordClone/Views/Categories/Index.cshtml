@@ -5,8 +5,17 @@
 
 <div class="main-content">
 
-    <h1 class="h1"> <a asp-controller="Users" asp-action="Index">Useri</a>  -- <a asp-controller="AdminGroups" asp-action="Index">Grupuri</a> -- Categorii</h1>
-    <hr />
+    @if (ViewBag.Alerta != null)
+    {
+        <div id="alerta" class="alerta">
+            <p id="alerta-mesaj">@ViewBag.Alerta</p>
+            <button id="alerta-buton" class="icon" onclick="inchide()">x</button>
+        </div>
+
+    }
+
+    <h1 class="h1"> <a asp-controller="Users" asp-action="Index">Useri</a> -- <a asp-controller="AdminGroups" asp-action="Index">Grupuri</a> -- Categorii</h1>
+    <hr/>
     <h2>@ViewBag.Title</h2>
     <br/>
 
@@ -17,7 +26,7 @@
 
 
     @foreach (DiscordClone.Models.Category category in ViewBag.Categories)
-    {   
+    {
         <div class="col-md-6 col-lg-4 mb-4" style="margin-left:10px;">
             <div class="card text-white bg-dark h-100 d-flex flex-column">
                 <div class="card-body">
@@ -40,7 +49,7 @@
 
     }
     <br/>
-    <a asp-controller="Categories" asp-action="New"><button  class="btn btn-success create">Adauga o noua categorie</button></a>
+    <a asp-controller="Categories" asp-action="New"><button class="btn btn-success create">Adauga o noua categorie</button></a>
     <br/>
 
 </div>

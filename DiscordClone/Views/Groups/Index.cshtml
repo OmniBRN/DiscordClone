@@ -1,8 +1,18 @@
 ﻿
 <div class="main-content">
+
+    @if (ViewBag.Alerta != null)
+    {
+        <div id="alerta" class="alerta">
+            <p id="alerta-mesaj">@ViewBag.Alerta</p>
+            <button id="alerta-buton" class="icon" onclick="inchide()">x</button>
+        </div>
+    
+    }
+    
     <form method="get">
         <div class="header">
-            <input type="text" placeholder="Cauta un Grup" class="search-bar" name="search" value="@ViewBag.SearchString" />
+            <input type="text" placeholder="Cauta un Grup" class="search-bar" name="search" value="@ViewBag.SearchString"/>
             <button class="btn btn-outline-dark" type="submit">Cauta</button>
         </div>
     </form>
@@ -10,7 +20,7 @@
     <div class="lista-grupuri">
         <h2>Toate grupurile in care nu ai fost invitat</h2>
 
-        
+
         @foreach (var group in ViewBag.Groups2)
         {
             <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id">
@@ -30,8 +40,8 @@
                     </div>
                 </div>
             </a>
-            <hr />
+            <hr/>
         }
-       
-     </div>
+
+    </div>
 </div>

@@ -11,10 +11,18 @@
 
 
 <div class="main-content">
+    @if (ViewBag.Alerta != null)
+    {
+        <div id="alerta" class="alerta">
+            <p id="alerta-mesaj">@ViewBag.Alerta</p>
+            <button id="alerta-buton" class="icon" onclick="inchide()">x</button>
+        </div>
+
+    }
     <div class="header-channel">
         <h4>@Model.Name</h4>
         <div class="icon-profil">
-            @if( ViewBag.UserCurrent == ViewBag.OwnerId )
+            @if (ViewBag.UserCurrent == ViewBag.OwnerId)
             {
                 <a id="sterge" class="icon" style="cursor:pointer;"><i class="bi bi-trash"></i></a>
             }
@@ -25,7 +33,7 @@
 
 
     <div class="messages">
-        @foreach( var mes in ViewBag.Messages )
+        @foreach (var mes in ViewBag.Messages)
         {
             <div class="info-grup">
                 @* N-avem useri deci aici fa fi o poza random *@
@@ -83,16 +91,16 @@
                                 {
                                     <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
                                 }
-                                else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov")|| mes.FileRPath.EndsWith(".mkv"))
+                                else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov") || mes.FileRPath.EndsWith(".mkv"))
                                 {
                                     <video controls class="poza-colectie">
-                                        <source src="@mes.FileRPath" type="video/mp4" />
+                                        <source src="@mes.FileRPath" type="video/mp4"/>
                                     </video>
                                 }
                                 else if (mes.FileRPath.EndsWith(".mp3"))
                                 {
                                     <audio controls class="poza-colectie">
-                                        <source src="@mes.FileRPath" type="audio/mp3" />
+                                        <source src="@mes.FileRPath" type="audio/mp3"/>
                                     </audio>
                                 }
                             </div>
@@ -107,7 +115,8 @@
 
     <div class="footer-mesaje">
         <div id="progress-bar">
-            <div><p id="procentaj-upload"></p></div>
+            <div>
+                <p id="procentaj-upload"></p></div>
         </div>
         <div>
             <form enctype="multipart/form-data" method="post" asp-controller="Channels" asp-action="Show" class="formular">

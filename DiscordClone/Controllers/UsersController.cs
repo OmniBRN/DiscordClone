@@ -37,7 +37,11 @@ namespace DiscordClone.Controllers
 
             ViewBag.UsersList = users;
 
-           
+            if (TempData.ContainsKey("alerta"))
+            {
+                ViewBag.Alerta = TempData["alerta"].ToString();
+                
+            }
 
             return View();
         }
@@ -105,6 +109,8 @@ namespace DiscordClone.Controllers
                 var roleName = await _roleManager.FindByIdAsync(newRole);
                 await _userManager.AddToRoleAsync(user, roleName.ToString());
 
+                TempData["alerta"] = "Ai schimbat rolul user-ului";
+
                 db.SaveChanges();
 
             }
@@ -137,6 +143,7 @@ namespace DiscordClone.Controllers
                 }
                 
                 db.Users.Remove(user);
+                TempData["alerta"] = "Ai sters user-ul";
                 db.SaveChanges();
             }
             return RedirectToAction("Index");
