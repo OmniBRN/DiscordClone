@@ -51,34 +51,30 @@ public class NotificationsController : BaseController
     public IActionResult New(int id)
     {
         
-        
-        Console.WriteLine(id);
-        
-        var group = db.Groups.Where(o=>o.Id == id).FirstOrDefault();
-        
-        Notification notification = new Notification();
-        notification.type = "Cerere intrare in grup";
-        notification.UserId = group.UserId;
-        notification.ReferencedGroupId = group.Id.ToString();
         var userCurent = _userManager.GetUserId(User);
-        notification.FromUserId = userCurent;
+        var group = db.Groups.Where(o => o.Id == id).FirstOrDefault();
         
-        var t = db.UserGroups.Where(o=> o.GroupId == notification.ReferencedGroupId && o.UserId == notification.FromUserId ).FirstOrDefault();
-        
+        var t = db.UserGroups.Where(o=> o.GroupId == id.ToString() && o.UserId == userCurent).FirstOrDefault();
         if (t != null && t.Culoare != "gray")
         {   
             return Redirect("/Groups/Index/");
         }
-        
-        
+        var moderators = db.UserGroups.Where(o => o.GroupId == id.ToString() && o.Role == "Moderator").ToList();
+        foreach (var moderator in moderators)
+        {
+            Notification notification = new Notification();
+            notification.type = "Cerere intrare in grup";
+            notification.UserId = moderator.UserId;
+            notification.ReferencedGroupId = group.Id.ToString();
+            notification.FromUserId = userCurent;
 
-
-        var numeUser = db.Users.Where(a => a.Id == userCurent).FirstOrDefault().UserName;
-        notification.content = "Utilizatorul " + numeUser + " doreste sa intre in grupul "+ group.Name;
+            var numeUser = db.Users.Where(a => a.Id == userCurent).FirstOrDefault().UserName;
+            notification.content = "Utilizatorul " + numeUser + " doreste sa intre in grupul "+ group.Name;
+            
+            db.Notifications.Add(notification);
+        }
         
-        db.Notifications.Add(notification);
         db.SaveChanges();
-        
 
         return Redirect("/Groups/Index");
        
@@ -128,7 +124,7 @@ public class NotificationsController : BaseController
 
         
         var notification = db.Notifications.Where(o => o.Id == id).FirstOrDefault();
-        
+        var allNotifications = db.Notifications.Where(o => o.FromUserId == notification.FromUserId && o.ReferencedGroupId == notification.ReferencedGroupId);
         var user_intrare = db.UserGroups.Where(o => o.GroupId == notification.ReferencedGroupId && o.UserId == notification.FromUserId).FirstOrDefault();
         if (user_intrare != null)
         {
@@ -138,11 +134,15 @@ public class NotificationsController : BaseController
             db.SaveChanges();
         
             db.Notifications.Remove(notification);
+            db.Notifications.RemoveRange(allNotifications);
+            
             db.SaveChanges();
             TempData["alerta"] = "Ai acceptat cererea de intrare";
             return Redirect("/Notifications/Index");
             
         }
+        
+        
         
         var usergroup = new UserGroup();
         usergroup.GroupId = notification.ReferencedGroupId;
