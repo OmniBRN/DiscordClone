@@ -60,9 +60,18 @@
                     @if (mes.Content != "<<empty>>")
                     {
                         <div class="container-mesaje">
-                            <p class="descriere-grup">
-                                @mes.Content
-                            </p>
+                            @if (mes.Content.StartsWith("https://www.youtube.com"))
+                            {
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <iframe class="embed-responsive-item poza-colectie" height="1000" width="1000" src="@mes.Content" allowfullscreen></iframe>
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="descriere-grup">
+                                    @mes.Content
+                                </p>
+                            }
                             @if (mes.UserId == ViewBag.UserCurrent)
                             {
                                 <div class="editare-inline" id="e @mes.Id">
