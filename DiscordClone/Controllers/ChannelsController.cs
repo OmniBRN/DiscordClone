@@ -69,6 +69,13 @@ namespace DiscordClone.Controllers
             message.TimeStamp = DateTime.Now;
             message.UserId = _userManager.GetUserId(User);
 
+            if (message.Content.StartsWith("https://www.youtube.com"))
+            {
+                var url = message.Content.Substring("https://www.youtube.com/watch?v=".Length);
+                url = "https://www.youtube.com/embed/" + url + "?rel=0";
+                message.Content = url;
+            }
+
             if( ModelState.IsValid )
             {
                 // se fac chestii
