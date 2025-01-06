@@ -170,6 +170,7 @@ namespace DiscordClone.Controllers
                         combined.Message.TimeStamp,
                         combined.Message.UserId,
                         combined.Message.WasEdited,
+                        combined.Message.EditTimeStamp,
                         UserName = combined.User.UserName,
                         combined.User.ProfilePicture,
                         combined.Message.FileRPath,
@@ -207,7 +208,8 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public IActionResult Kick(string UserId, string GroupId, int ChannelId)
         {
-            var userGroup = db.UserGroups.Where(o => o.GroupId == GroupId && o.UserId == UserId).FirstOrDefault();
+            var userGroup = db.UserGroups.Where(o => o.GroupId == GroupId.ToString() && o.UserId == UserId).FirstOrDefault();
+            
             
             int nr_membri = db.UserGroups.Count(o => o.GroupId == GroupId);
             

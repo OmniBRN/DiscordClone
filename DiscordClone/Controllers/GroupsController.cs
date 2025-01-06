@@ -73,7 +73,7 @@ namespace DiscordClone.Controllers
             
 
             var userId = _userManager.GetUserId(User);
-            var allGroupsImin = db.UserGroups.Where(o => userId == o.UserId).Select(o => o.GroupId).ToList();
+            var allGroupsImin = db.UserGroups.Where(o => userId == o.UserId && o.Culoare != "gray").Select(o => o.GroupId).ToList();
             var groups = db.Groups.Where(o => !allGroupsImin.Contains(o.Id.ToString())).ToList();
             var groupsIds = groups.Select(o => o.Id).ToList();
             

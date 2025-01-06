@@ -63,14 +63,14 @@ public class NotificationsController : BaseController
         var userCurent = _userManager.GetUserId(User);
         notification.FromUserId = userCurent;
         
-        var t = db.UserGroups.Where(o=> o.GroupId == notification.ReferencedGroupId && o.UserId == notification.FromUserId).FirstOrDefault();
-        if (t != null)
+        var t = db.UserGroups.Where(o=> o.GroupId == notification.ReferencedGroupId && o.UserId == notification.FromUserId ).FirstOrDefault();
+        
+        if (t != null && t.Culoare != "gray")
         {   
-            //Mai tarziu trebuie sa adaugam o alerta care sa spuna ca ala care a facut cererea este dezabilitat
             return Redirect("/Groups/Index/");
         }
         
-        //Facem IF pt cazul in care asta este Admin ca pur si simplu sa intre, fara sa trimita notificare;
+        
 
 
         var numeUser = db.Users.Where(a => a.Id == userCurent).FirstOrDefault().UserName;
@@ -101,13 +101,6 @@ public class NotificationsController : BaseController
     [HttpPost]
     public IActionResult Accept(int id)
     {
-      
-
-        
-        var notification = db.Notifications.Where(o => o.Id == id).FirstOrDefault();
-        var usergroup = new UserGroup();
-        usergroup.GroupId = notification.ReferencedGroupId;
-        usergroup.UserId = notification.FromUserId;
         string[] colors = new string[]
         {
             "#F94144", // Vibrant Red
@@ -132,6 +125,29 @@ public class NotificationsController : BaseController
         };
         Random random = new Random();
         int randomNumber = random.Next(colors.Length);
+
+        
+        var notification = db.Notifications.Where(o => o.Id == id).FirstOrDefault();
+        
+        var user_intrare = db.UserGroups.Where(o => o.GroupId == notification.ReferencedGroupId && o.UserId == notification.FromUserId).FirstOrDefault();
+        if (user_intrare != null)
+        {
+            user_intrare.Culoare = colors[randomNumber];
+            user_intrare.Role = "User";
+            
+            db.SaveChanges();
+        
+            db.Notifications.Remove(notification);
+            db.SaveChanges();
+            TempData["alerta"] = "Ai acceptat cererea de intrare";
+            return Redirect("/Notifications/Index");
+            
+        }
+        
+        var usergroup = new UserGroup();
+        usergroup.GroupId = notification.ReferencedGroupId;
+        usergroup.UserId = notification.FromUserId;
+       
         usergroup.Culoare = colors[randomNumber];
         usergroup.Role = "User";
         db.UserGroups.Add(usergroup);

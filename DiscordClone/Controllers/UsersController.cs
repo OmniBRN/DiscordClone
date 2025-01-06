@@ -103,7 +103,17 @@ namespace DiscordClone.Controllers
                     // Scoatem userul din rolurile anterioare
                     await _userManager.RemoveFromRoleAsync(user, role.Name);
                 }
-                // Adaugam noul rol selectat
+/*
+                var admin = "2c5e174e-3b0e-446f-86af-483d56fd7210";
+                var nr_admin = db.UserRoles.Where(ur => ur.RoleId == admin).ToList();
+                var user_ = db.UserRoles.Where(ur => ur.UserId == id).FirstOrDefault();
+
+                if (nr_admin.Count == 1 && user_.RoleId == admin)
+                {
+                    TempData["alerta"] = "Aplicatia noastra are nevoie de ( un ) admin";
+                    return RedirectToAction("Index");
+                }*/
+                
                 var roleName = await _roleManager.FindByIdAsync(newRole);
                 await _userManager.AddToRoleAsync(user, roleName.ToString());
 
@@ -123,6 +133,9 @@ namespace DiscordClone.Controllers
             {
                 var channels = db.Channels.Where(c => c.UserId == user.Id).ToList();
                 var groups = db.Groups.Where(c => c.UserId == user.Id).ToList();
+                var userGroups = db.UserGroups.Where(c => c.UserId == user.Id).ToList();
+                
+                db.UserGroups.RemoveRange(userGroups);
                 
                 if(channels != null)
                 {

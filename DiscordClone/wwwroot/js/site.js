@@ -121,6 +121,7 @@ if(kick_btn)
     kick_btn.addEventListener("click", () => {
         kick.style.display = "block";
         fog.style.display = "block";
+        fog.style.zIndex = 1;
     })
 }
 

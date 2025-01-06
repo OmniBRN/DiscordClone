@@ -35,7 +35,7 @@ public class BaseController : Controller
             
           
             var userIdVIEWBAG = _userManager.GetUserId(User); 
-            var usergroupsVIEWBAG =  db.UserGroups.Where(o=>userIdVIEWBAG == o.UserId).Select(o=>o.GroupId).ToList();
+            var usergroupsVIEWBAG =  db.UserGroups.Where(o=>userIdVIEWBAG == o.UserId && o.Culoare != "gray").Select(o=>o.GroupId).ToList();
             var groupsVIEWBAG = db.Groups.Where(o => usergroupsVIEWBAG.Contains(o.Id.ToString()));
             var userVIEWBAG = db.Users.Find(userIdVIEWBAG);
             if(userVIEWBAG != null)

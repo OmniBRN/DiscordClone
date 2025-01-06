@@ -97,7 +97,7 @@ namespace DiscordClone.Controllers
             
             oldMessage.Content = NewMessage.Content;
             oldMessage.WasEdited = true;
-            oldMessage.TimeStamp = DateTime.Now;
+            oldMessage.EditTimeStamp = DateTime.Now;
             db.SaveChanges();
             return Redirect($"/Channels/Index/{NewMessage.MessageChannelId}");
         }

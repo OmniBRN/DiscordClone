@@ -51,11 +51,11 @@
                     }
                     else if (mes.WasEdited != true && mes.Color == "gray")
                     {
-                        <p style="color: @mes.Color" class="nume=grup">@mes.UserName (Left) </p>
+                        <p style="color: @mes.Color" class="nume-grup">@mes.UserName (Left) </p>
                     }
                     else
                     {
-                        <p style="color: @mes.Color" class="nume=grup">@mes.UserName (Edited) (Left) </p>
+                        <p style="color: @mes.Color" class="nume-grup">@mes.UserName (Edited) (Left) </p>
                     }
                     @if (mes.Content != "<<empty>>")
                     {
@@ -176,7 +176,15 @@
                         </div>
                     }
                 </div>
-                <p class="time-stamp">@mes.TimeStamp</p>
+                @if (mes.WasEdited == true)
+                {
+                    <p class="time-stamp">@mes.EditTimeStamp</p>
+                }
+                else
+                {
+                    <p class="time-stamp">@mes.TimeStamp</p>
+                }
+                
             </div>
 
         }
@@ -208,8 +216,9 @@
     @foreach (var member in ViewBag.Members)
     {
 
-
-        <div class="member">
+        if (member.Culoare != "gray")
+        {
+             <div class="member">
             <img src=@member.ProfilePicture class="poza-grup"/>
             <p style="color:@member.Culoare"class="nume-grup">@member.UserName </p>
             @if(ViewBag.UserCurrentRole=="Moderator"&&member.UserId!=ViewBag.UserCurrent&&member.UserId!=ViewBag.OwnerId)
@@ -225,7 +234,28 @@
                                 <i class="bi bi-arrow-up-circle"></i>
                             </button>
                         </form>
-
+                        
+                        <button id="kick-button" type="submit" class="icon">
+                            <i class="bi bi-x-circle"></i>
+                        </button>
+                   
+                        
+                        <div id="kick" class="are-you-sure-modal" style="display: none;">
+                            <h1>Esti pe cale sa dai kick unui utilizator</h1>
+                            <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
+                            <form asp-controller="Channels" asp-action="Kick" method="post">
+                                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                                <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                                <input type="hidden" value="@member.UserId" name="UserId"/>
+                                <div class="footer">
+                                    <button type="submit" class="create">
+                                        Da
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        
                     }
                     else
                     {
@@ -240,10 +270,7 @@
 
                     }
                    
-                        <button id="kick-button" type="submit" class="icon">
-                            <i class="bi bi-x-circle"></i>
-                        </button>
-                   
+                       
 
                     
 
@@ -271,23 +298,12 @@
                     </div>
                 }
 
-            <div id="kick" class="are-you-sure-modal" style="display: none;">
-                <h1>Esti pe cale sa dai kick unui utilizator</h1>
-                <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
-                <form asp-controller="Channels" asp-action="Kick" method="post">
-                    <input type="hidden" value="@Model.GroupId" name="GroupId"/>
-                    <input type="hidden" value="@Model.Id" name="ChannelId"/>
-                    <input type="hidden" value="@member.UserId" name="UserId"/>
-                    <div class="footer">
-                        <button type="submit" class="create">
-                            Da
-                        </button>
-                    </div>
-                </form>
-            </div>
+           
             
 
         </div>
+        }
+       
     }
 
 </div>
