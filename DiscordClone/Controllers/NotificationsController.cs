@@ -83,6 +83,8 @@ public class NotificationsController : BaseController
         return Redirect("/Groups/Index");
        
     }
+    
+    
 
     [HttpPost]
     public IActionResult Delete(int id)

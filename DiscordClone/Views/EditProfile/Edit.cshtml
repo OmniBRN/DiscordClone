@@ -1,0 +1,28 @@
+﻿@model DiscordClone.Models.ApplicationUser
+
+
+<div class="modal">
+    <form asp-controller="EditProfile" asp-action="Edit" method="post" asp-route-id="@Model.Id">
+        <label asp-for="ProfilePicture" class="upload">
+            <img id="poza-editare-profil" src="@ViewBag.fisier" />
+            <input id="ProfilePicture" asp-for="ProfilePicture" type="file"/>
+            <span><i class="bi bi-camera"></i></span>
+        </label>
+        <i class="bi bi-person"></i>
+        <label asp-for="UserName">Nume utilizator</label>
+        <br />
+        <input  asp-for="UserName" class="server-name" />
+        <br />
+
+        <i class="bi bi-envelope"></i>
+        <label asp-for="Email">Email utilizator</label>
+        <br />
+        <input  asp-for="Email" class="server-name" />
+        <br />
+        <button type="submit" class="btn btn-sm btn-success">Editare user</button>
+    </form>
+        <form asp-controller="EditProfile" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+            <button type="submit" class="btn btn-sm btn-danger">Sterge</button>
+        </form>
+</div>
+

@@ -1,0 +1,36 @@
+﻿@model DiscordClone.Models.Group;
+
+@if (User.IsInRole("Admin") || User.IsInRole("Moderator") || User.IsInRole("User"))
+{
+    <div class="modal">
+        <h1>Cerere de intrare in grup</h1>
+        <div>
+            <img src="@Model.ImageRPath" class="poza-grup">
+            <br/>
+            <div class="info-grup cerere-grup">
+                <p class="group-name">Nume grup: @Model.Name</p>
+                <br/>
+                <p class="descriere-grup">Descriere grup: @Model.Description</p>
+                <br/>
+                @* Cred ca pentru asta avem noi User*@
+                <p>Detinatorul grupului: @ViewBag.Owner</p>
+            </div>
+            <br/>
+            @* Aici o sa fie pus un post request la notificarile ownerului cu id-ul persoanei care a facut requestul *@
+            <form method="post" asp-controller="Notifications" asp-action="New" asp-route-id="@Model.Id">
+            
+                <button class="btn btn-success">Request to join</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="modal">
+        <h1>Nu esti logat</h1>
+        <p>Pentru a vedea detalii legat de grup este nevoie sa te log-ezi</p>
+        <a asp-area="Identity" asp-page="/Account/Register">
+            <button class="create">Log in</button>
+        </a>
+    </div>
+}

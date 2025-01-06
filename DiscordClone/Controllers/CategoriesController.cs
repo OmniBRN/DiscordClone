@@ -47,6 +47,57 @@ public class CategoriesController : BaseController
         return View();
         
     }
+    
+    [HttpPost]
+    public async Task<ActionResult> UploadFile(IFormFile file)
+    {
+        string nume = "";
+        string folder = "";
+        if (file != null)
+        {
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png"};
+            var fileExtension = Path.GetExtension(file.FileName).ToLower();
+            nume = Path.ChangeExtension(file.FileName, null);
+            nume = nume.Replace(" ", "");
+            nume += Guid.NewGuid().ToString("N") + fileExtension;
+                
+            if (!allowedExtensions.Contains(fileExtension))
+            {
+                ModelState.AddModelError("ChannelImage",
+                    "Fișierul trebuie să fie o imagine (jpg, jpeg, png).");
+                   
+            }
+
+            folder = Guid.NewGuid().ToString("N");
+                
+            var folderName = Path.Combine(_env.WebRootPath , "temp_" + folder);
+            if(!Directory.Exists(folderName))
+                Directory.CreateDirectory(folderName);
+            // Cale stocare
+            var storagePath = Path.Combine(folderName, nume);
+            var databaseFileName = "/images/"  + nume;
+            TempData["fisier"] = storagePath;
+            TempData["folder"] = folder;
+
+            // Salvare fișier
+            using (var fileStream = new FileStream(storagePath, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+                
+            return new JsonResult(new { filePath = databaseFileName }) { StatusCode = 200 };
+                
+        }       
+
+        TempData["fisier"] = nume;
+        TempData["folder"] = folder;
+            
+        return BadRequest(new { error = "No file was uploaded." });
+            
+            
+        return new EmptyResult();
+    }
+
 
     public ActionResult New()
     {
@@ -86,9 +137,6 @@ public class CategoriesController : BaseController
     [HttpPost]
     public ActionResult Edit(int id, Category requestCategory)
     {
-        
-
-        
         Category category = db.Categories.Find(id);
 
         if (ModelState.IsValid)

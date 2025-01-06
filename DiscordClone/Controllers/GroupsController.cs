@@ -12,7 +12,7 @@ namespace DiscordClone.Controllers
     // Le decomentam la testare
 
 
-    [Authorize]
+    //[Authorize]
 
 
     public class GroupsController : BaseController
@@ -63,7 +63,7 @@ namespace DiscordClone.Controllers
 
         // Se afiseaza lista tuturor grupurilor in care nu te afli + categoria lor
         // Acum se afiseaza toate grupurile, modific filtrarea mai incolo
-        [Authorize(Roles = "User, Moderator, Admin")]
+        //[Authorize(Roles = "User, Moderator, Admin")]
         public IActionResult Index()
         {
 
@@ -131,7 +131,7 @@ namespace DiscordClone.Controllers
 
             Group group = new Group();
 
-            group.Categ = ViewBag.Categories ?? GetAllCategories();
+            group.Categ = GetAllCategories();
             ViewBag.fisier = "/images/defaultGroup.png";
             return View(group);
         }
@@ -141,7 +141,8 @@ namespace DiscordClone.Controllers
         public async Task<IActionResult> New(Group group, IFormFile ImageRPath)
         {
 
-
+            ViewBag.fisier = "/images/defaultGroup.png";
+            group.Categ= GetAllCategories();
             ModelState.Remove(nameof(group.ImageRPath));
 
             if (TempData.ContainsKey("fisier") && TempData["fisier"] != null)
@@ -270,6 +271,7 @@ namespace DiscordClone.Controllers
 
             }
 
+            ViewBag.fisier = group.ImageRPath;
             group.Categ = GetAllCategories();
             return View(group);
 
@@ -287,30 +289,21 @@ namespace DiscordClone.Controllers
             
             
             var group = db.Groups.Where(o => o.Id == editedGroup.Id).FirstOrDefault();
-            
-            if (ImageRPath != null)
+            if (TempData.ContainsKey("fisier") && TempData["fisier"] != null)
             {
-                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png" };
-                var fileExtension = Path.GetExtension(ImageRPath.FileName).ToLower();
-                if (!allowedExtensions.Contains(fileExtension))
-                {
-                    ModelState.AddModelError("Image",
-                        "Fișierul trebuie să fie o imagine (jpg, jpeg, png)");
-                    return View(group);
-                }
+                var numeFisier = TempData["fisier"].ToString();
+                TempData["fisier"] = null;
+                var numeFolder = Path.Combine(_env.WebRootPath, "temp_" + _userManager.GetUserId(User));
+                var file = new FileInfo(Path.Combine(numeFolder, numeFisier));
+                file.MoveTo(Path.Combine(_env.WebRootPath, "images", numeFisier));
 
                 // Cale stocare
-                var storagePath = Path.Combine(_env.WebRootPath, "images", ImageRPath.FileName);
-                var databaseFileName = "/images/" + ImageRPath.FileName;
-
-                // Salvare fișier
-                using (var fileStream = new FileStream(storagePath, FileMode.Create))
-                {
-                    await ImageRPath.CopyToAsync(fileStream);
-                }
-
+                
+                var databaseFileName = "/images/" + numeFisier;
+                
                 ModelState.Remove(nameof(group.ImageRPath));
                 group.ImageRPath = databaseFileName;
+
             }
             else
             {

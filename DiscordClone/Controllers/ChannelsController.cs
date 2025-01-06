@@ -3,6 +3,7 @@ using DiscordClone.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace DiscordClone.Controllers
@@ -124,7 +125,7 @@ namespace DiscordClone.Controllers
         
         public IActionResult Index( int id)
         {
-         
+            ViewBag.Categories = GetAllCategories();
             var userId = _userManager.GetUserId(User);
             var folderName = _env.WebRootPath + "/temp_" + userId;
             if(Directory.Exists(folderName))
@@ -207,15 +208,34 @@ namespace DiscordClone.Controllers
         public IActionResult Kick(string UserId, string GroupId, int ChannelId)
         {
             var userGroup = db.UserGroups.Where(o => o.GroupId == GroupId && o.UserId == UserId).FirstOrDefault();
-            db.UserGroups.Remove(userGroup);
+            
+            int nr_membri = db.UserGroups.Count(o => o.GroupId == GroupId);
+            
+            
+            if (userGroup.Role == "Moderator" )
+            {
+                var nr_moderatori = db.UserGroups.Count(o => o.GroupId == GroupId && o.Role == "Moderator");
+                if (nr_moderatori == 1 && nr_membri != 1 )
+                {
+                    TempData["alerta"] = "Grupul are nevoie de minim un alt moderator pentru a iesi";
+                    return Redirect("/Channels/Index/" + ChannelId);
+                }
+            }
+            userGroup.Culoare = "gray";
+            ////Astia cu gri sunt fosti membri si trebuie sa le apara mesajele
+
+           
+            
+            //db.UserGroups.Remove(userGroup);
             db.SaveChanges();
             
-            int nr_membri = db.UserGroups.Count(O => O.GroupId == GroupId);
-
-            if (nr_membri == 0)
+            
+            
+            if (nr_membri == 1)
             {
                 var group = db.Groups.Where(o => o.Id.ToString() == GroupId).FirstOrDefault();
                 var channels = db.Channels.Include("Messages").Where(o => o.GroupId.ToString() == GroupId).FirstOrDefault();
+                var grupuri_useri = db.UserGroups.Where(o => o.GroupId == GroupId && o.UserId == UserId).FirstOrDefault();
                 if (group == null)
                 {
                     TempData["alerta"] = "Grupul pe care incerci sa-l stergi nu exista";
@@ -228,6 +248,7 @@ namespace DiscordClone.Controllers
                     System.IO.File.Delete(filePath);
                 }
 
+                db.UserGroups.Remove(grupuri_useri);
                 db.Groups.Remove(group);
                 //Am facut un check sa vad daca este null channels ca altfel da eroare
                 if (channels != null)
@@ -297,6 +318,25 @@ namespace DiscordClone.Controllers
             db.SaveChanges();
             TempData["alerta"] = "Retrogradarea s-a efectuat cu succes";
             return Redirect("/Channels/Index/" + ChannelId);
+        }
+        
+        [NonAction]
+        public IEnumerable<SelectListItem> GetAllCategories()
+        {
+            var selectList = new List<SelectListItem>();
+            var categories = from cat in db.Categories
+                select cat;
+
+            foreach (var category in categories)
+            {
+                var listItem = new SelectListItem();
+                listItem.Value = category.Id.ToString();
+                listItem.Text = category.Name;
+
+                selectList.Add(listItem);
+            }
+
+            return selectList;
         }
 
 

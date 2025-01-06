@@ -3,6 +3,7 @@ using DiscordClone.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DiscordClone.Controllers;
 
@@ -26,12 +27,13 @@ public class BaseController : Controller
 
     public override void OnActionExecuting(ActionExecutingContext context)
     {
+        ViewBag.Categ = GetAllCategories();
+        ViewBag.fisier = "/images/defaultGroup.png";
         base.OnActionExecuting(context);
-
         if (User.Identity.IsAuthenticated)
         {
             
-            
+          
             var userIdVIEWBAG = _userManager.GetUserId(User); 
             var usergroupsVIEWBAG =  db.UserGroups.Where(o=>userIdVIEWBAG == o.UserId).Select(o=>o.GroupId).ToList();
             var groupsVIEWBAG = db.Groups.Where(o => usergroupsVIEWBAG.Contains(o.Id.ToString()));
@@ -43,7 +45,30 @@ public class BaseController : Controller
         }
         else
         {
+            ViewBag.Categories = GetAllCategories();
+            ViewBag.fisier = "/images/defaultGroup.png";
              Redirect("/Identity/Account/Login");
         }
     }
+    
+    [NonAction]
+    public IEnumerable<SelectListItem> GetAllCategories()
+    {
+        var selectList = new List<SelectListItem>();
+        var categories = from cat in db.Categories
+            select cat;
+
+        foreach (var category in categories)
+        {
+            var listItem = new SelectListItem();
+            listItem.Value = category.Id.ToString();
+            listItem.Text = category.Name;
+
+            selectList.Add(listItem);
+        }
+
+        return selectList;
+    }
+    
+   
 }

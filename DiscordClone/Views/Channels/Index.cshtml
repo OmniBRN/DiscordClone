@@ -41,13 +41,21 @@
                 @* N-avem useri deci aici fa fi o poza random *@
                 <img src="@mes.ProfilePicture" class="poza-grup"></img>
                 <div class="detalii-grup">
-                    @if(mes.WasEdited != true)
+                    @if(mes.WasEdited != true && mes.Color != "gray")
                     {
                         <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
                     }
-                    else
+                    else if( mes.WasEdited == true && mes.Color != "gray")
                     {
                         <p style="color:@mes.Color" class="nume-grup">@mes.UserName (Edited)</p>
+                    }
+                    else if (mes.WasEdited != true && mes.Color == "gray")
+                    {
+                        <p style="color: @mes.Color" class="nume=grup">@mes.UserName (Left) </p>
+                    }
+                    else
+                    {
+                        <p style="color: @mes.Color" class="nume=grup">@mes.UserName (Edited) (Left) </p>
                     }
                     @if (mes.Content != "<<empty>>")
                     {
@@ -98,7 +106,7 @@
                             <div class="detalii-grup">
                                 @if (mes.FileRPath.EndsWith(".jpg") || mes.FileRPath.ToLower().EndsWith(".png") || mes.FileRPath.ToLower().EndsWith(".jpeg"))
                                 {
-                                    @if (mes.UserId == ViewBag.UserCurrent)
+                                    @if (mes.UserId == ViewBag.UserCurrent || ViewBag.UserCurrentRole == "Moderator")
                                     {
                                         <div style="display: flex;">
                                             <img src=@mes.FileRPath class="poza-colectie" id=@mes.Id onClick="poza_mare('@mes.Id', '@mes.FileRPath')"/>
@@ -118,7 +126,7 @@
                                 }
                                 else if (mes.FileRPath.EndsWith(".mp4") || mes.FileRPath.EndsWith(".mov") || mes.FileRPath.EndsWith(".mkv"))
                                 {
-                                    @if (mes.UserId == ViewBag.UserCurrent)
+                                    @if (mes.UserId == ViewBag.UserCurrent || ViewBag.UserCurrentRole == "Moderator")
                                     {
                                         <div style="display: flex;">
                                             <video controls class="poza-colectie">
@@ -134,7 +142,7 @@
                                     }
                                     else
                                     {
-
+                                    
                                         <video controls class="poza-colectie">
                                             <source src="@mes.FileRPath" type="video/mp4"/>
                                         </video>
@@ -144,7 +152,7 @@
                                 }
                                 else if (mes.FileRPath.EndsWith(".mp3"))
                                 {
-                                    @if (mes.UserId == ViewBag.UserCurrent)
+                                    @if (mes.UserId == ViewBag.UserCurrent || ViewBag.UserCurrentRole == "Moderator")
                                     {
                                         <div style="display: flex;">
                                             <audio controls class="poza-colectie">
@@ -237,24 +245,13 @@
                         </button>
                    
 
-                    <div id="kick" class="are-you-sure-modal" style="display: none;">
-                        <h1>Esti pe cale sa dai kick unui utilizator</h1>
-                        <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
-                        <form asp-controller="Channels" asp-action="Kick" method="post">
-                            <input type="hidden" value="@Model.GroupId" name="GroupId"/>
-                            <input type="hidden" value="@Model.Id" name="ChannelId"/>
-                            <input type="hidden" value="@member.UserId" name="UserId"/>
-                            <button type="submit" class="icon">
-                                Da
-                            </button>
-                        </form>
-                    </div>
+                    
 
                 </div>
             }
                 @if (member.UserId == ViewBag.UserCurrent)
                 {
-                    <button id="leave-button" type="submit" class="icon">
+                    <button id="leave-button" type="submit" style="z-index: 0;" class="icon">
                         <i class="bi bi-box-arrow-left"></i>
                     </button>
 
@@ -265,12 +262,29 @@
                             <input type="hidden" value="@Model.GroupId" name="GroupId"/>
                             <input type="hidden" value="@Model.Id" name="ChannelId"/>
                             <input type="hidden" value="@member.UserId" name="UserId"/>
-                            <button type="submit" class="icon">
-                                Da
-                            </button>
+                            <div class="footer">
+                                <button type="submit" class="create">
+                                    Da
+                                </button>
+                            </div>
                         </form>
                     </div>
                 }
+
+            <div id="kick" class="are-you-sure-modal" style="display: none;">
+                <h1>Esti pe cale sa dai kick unui utilizator</h1>
+                <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
+                <form asp-controller="Channels" asp-action="Kick" method="post">
+                    <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                    <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                    <input type="hidden" value="@member.UserId" name="UserId"/>
+                    <div class="footer">
+                        <button type="submit" class="create">
+                            Da
+                        </button>
+                    </div>
+                </form>
+            </div>
             
 
         </div>

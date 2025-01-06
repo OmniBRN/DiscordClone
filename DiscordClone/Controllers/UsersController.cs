@@ -62,8 +62,6 @@ namespace DiscordClone.Controllers
 
         public async Task<ActionResult> Edit(string id)
         {
-           
-
             
             ApplicationUser user = db.Users.Find(id);
 
@@ -93,10 +91,10 @@ namespace DiscordClone.Controllers
 
             if (ModelState.IsValid)
             {
-                user.UserName = newData.UserName;
+               /* user.UserName = newData.UserName;
                 user.Email = newData.Email;
                 user.ProfilePicture = newData.ProfilePicture;
-
+*/
                 // Cautam toate rolurile din baza de date
                 var roles = db.Roles.ToList();
 
@@ -120,7 +118,7 @@ namespace DiscordClone.Controllers
         [HttpPost]
         public IActionResult Delete(string id)
         {
-            var user = db.Users.Include("UserGroups").Include("Messages").Include("Notifications").Where( u => u.Id == id).FirstOrDefault();
+            var user = db.Users.Include("Notifications").Where( u => u.Id == id).FirstOrDefault();
             if(user != null)
             {
                 var channels = db.Channels.Where(c => c.UserId == user.Id).ToList();

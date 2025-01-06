@@ -1,4 +1,10 @@
 ﻿
+<div id="fog"></div>
+
+<div id="popOutShow" style="display: none;">
+    <partial name="NeedAccount"></partial>
+</div>
+
 <div class="main-content">
 
     @if (ViewBag.Alerta != null)
@@ -13,7 +19,14 @@
     <form method="get">
         <div class="header">
             <input type="text" placeholder="Cauta un Grup" class="search-bar" name="search" value="@ViewBag.SearchString"/>
-            <button class="btn btn-outline-dark" type="submit">Cauta</button>
+            @if (User.IsInRole("User") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                <button class="btn btn-outline-dark" type="submit">Cauta</button>
+            }
+            else
+            {
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            }
         </div>
     </form>
 
@@ -23,24 +36,48 @@
 
         @foreach (var group in ViewBag.Groups2)
         {
-            <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id">
-                <div class="grup">
-                    <div class="info-grup">
-                        <img src=@group.ImageRPath class="poza-grup"></img>
-                        <div class="detalii-grup">
-                            <p class="nume-grup">@group.Name</p>
-                            <p class="descriere-grup">
-                                @group.Description
-                            </p>
+            @if (User.IsInRole("User") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
+            {
+                <a asp-controller="Groups" asp-action="Show" asp-route-id="@group.Id">
+                    <div class="grup">
+                        <div class="info-grup">
+                            <img src=@group.ImageRPath class="poza-grup"></img>
+                            <div class="detalii-grup">
+                                <p class="nume-grup">@group.Name</p>
+                                <p class="descriere-grup">
+                                    @group.Description
+                                </p>
+                            </div>
+                            @* <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" > <button class="btn-success">[TEMPORARY] Edit @group.Name</button></a> *@
+                            @* <form method="post" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id"> *@
+                            @*     <button class="btn-danger" type="submit">[TEMPORARY] Delete @group.Name</button> *@
+                            @* </form> *@
                         </div>
-                        @* <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" > <button class="btn-success">[TEMPORARY] Edit @group.Name</button></a> *@
-                        @* <form method="post" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id"> *@
-                        @*     <button class="btn-danger" type="submit">[TEMPORARY] Delete @group.Name</button> *@
-                        @* </form> *@
                     </div>
-                </div>
-            </a>
-            <hr/>
+                </a>
+                <hr/>
+            }
+            else
+            {
+                <a onclick="cont()">
+                    <div class="grup">
+                        <div class="info-grup">
+                            <img src=@group.ImageRPath class="poza-grup"></img>
+                            <div class="detalii-grup">
+                                <p class="nume-grup">@group.Name</p>
+                                <p class="descriere-grup">
+                                    @group.Description
+                                </p>
+                            </div>
+                            @* <a asp-controller="Groups" asp-action="Edit" asp-route-id="@group.Id" > <button class="btn-success">[TEMPORARY] Edit @group.Name</button></a> *@
+                            @* <form method="post" asp-controller="Groups" asp-action="Delete" asp-route-id="@group.Id"> *@
+                            @*     <button class="btn-danger" type="submit">[TEMPORARY] Delete @group.Name</button> *@
+                            @* </form> *@
+                        </div>
+                    </div>
+                </a>
+                <hr/>
+            }
         }
 
     </div>

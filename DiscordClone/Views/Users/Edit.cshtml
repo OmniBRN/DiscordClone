@@ -4,10 +4,10 @@
 <div class="modal">
     <form asp-controller="Users" asp-action="Edit" method="post" asp-route-id="@Model.Id">
 
-        <label readonly asp-for="ProfilePicture" class="upload">
-            <input asp-for="ProfilePicture" type="file" readonly />
-            <span><i class="bi bi-camera"></i></span>
-        </label>
+        
+        <img src="@Model.ProfilePicture" class="poza-grup"></img>
+            <br/>
+        
 
         <i class="bi bi-person"></i>
         <label asp-for="UserName">Nume utilizator</label>

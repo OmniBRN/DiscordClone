@@ -1,11 +1,12 @@
 ﻿@model DiscordClone.Models.Group
 
 
-<div class="modal">
+<div id="modal-editare" class="modal" style="display: none;">
     <h1>Edit Your Server</h1>
     <form enctype="multipart/form-data" method="post" asp-action="Edit" asp-controller="Groups">
         <label asp-for="ImageRPath" class="upload">
-            <input asp-for="ImageRPath" type="file" />
+            <img id="uploadedImage-edit" src="@ViewBag.fisier">
+            <input asp-for="ImageRPath" id="edit" type="file" />
             <span><i class="bi bi-camera"></i></span>
         </label>
         <label asp-for="Name"> Numele Server-ului</label>
@@ -23,7 +24,16 @@
         <br />
         <label asp-for="CategoryId">Categoria</label>
         <br />
-        <select asp-for="CategoryId" asp-items="Model.Categ" class="server-name"><option value="">Alegeti Categoria</option></select>
+
+        <select name="CategoryId" class="server-name">
+
+            @foreach (var item in ViewBag.Categories)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+
+        </select>
+        
         <span asp-validation-for="CategoryId" class="text-danger"></span>
         <div class="footer">
             @* <button class="back" id="inchide">Back</button> *@
@@ -31,6 +41,3 @@
         </div>
     </form>
 </div>
-
-
-        @* asp-controller="Groups" asp-action="Edit" asp-route-id="@Model.GroupId"  *@

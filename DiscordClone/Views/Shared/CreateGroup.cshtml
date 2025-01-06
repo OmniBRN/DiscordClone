@@ -1,34 +1,45 @@
 ﻿@model DiscordClone.Models.Group
 
 
-<div class="modal">
-    <h1>Customize Your Server</h1>
+
+<div id="modal-creare" class="modal" style="display:none;">
+    <h1>Creaza un server</h1>
     <form enctype="multipart/form-data" method="post" asp-action="New" asp-controller="Groups">
         <label asp-for="ImageRPath" class="upload">
-            <input asp-for="ImageRPath" type="file" />
+            <img id="uploadedImage" src="@ViewBag.fisier">
+            <input asp-for="ImageRPath" id="ImageRPath" type="file" />
             <span><i class="bi bi-camera"></i></span>
         </label>
         <label asp-for="Name"> Numele Server-ului</label>
         <br />
         <input type="text"
                class="server-name"
-               asp-for = "Name"
+               asp-for="Name"
                placeholder="Server Name" />
-               <span asp-validation-for="Name" class="text-danger"></span>
-               <br /><br />
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <br /><br />
         <label asp-for="Description">Descrierea Server-ului</label>
-       <br />
-       <textarea class="form-control server-name" asp-for="Description"></textarea>
-       <span asp-validation-for="Description" class="text-danger"></span>
-       <br />
-       <label asp-for="CategoryId">Categoria</label>
-       <br />
-        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="server-name"><option value="">Alegeti Categoria</option></select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span> 
+        <br />
+        <textarea class="form-control server-name" asp-for="Description"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+        <br />
+        <label asp-for="CategoryId">Categoria</label>
+        <br />
+        @*<select asp-for="CategoryId" asp-items="Model.Categ" class="server-name"><option value="">Alegeti Categoria</option></select>*@
+
+        <select name="CategoryId" class="server-name">
+
+            @foreach (var item in ViewBag.Categ)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+
+        </select>
+
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
         <div class="footer">
             @* <button class="back" id="inchide">Back</button> *@
             <button class="create" type="submit">Create</button>
         </div>
     </form>
 </div>
-<div id="fog"></div> 

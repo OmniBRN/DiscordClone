@@ -10,7 +10,8 @@
         <form enctype="multipart/form-data" id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <label asp-for="Input.ProfilePicture" class="upload">
-                <input asp-for="Input.ProfilePicture" type="file" />
+                <img id="profil-provizoriu" src="@TempData["fisier"]" />
+                <input asp-for="Input.ProfilePicture" id="Input_ProfilePicture" type="file"/>
                 <span><i class="bi bi-camera"></i></span>
             </label>
             

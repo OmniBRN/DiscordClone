@@ -5,7 +5,8 @@
     <h1>Edit Your Server</h1>
     <form enctype="multipart/form-data" method="post" asp-action="Edit" asp-controller="Groups">
         <label asp-for="ImageRPath" class="upload">
-            <input asp-for="ImageRPath" type="file" />
+            <img id="uploadedImage-edit" src="@ViewBag.fisier" alt="Uploaded Image">
+            <input asp-for="ImageRPath" id="ImageRPath-edit" type="file" />
             <span><i class="bi bi-camera"></i></span>
         </label>
         <label asp-for="Name"> Numele Server-ului</label>

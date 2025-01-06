@@ -475,6 +475,7 @@ input:focus {
     cursor: pointer;
     margin-left: 5px;
     justify-content: flex-start;
+    image-rendering: smooth;
 }
 
 .profil-user{
@@ -603,6 +604,7 @@ input:focus {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 7;
+    text-align: center;
 }
 
 
@@ -683,8 +685,8 @@ input:focus {
 .footer {
     margin-top: 10px;
     display: flex;
-    justify-content: space-between;
-    align-self:flex-end;
+    justify-content: center;
+    /*align-self:flex-end;*/
 }
 
 .register{
@@ -710,7 +712,8 @@ input:focus {
 }
 
 .footer .create {
-    background-color: #5865F2;
+    background-color: var(--forth);
+    
 }
 
 
@@ -729,9 +732,7 @@ input:focus {
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     z-index: 100;
-
     
-   
 }
 
 

@@ -2,6 +2,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,11 +15,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 </head>
 <body>
-
-    <div class="layout-container">
+<div id="fog"></div>
+    <div id="toata-pagina" class="layout-container">
 
         @if (User.IsInRole("User") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
         {
+            <div id="creare-grup">
+                <partial model="new DiscordClone.Models.Group()" name="CreateGroup"></partial>
+            </div>
 
             <nav class="sidebar">
 
@@ -39,7 +43,8 @@
                 }
 
                 <div class="test2dor">
-                    <a  href="/Groups/New" id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>
+                    @*<a  href="/Groups/New" id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>*@
+                    <a id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>
                     <p class="nume-grupdor">Adauga un grup</p>
                 </div>
 

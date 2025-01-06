@@ -10,7 +10,7 @@
     {
         <div class="test2dor bottom">
             <hr/>
-            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><img src=@user.ProfilePicture class="poza-grup profil-user"/></a>
+            <a asp-controller="EditProfile" asp-action="Edit" asp-route-id="@user.Id" ><img src=@user.ProfilePicture class="poza-grup profil-user"/></a>
             <div class="detalii-grup">
                 <p class="nume-profildor">@user.UserName</p>
 

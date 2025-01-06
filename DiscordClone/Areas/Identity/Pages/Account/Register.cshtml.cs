@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using DiscordClone.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -113,13 +114,15 @@ namespace DiscordClone.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            TempData["fisier"] = "/images/defaultProfile.jpg";
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+       public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+            TempData["ceva"] = "text";
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
@@ -181,6 +184,57 @@ namespace DiscordClone.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
+        }
+        
+        
+        [HttpPost]
+        public async Task<ActionResult> UploadFile(IFormFile file)
+        {
+            string nume = "";
+            string folder = "";
+            if (file != null)
+            {
+                var allowedExtensions = new[] { ".jpg", ".jpeg", ".png"};
+                var fileExtension = Path.GetExtension(file.FileName).ToLower();
+                nume = Path.ChangeExtension(file.FileName, null);
+                nume = nume.Replace(" ", "");
+                nume += Guid.NewGuid().ToString("N") + fileExtension;
+                
+                if (!allowedExtensions.Contains(fileExtension))
+                {
+                    ModelState.AddModelError("ChannelImage",
+                        "Fișierul trebuie să fie o imagine (jpg, jpeg, png).");
+                   
+                }
+
+                folder = Guid.NewGuid().ToString("N");
+                
+                var folderName = Path.Combine(_env.WebRootPath , "temp_" + folder);
+                if(!Directory.Exists(folderName))
+                    Directory.CreateDirectory(folderName);
+                // Cale stocare
+                var storagePath = Path.Combine(folderName, nume);
+                var databaseFileName = "/images/"  + nume;
+                TempData["fisier"] = storagePath;
+                TempData["folder"] = folder;
+
+                // Salvare fișier
+                using (var fileStream = new FileStream(storagePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                }
+                
+                return new JsonResult(new { filePath = databaseFileName }) { StatusCode = 200 };
+                
+            }       
+
+            TempData["fisier"] = nume;
+            TempData["folder"] = folder;
+            
+            return BadRequest(new { error = "No file was uploaded." });
+            
+            
+            return new EmptyResult();
         }
 
 

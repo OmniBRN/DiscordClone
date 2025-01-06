@@ -11,11 +11,21 @@ if (!localStorage.getItem("inaltime")) {
     localStorage.setItem("inaltime", inaltime);
 }
 
+var toata_pagina = document.getElementById("toata-pagina")
+toata_pagina.style.maxHeight = ( inaltime + 139 ) + 'px'
+
 let b = parseInt(localStorage.getItem("inaltime"));
+
+var creare_grup = document.getElementById("creare-grup")
 
 if (continut.length > 0)
 {
     continut[0].style.maxHeight = ( b - 38 ) + "px";
+    
+    var mesaje = document.getElementsByClassName("info-grup")
+    console.log(mesaje[mesaje.length - 1 ])
+    if(mesaje.length > 0)
+    mesaje[mesaje.length - 1 ].scrollIntoView({ block: "end", inline: "nearest" });
 
     console.log("Inaltime: " + b);
 }
@@ -76,12 +86,14 @@ function buton_cancel(i)
 
 
 var popOutStergere = document.getElementById("popOutStergere")
+var popOutShow = document.getElementById("popOutShow");
 var kick = document.getElementById("kick")
 var leave = document.getElementById("leave")
 
 var leave_btn = document.getElementById("leave-button");
 var kick_btn = document.getElementById("kick-button")
 var buton = document.getElementById("efectuare")
+
 
 
 
@@ -125,8 +137,20 @@ fog.addEventListener("click", () => {
     if (leave && leave.style.display === "block") {
         leave.style.display = "none";
     }
+    if(creare_grup && creare_grup.style.display === "block") {
+        creare_grup.style.display = "none";
+    }
+    if( popOutShow && popOutShow.style.display === "block") {
+        popOutShow.style.display = "none";
+    }
     fog.style.display = "none";
 })
+
+function cont(){
+    popOutShow.style.display = "block";
+    fog.style.display = "block";
+}
+
 
 var profil = document.getElementById("ImageRPath")
 
@@ -164,6 +188,80 @@ profil.addEventListener("input", () => {
     xhr.send(formData);
     
 })
+
+var creare_cont = document.getElementById("Input_ProfilePicture")
+
+if(creare_cont)
+    creare_cont.addEventListener("input", function(){
+        var poza = creare_cont.files[0];
+
+        if(!poza)
+        {
+            return;
+        }
+
+        console.log(poza);
+
+        const formData = new FormData();
+        formData.append('file', poza);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Categories/UploadFile' ,true)
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('profil-provizoriu').src = e.target.result;
+                };
+                reader.readAsDataURL(poza);
+            } else {
+                console.error("File upload failed. Status:", xhr.status, "Response:", xhr.responseText);
+                alert("File upload failed");
+            }
+        };
+
+        xhr.send(formData);
+
+    })
+
+var pro = document.getElementById("ProfilePicture")
+
+console.log("ceva " + pro)
+if(pro)
+    pro.addEventListener("input", () => {
+
+        var poza = pro.files[0];
+        console.log("vdde")
+        if(!poza)
+        {
+            return;
+        }
+
+        console.log("ceva" + poza);
+
+        const formData = new FormData();
+        formData.append('file', poza);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/EditProfile/UploadFile' ,true)
+
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('poza-editare-profil').src = e.target.result;
+                };
+                reader.readAsDataURL(poza);
+            } else {
+                alert("File upload failed");
+            }
+        };
+
+        xhr.send(formData);
+
+    })
+
 const fileInput = document.getElementById('fileInput');
 if(fileInput)
 fileInput.addEventListener('input', function () {
@@ -216,6 +314,13 @@ function inchide()
 }
 
 
+var creare = document.getElementById("adaugare");
+if(creare)
+creare.addEventListener("click", function(){
+    fog.style.display = "block";
+   creare_grup.style.display = "block";
+   document.getElementById("modal-creare").style.display = "block";
+})
 
 
 //function editare(id) {
