@@ -134,8 +134,25 @@ namespace DiscordClone.Controllers
                 var channels = db.Channels.Where(c => c.UserId == user.Id).ToList();
                 var groups = db.Groups.Where(c => c.UserId == user.Id).ToList();
                 var userGroups = db.UserGroups.Where(c => c.UserId == user.Id).ToList();
+
                 
-                db.UserGroups.RemoveRange(userGroups);
+                Console.WriteLine("-----------------------------------------------------------------------------------");
+                foreach (var channel in channels)
+                {
+                    Console.WriteLine(channel.Name);
+                }
+                Console.WriteLine("-----------------------------------------------------------------------------------");
+                foreach (var group in groups)
+                {
+                    Console.WriteLine(group.Name);
+                }
+                Console.WriteLine("-----------------------------------------------------------------------------------");
+                foreach (var userGroup in userGroups)
+                {
+                    var message = db.Messages.Where(o=> o.GroupId == userGroup.GroupId && o.UserId == userGroup.UserId).ToList();
+                    db.Messages.RemoveRange(message);
+                    db.UserGroups.Remove(userGroup);
+                }
                 
                 if(channels != null)
                 {
