@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace DiscordClone.Controllers;
 
@@ -159,6 +160,47 @@ public class CategoriesController : BaseController
       
         
         Category category = db.Categories.Find(id);
+        var groups = db.Groups.Where(o=> o.CategoryId == id).ToList();
+        foreach (var group in groups)
+        {
+             var channels = db.Channels.Include("Messages").Where(o => o.GroupId == group.Id).FirstOrDefault();
+             if (group == null)
+             {
+                TempData["alerta"] = "Grupul pe care incerci sa-l stergi nu exista";
+                
+             }
+            
+             if (group.ImageRPath != null && group.ImageRPath != "/images/defaultGroup.png")
+             {
+                string filePath = Path.Combine(_env.WebRootPath, group.ImageRPath.TrimStart('/').Replace("/", "\\"));
+                System.IO.File.Delete(filePath);
+             }
+
+            //Am facut un check sa vad daca este null channels ca altfel da eroare
+            if (channels != null)
+            {
+                var mesaje = db.Messages.Where(m => m.MessageChannelId == id.ToString()).ToList();
+
+                if (mesaje.Count > 0)
+                {
+                    foreach (var mesaj in mesaje)
+                    {
+                        if (mesaj.FileRPath != null)
+                        {
+                            string filePath = Path.Combine(_env.WebRootPath,
+                                mesaj.FileRPath.TrimStart('/').Replace("/", "\\"));
+                            System.IO.File.Delete(filePath);
+                            mesaj.FileRPath = null;
+                        }
+
+                        db.Messages.Remove(mesaj);
+                    }
+                }
+                db.Channels.Remove(channels);
+            }
+            
+            db.Groups.Remove(group);
+        }
         db.Categories.Remove(category);
         TempData["alerta"] = "Categoria a fost stearsa";
         db.SaveChanges();

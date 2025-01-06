@@ -148,7 +148,7 @@ namespace DiscordClone.Controllers
             // var members1 = db.Users.Where(o => members2.Contains(o.Id));
             ViewBag.Members = members2;
 
-            if (!members2.Any( m => m.UserId == _userManager.GetUserId(User) ))
+            if (!members2.Any( m => m.UserId == _userManager.GetUserId(User) && m.Culoare != "gray"))
             {
                 return Redirect($"/Groups/Index");
             }

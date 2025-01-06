@@ -356,7 +356,6 @@ namespace DiscordClone.Controllers
 
             //// Aici am adaugat comentariu pt ca ar trebui sa stergem si canalele asociate grupului pe care-l facem
 
-           
             var channels = db.Channels.Include("Messages").Where(o => o.GroupId == id).FirstOrDefault();
             if (group == null)
             {

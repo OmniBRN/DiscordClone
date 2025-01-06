@@ -20,12 +20,15 @@
                             <p><i class="bi bi-person"></i> UserName: @user.UserName</p>
                             <p><i class="bi bi-envelope"></i> Email utilizator: @user.Email</p>
                         </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <a asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-success">Editare utilizator</a>
-                            <form asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" method="post">
-                                <button type="submit" class="btn btn-sm btn-danger">Sterge utilizator</button>
-                            </form>
-                        </div>
+                        @if (user.Id != ViewBag.currentUser)
+                        {
+                            <div class="card-footer d-flex justify-content-between">
+                                <a asp-controller="Users" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-success">Editare utilizator</a>
+                                <form asp-controller="Users" asp-action="Delete" asp-route-id="@user.Id" method="post">
+                                    <button type="submit" class="btn btn-sm btn-danger">Sterge utilizator</button>
+                                </form>
+                            </div>
+                        }
                     </div>
                 </div>
             }
