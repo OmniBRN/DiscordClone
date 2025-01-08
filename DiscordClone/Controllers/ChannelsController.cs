@@ -68,13 +68,26 @@ namespace DiscordClone.Controllers
 
             message.TimeStamp = DateTime.Now;
             message.UserId = _userManager.GetUserId(User);
-
-            if (message.Content.StartsWith("https://www.youtube.com"))
+            if (message.Content.StartsWith("https://www.youtube.com/shorts/"))
+            {
+                var url = message.Content.Substring("https://www.youtube.com/shorts/".Length);
+                url = "https://www.youtube.com/embed/" + url;
+                message.Content = url;
+            }
+            else if (message.Content.StartsWith("https://www.youtube.com"))
             {
                 var url = message.Content.Substring("https://www.youtube.com/watch?v=".Length);
                 url = "https://www.youtube.com/embed/" + url + "?rel=0";
                 message.Content = url;
             }
+            else if (message.Content.StartsWith("https://youtu.be/"))
+            {
+                var url = message.Content.Substring("https://youtu.be/".Length);
+                url = "https://www.youtube.com/embed/" + url + "?rel=0";
+                message.Content = url;
+            }
+             
+            
 
             if( ModelState.IsValid )
             {
