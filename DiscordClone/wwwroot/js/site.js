@@ -11,7 +11,7 @@ if (!localStorage.getItem("inaltime")) {
     localStorage.setItem("inaltime", inaltime);
 }
 
-var toata_pagina = document.getElementById("toata-pagina")
+var toata_pagina = document.getElementById("original")
 toata_pagina.style.maxHeight = ( inaltime + 139 ) + 'px'
 
 let b = parseInt(localStorage.getItem("inaltime"));
@@ -20,8 +20,9 @@ var creare_grup = document.getElementById("creare-grup")
 
 if (continut.length > 0)
 {
-    continut[0].style.maxHeight = ( b - 38 ) + "px";
-    
+    //continut[0].style.maxHeight = ( b - 38 ) + "px";
+    var sidebar = document.getElementById("sidebar")
+    sidebar.style.maxHeight = ( inaltime + 139 ) + 'px'
     var mesaje = document.getElementsByClassName("info-grup")
     console.log(mesaje[mesaje.length - 1 ])
     if(mesaje.length > 0)
@@ -73,6 +74,37 @@ function afisare_inline(i)
     input.style.display = 'block';
 
 }
+
+function inchide_kick(i)
+{
+    var optiune = document.getElementById("kick " + i);
+    var blackdrop = document.getElementById("blackdrop " + i);
+
+    optiune.style.display = 'none';
+    blackdrop.style.display = 'none';
+}
+
+function kick_membru(i)
+{
+    console.log(i);
+    var optiune = document.getElementById("kick " + i);
+    optiune.style.display = 'block';
+    
+    var blackdrop = document.createElement("div");
+    blackdrop.classList.add("fog")
+    blackdrop.style.display = 'block';
+    blackdrop.id = ("blackdrop " + i);
+    blackdrop.addEventListener("click", function () {
+        optiune.style.display = 'none';
+        blackdrop.style.display = 'none';
+    })
+
+    ecran = document.getElementsByTagName("body")
+    ecran[0].appendChild(blackdrop);
+    
+}
+
+
 
 function buton_cancel(i)
 {

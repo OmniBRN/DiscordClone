@@ -1,10 +1,13 @@
 ﻿@model dynamic
 
 
-
+@{
+    var lungime = (ViewBag.Groups as IEnumerable<Group>)?.ToList().Count;
+    var cnt = 1;
+}
 
 <!DOCTYPE html>
-<html lang="en">
+<html id="original" lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,32 +27,40 @@
                 <partial model="new DiscordClone.Models.Group()" name="CreateGroup"></partial>
             </div>
 
-            <nav class="sidebar">
-
+            <nav id="sidebar" class="sidebar">
+               
                 <a asp-controller="Groups" asp-action="Index" class="h1 Discord"><i class="bi bi-discord"></i></a>
                 <hr/>
                 @if (ViewBag.Groups != null)
                 {
-                    @foreach (Group group in ViewBag.Groups)
-                    {
-                        <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.GroupChannelId>
-                            <div class="test2dor">
-                                <img src=@group.ImageRPath class="poza-grup profil-user"/>
-                                <p class="nume-grupdor">@group.Name</p>
-                            </div>
-                            <hr/>
-                        </a>
-                    }
+                    <div class="container-grup container-overflow">
+                        @foreach (Group group in ViewBag.Groups)
+                        {
+                            
+                            <a asp-controller="Channels" asp-action="Index" asp-route-id=@group.GroupChannelId>
+                                <div class="test2dor">
+                                    <img src=@group.ImageRPath class="poza-grup profil-user"/>
+                                    <p class="nume-grupdor">@group.Name</p>
+                                </div>
+                                <hr/>
+                            </a>
+                            if (cnt == lungime)
+                            {
+                                <div style="margin-bottom: 15px;" class="test2dor">
+                                    <a id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>
+                                    <p class="nume-grupdor">Adauga un grup</p>
+                                </div>
+                                
+                            }
+                            cnt = cnt + 1;
+                        }
+                    </div>
                 }
 
-                <div class="test2dor">
-                    @*<a  href="/Groups/New" id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>*@
-                    <a id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>
-                    <p class="nume-grupdor">Adauga un grup</p>
-                </div>
+                
 
-               
                 <partial name="_LoginPartial" /> 
+                
             </nav>
         }
         @RenderBody()

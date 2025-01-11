@@ -30,10 +30,10 @@
         </div>
     </form>
 
-    <div class="lista-grupuri">
+    <div class="lista-grupuri container-overflow">
         <h2>Toate grupurile in care nu ai fost invitat</h2>
 
-
+        <div>
         @foreach (var group in ViewBag.Groups2)
         {
             @if (User.IsInRole("User") || User.IsInRole("Moderator") || User.IsInRole("Admin"))
@@ -79,6 +79,7 @@
                 <hr/>
             }
         }
+        </div>
 
     </div>
 </div>

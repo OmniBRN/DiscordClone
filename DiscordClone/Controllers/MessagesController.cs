@@ -61,8 +61,7 @@ namespace DiscordClone.Controllers
             var group = db.Groups.Where(o => o.Id.ToString() == mes.GroupId).FirstOrDefault();
             var userCurrentId = _userManager.GetUserId(User);
             var currentUserRole = db.UserGroups.Where(o=>o.GroupId == mes.GroupId.ToString() && o.UserId == userCurrentId).First().Role;
-            if(!((currentUserRole == "Moderator" || group.UserId == userCurrentId) || User.IsInRole("Admin")))
-                
+            if(!((currentUserRole == "Moderator" || mes.UserId == userCurrentId) || User.IsInRole("Admin")))
                 return RedirectToAction("Index", "Groups");
             
             

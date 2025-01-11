@@ -26,6 +26,12 @@ a {
     color: white;
 }
 
+.container-overflow{
+    overflow: scroll;
+    scrollbar-color: var(--principal) var(--principal);
+    margin: 0;
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -88,6 +94,7 @@ html {
 
 .layout-container {
     display: flex;
+    max-height: 100vh;
     min-height: 100vh;
     background-color: var(--principal);
 }
@@ -172,6 +179,7 @@ hr {
     overflow: hidden;
     cursor: pointer;
     white-space: nowrap;
+    margin-left:5px;
 }
 
 .nume-grupdor {
@@ -208,6 +216,12 @@ hr {
     padding-top: 20px;
     overflow-y: auto;
     transition: width 0.5s ease;
+}
+
+.container-grup{
+    width: 300px;
+    padding: 0;
+    overflow: auto;
 }
 
 .sidebar:hover {
@@ -388,6 +402,9 @@ input:focus {
 .bottom{
     margin-top:auto;
     margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-top: 1px solid var(--forth);
 }
 
 .icon-profil{
