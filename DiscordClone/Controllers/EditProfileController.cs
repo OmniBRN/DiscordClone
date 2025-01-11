@@ -162,8 +162,14 @@ public class EditProfileController: BaseController
             foreach (var userGroup in userGroups)
             {
                 var message = db.Messages.Where(o=> o.GroupId == userGroup.GroupId && o.UserId == userGroup.UserId).ToList();
-                db.Messages.RemoveRange(message);
-                db.UserGroups.Remove(userGroup);
+                foreach (var mes in message)
+                {
+                    mes.UserId = "2ff8c808-69c7-4a2e-8271-d45ebad878df";
+                }
+                // db.Messages.RemoveRange(message);
+                // db.UserGroups.Remove(userGroup);
+                userGroup.UserId = "2ff8c808-69c7-4a2e-8271-d45ebad878df";
+                userGroup.Culoare = "gray";
             }
             if(channels != null)
             {

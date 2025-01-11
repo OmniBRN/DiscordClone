@@ -113,6 +113,11 @@ namespace DiscordClone.Areas.Identity.Pages.Account
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Acest utilizator nu exista.");
+            }
+            
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -138,6 +143,7 @@ namespace DiscordClone.Areas.Identity.Pages.Account
                     return Page();
                 }
             }
+            
 
             // If we got this far, something failed, redisplay form
             return Page();

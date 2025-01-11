@@ -41,11 +41,15 @@
                 @* N-avem useri deci aici fa fi o poza random *@
                 <img src="@mes.ProfilePicture" class="poza-grup"></img>
                 <div class="detalii-grup">
-                    @if(mes.WasEdited != true && mes.Color != "gray")
+                    @if (mes.UserId == "2ff8c808-69c7-4a2e-8271-d45ebad878df")
+                    {
+                        <p style="color:@mes.Color" class="nume-grup">[DELETED]</p>
+                    }
+                    else if (mes.WasEdited != true && mes.Color != "gray")
                     {
                         <p style="color:@mes.Color" class="nume-grup">@mes.UserName</p>
                     }
-                    else if( mes.WasEdited == true && mes.Color != "gray")
+                    else if (mes.WasEdited == true && mes.Color != "gray")
                     {
                         <p style="color:@mes.Color" class="nume-grup">@mes.UserName (Edited)</p>
                     }
@@ -151,7 +155,7 @@
                                     }
                                     else
                                     {
-                                    
+
                                         <video controls class="poza-colectie">
                                             <source src="@mes.FileRPath" type="video/mp4"/>
                                         </video>
