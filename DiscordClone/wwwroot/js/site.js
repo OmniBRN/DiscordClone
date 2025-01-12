@@ -211,6 +211,7 @@ profil.addEventListener("input", () => {
             const reader = new FileReader();
             reader.onload = function (e) {
                 document.getElementById('uploadedImage').src = e.target.result;
+                document.getElementById('uploadedImage-edit').src = e.target.result;
             };
             reader.readAsDataURL(poza); 
         } else {

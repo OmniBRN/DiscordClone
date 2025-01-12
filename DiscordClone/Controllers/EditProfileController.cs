@@ -88,6 +88,7 @@ public class EditProfileController: BaseController
             user.UserName = newData.UserName;
             user.NormalizedUserName = newData.UserName.ToUpper();
             user.Email = newData.Email;
+            user.NormalizedEmail = newData.Email.ToUpper();
             if(TempData.ContainsKey("fisier") && TempData["fisier"] != null)
                 user.ProfilePicture = TempData["fisier"].ToString();
 

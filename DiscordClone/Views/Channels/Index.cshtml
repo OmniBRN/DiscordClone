@@ -202,6 +202,24 @@
 
         }
     </div>
+    
+    @foreach (var member in ViewBag.Members)
+    {
+        <div id="kick @member.UserId" class="are-you-sure-modal" style="display: none; z-index: 1000;">
+            <h1>Esti pe cale sa dai kick unui utilizator</h1>
+            <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
+            <form asp-controller="Channels" asp-action="Kick" method="post">
+                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
+                <input type="hidden" value="@Model.Id" name="ChannelId"/>
+                <input type="hidden" value="@member.UserId" name="UserId"/>
+                <div class="footer">
+                    <button type="submit" class="create">
+                        Da
+                    </button>
+                </div>
+            </form>
+        </div>
+    }
 
     <div class="footer-mesaje">
         <div id="progress-bar">
@@ -225,7 +243,7 @@
     </div>
 </div>
 
-<div class="members-bar " style="z-index: 500">
+<div class="members-bar ">
     @foreach (var member in ViewBag.Members)
     {
 
@@ -255,20 +273,7 @@
                       
                    
                         
-                        <div id="kick @member.UserId" class="are-you-sure-modal" style="display: none; z-index: 1000;">
-                            <h1>Esti pe cale sa dai kick unui utilizator</h1>
-                            <p> Apasand butonul de mai jos, vei da afara un utilizator. Esti sigur ca vrei sa faci asta?</p>
-                            <form asp-controller="Channels" asp-action="Kick" method="post">
-                                <input type="hidden" value="@Model.GroupId" name="GroupId"/>
-                                <input type="hidden" value="@Model.Id" name="ChannelId"/>
-                                <input type="hidden" value="@member.UserId" name="UserId"/>
-                                <div class="footer">
-                                    <button type="submit" class="create">
-                                        Da
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                       
                         
                         
                     }

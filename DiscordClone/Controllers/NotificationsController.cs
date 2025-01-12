@@ -75,6 +75,7 @@ public class NotificationsController : BaseController
         }
         
         db.SaveChanges();
+        TempData["alerta"] = "Ai trimis o cerere";
 
         return Redirect("/Groups/Index");
        
