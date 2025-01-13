@@ -154,7 +154,7 @@ namespace DiscordClone.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    user.ProfilePicture = "/images/defaultProfile.jpg";
+                    user.ProfilePicture = "/images/DefaultProfile.jpg";
                 }
 
                 

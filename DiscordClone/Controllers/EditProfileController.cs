@@ -71,6 +71,15 @@ public class EditProfileController: BaseController
             var databaseFileName = "/images/" + numeFisier;
                 
             ModelState.Remove(nameof(user.ProfilePicture));
+            
+            string filePath = Path.Combine(_env.WebRootPath, user.ProfilePicture.TrimStart('/').Replace("/", "\\"));
+            Console.WriteLine(filePath);
+            Console.WriteLine("==============================================================================================");
+            if( !filePath.Contains("DefaultProfile") )
+                System.IO.File.Delete(filePath);
+
+            
+            
             user.ProfilePicture = databaseFileName;
             ViewBag.fisier = user.ProfilePicture;
 
@@ -89,8 +98,10 @@ public class EditProfileController: BaseController
             user.NormalizedUserName = newData.UserName.ToUpper();
             user.Email = newData.Email;
             user.NormalizedEmail = newData.Email.ToUpper();
-            if(TempData.ContainsKey("fisier") && TempData["fisier"] != null)
+            if (TempData.ContainsKey("fisier") && TempData["fisier"] != null)
+            {
                 user.ProfilePicture = TempData["fisier"].ToString();
+            }
 
             // Cautam toate rolurile din baza de date
             var roles = db.Roles.ToList();

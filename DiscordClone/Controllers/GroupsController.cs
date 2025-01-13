@@ -302,6 +302,13 @@ namespace DiscordClone.Controllers
                 var databaseFileName = "/images/" + numeFisier;
                 
                 ModelState.Remove(nameof(group.ImageRPath));
+                
+                string filePath = Path.Combine(_env.WebRootPath, group.ImageRPath.TrimStart('/').Replace("/", "\\"));
+                Console.WriteLine(filePath);
+                Console.WriteLine("==============================================================================================");
+                if( !filePath.Contains("defaultGroup.png") )
+                    System.IO.File.Delete(filePath);
+                
                 group.ImageRPath = databaseFileName;
 
             }
