@@ -31,7 +31,7 @@
                
                 <a asp-controller="Groups" asp-action="Index" class="h1 Discord"><i class="bi bi-discord"></i></a>
                 <hr/>
-                @if (ViewBag.Groups != null)
+                @if (lungime != 0)
                 {
                     <div class="container-grup container-overflow">
                         @foreach (Group group in ViewBag.Groups)
@@ -54,6 +54,15 @@
                             }
                             cnt = cnt + 1;
                         }
+                    </div>
+                }
+                else
+                {
+                    <div class="container-grup container-overflow">
+                                <div style="margin-bottom: 15px;" class="test2dor">
+                                    <a id="adaugare"><img class="poza-grup profil-user" src="~/images/Crucea.png"/></a>
+                                    <p class="nume-grupdor">Adauga un grup</p>
+                                </div>
                     </div>
                 }
 
