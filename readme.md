@@ -4,8 +4,9 @@ This web application is inspired by Discord, built using ASP.NET technologies. I
 
 # Team
 
-Boureanu Tudor
-Dinca Mario
+![Boureanu Tudor](https://github.com/OmniBRN)
+
+![Dinca Mario](https://github.com/DincaMario)
 
 ## How it was made
 
