@@ -2,18 +2,22 @@
 
 This web application is inspired by Discord, built using ASP.NET technologies. It enables users to communicate in structured channels, manage roles with robus authentication system
 
+# Team
+
+Boureanu Tudor
+Dinca Mario
+
 ## How it was made
 
 **Tech Stack**:
 - ASP.NET Core MVC – Used to implement the Model-View-Controller pattern for a clean and scalable architecture.
 - Entity Framework Core – For database interactions using a code-first approach.
-ASP.NET Identity – Provides user authentication, registration, and role management.
+- ASP.NET Identity – Provides user authentication, registration, and role management.
 - Lazy Loading – Optimizes performance by loading related data only when it’s needed.
 - Razor Views – Used for dynamic rendering of UI content from the server side.
 - Bootstrap – For responsive and clean UI styling.
 - LINQ – Utilized for querying and manipulating data within the application.
-
-This project takes advantage of powerful backend technologies and design patterns to provide a scalable and maintainable real-time chat experience.
+- MySQL (Docker Container) – Deployed within a Docker container to ensure environment consistency and isolate dependencies across development.
 
 ## How it looks
 ![Image](https://i.imgur.com/T7M6o48.png)
