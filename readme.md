@@ -29,7 +29,7 @@ This web application is inspired by Discord, built using ASP.NET technologies. I
 
 ## Lessons Learned
 
-This was our my first larger-scale ASP.NET projects, and it gave us a deeper experience with key backend development principles, especially:
+This was our first larger-scale ASP.NET projects, and it gave us a deeper experience with key backend development principles, especially:
 
 Implementing secure and flexible user authentication and role systems
 * Structuring a multi-role communication platform using MVC
