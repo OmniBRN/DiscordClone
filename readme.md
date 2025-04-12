@@ -16,7 +16,7 @@ ASP.NET Identity – Provides user authentication, registration, and role manage
 This project takes advantage of powerful backend technologies and design patterns to provide a scalable and maintainable real-time chat experience.
 
 ## How it looks
-![Image](https://github.com/user-attachments/assets/7f1d3933-3cb5-4afe-abe3-1386f3138626)
+![Image](https://i.imgur.com/T7M6o48.png)
 ## Known Issues
 * Real-time messaging is currently in progress
 * No mobile specific layout yet
